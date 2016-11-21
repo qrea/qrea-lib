@@ -8,8 +8,7 @@ Ces modèles sont utilisés par le logiciel SAAS **Qrea**, disponible [ici](http
 
 ### Prérequis
 
-* Typescript
-* Grunt
+* NodeJS
 
 ### Installation
 
