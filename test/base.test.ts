@@ -1,6 +1,6 @@
 /// <reference path="../typings/index.d.ts" />
 
-import { Facturation } from '../src/index';
+import * as QreaLib from '../src/index';
 
 describe('Facturation', () => {
 
@@ -8,10 +8,12 @@ describe('Facturation', () => {
 
         describe('#Adresse', () => {
 
+            it("should instanciate Test", () => {
+                let test = new QreaLib.Facturation.Models.Test();
+            });
+
             it("should instanciate Adresse", () => {
-                let a = new Facturation.Models.Adresse({
-                    ligne1: 'test'
-                });
+                let a = new QreaLib.Facturation.Models.Adresse({});
             });
 
         });

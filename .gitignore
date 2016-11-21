@@ -38,3 +38,8 @@ node_modules
 
 # fichier de sorties des tests grunt mocha
 results.txt
+
+#js files
+*.js
+*.d.ts
+*.js.map

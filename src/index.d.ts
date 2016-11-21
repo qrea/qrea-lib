@@ -1,2 +1,2 @@
-export * from './facturation/facturation';
-export * from './compta/compta';
+export { Facturation } from './facturation/facturation';
+export { Compta } from './compta/compta';

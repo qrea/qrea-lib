@@ -1,7 +1,7 @@
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
 // Facturation
-__export(require('./facturation/facturation'));
+var Facturation = require('./facturation/facturation');
+exports.Facturation = Facturation;
+/*
 // Comptabilite
-__export(require('./compta/compta'));
+export * from './compta/compta';
+*/ 
