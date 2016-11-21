@@ -3,20 +3,24 @@
   "version": "0.1.0",
   "description": "Librairie Javascript permettant la modélisation d'un système de facturation et de comptabilité FR",
   "main": "dist/qrea-lib.min.js",
-  "dependencies": {},
+  "dependencies": {
+    "@types/mocha": "^2.2.33"
+  },
   "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.33",
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-mocha-test": "^0.12.7",
     "grunt-typescript": "^0.8.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "ts-node": "^1.7.0",
+    "typings": "^2.0.0"
   },
   "scripts": {
-    "prepublish": "tsc index.ts --module commonjs ",
-    "pretest": "tsc test/base.test.ts --module commonjs",
-    "test": "mocha"
+    "test": "mocha -r ts-node/register src/**/*.test.ts"
   },
   "repository": {
     "type": "git",

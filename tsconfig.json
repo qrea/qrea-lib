@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "out": "dist/qrea-lib.js",
+        "module": "system",
         "removeComments": true,
         "target": "ES5"
     },
