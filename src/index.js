@@ -1,16 +1,4 @@
-System.register(['./core/core', './facturation/facturation'], function(exports_1) {
-    var Core, Facturation;
-    return {
-        setters:[
-            function (Core_1) {
-                Core = Core_1;
-            },
-            function (Facturation_1) {
-                Facturation = Facturation_1;
-            }],
-        execute: function() {
-            exports_1("Facturation", Facturation);
-            exports_1("Core", Core);
-        }
-    }
-});
+var Core = require('./core/core');
+exports.Core = Core;
+var Facturation = require('./facturation/facturation');
+exports.Facturation = Facturation;

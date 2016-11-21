@@ -1,8 +1,6 @@
-/// <reference path="../../typings/globals/mocha/index.d.ts"/>
+/// <reference path="../../typings/mocha/mocha.d.ts" />
 
-import { Models } from './facturation';
-import { expect } from 'chai';
-import * as mocha from 'mocha';
+import * as Facturation from './facturation';
 
 describe('Hello function', () => {
   it('should return hello world', () => {
