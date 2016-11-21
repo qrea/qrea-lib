@@ -15,7 +15,7 @@
   },
   "scripts": {
     "pretest": "tsc",
-    "postinstall": "npm install -g mocha && npm install -g typescript",
+    "postinstall": "npm install -g mocha && npm install -g typescript && npm install -g grunt",
     "test": "mocha --recursive src/**/*.test.js"
   },
   "repository": {
