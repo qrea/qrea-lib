@@ -10,6 +10,7 @@ describe('Facturation', () => {
 
             it("should instanciate Test", () => {
                 let test = new QreaLib.Facturation.Models.Test();
+                
             });
 
             it("should instanciate Adresse", () => {
