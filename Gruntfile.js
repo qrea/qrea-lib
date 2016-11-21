@@ -4,7 +4,22 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     typescript: {
-      base: {
+      "test" : {
+            options: {
+                module : "commonjs",
+                sourceMap: true,
+                declaration: true,
+                target: 'ES5'
+            },
+            files: [{
+                dest: "test/",
+                src: [
+                    "src/**/*.test.ts",
+                    "src/**/*.test.d.ts"
+                ]
+            }]
+        },
+      "base": {
         src: ['./src/index.ts', './src/**/*.ts'],
         // dest: './dist/<%= pkg.name %>.js',
         options: {
@@ -26,13 +41,16 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
+    clean: {
+        test : [
+            "test"
+        ]
+    },
     mochaTest: {
         test: {
             options: {
                 reporter: 'spec',
-                // captureFile: 'results.txt', // Optionally capture the reporter output to a file
-                quiet: false, // Optionally suppress output to standard out (defaults to false)
-                clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
+                captureFile: 'results.txt' // Optionally capture the reporter output to a file
             },
             src: ['test/**/*.js']
         }
@@ -50,6 +68,12 @@ module.exports = function(grunt) {
 
   // add the copy feature
   grunt.loadNpmTasks('grunt-contrib-copy');
+
+  grunt.loadNpmTasks("grunt-contrib-clean");
+
+  grunt.registerTask("test", ["clean:test",
+                                "typescript:test",
+                                "mochaTest:test"]);
 
   // Default task(s).
   grunt.registerTask('default', ['typescript', 'uglify', 'mochaTest']);
