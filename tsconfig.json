@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "out": "dist/qrea-lib.js",
+        "removeComments": true,
+        "target": "ES5"
+    },
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "test"
+    ]
+}
