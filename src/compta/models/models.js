@@ -1,0 +1,12 @@
+var comptabilite_1 = require('./comptabilite/comptabilite');
+exports.Comptabilite = comptabilite_1.Comptabilite;
+var compte_1 = require('./compte/compte');
+exports.Compte = compte_1.Compte;
+var ecriture_1 = require('./ecriture/ecriture');
+exports.Ecriture = ecriture_1.Ecriture;
+var exercice_1 = require('./exercice/exercice');
+exports.Exercice = exercice_1.Exercice;
+var journal_1 = require('./journal/journal');
+exports.Journal = journal_1.Journal;
+var ligne_1 = require('./ligne/ligne');
+exports.Ligne = ligne_1.Ligne;
