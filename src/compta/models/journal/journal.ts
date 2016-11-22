@@ -70,6 +70,7 @@ export class Journal extends Base.BaseModel implements IJournal {
 
           e.lignes.forEach(l => {
 
+            // console.log('compte num %s, compte recherche %s', l.compteNum, c);
             if(Helpers.numerosCompteEquals(l.compteNum, c) && testStart && testEnd){
               solde += l.debit;
               solde += -l.credit;

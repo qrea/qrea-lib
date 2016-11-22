@@ -53,7 +53,7 @@ describe('Compta', function () {
                 
             }
 
-            assert.equal(sommeTheorique, j.getSolde('622'), 'Le solde du journal ne correspond pas avec les écritures renseignées');
+            assert.equal(sommeTheorique, j.getSolde('6220'), 'Le solde du journal ne correspond pas avec les écritures renseignées');
 
         });
 
