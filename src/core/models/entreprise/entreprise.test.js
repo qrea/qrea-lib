@@ -11,7 +11,7 @@ describe('Core.Models.Entreprise', function () {
         
     });
 
-    if('doit instancier une entreprise avec des paramètres', () => {
+    it('doit instancier une entreprise avec des paramètres', () => {
 
         const params = {
             capital: 15000,
