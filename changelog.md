@@ -1,3 +1,7 @@
+#0.2.7
+* Ajout du Core.Models.Logo
+* Ajout de la propriété logo au Core.Models.Entreprise
+
 #0.2.6
 * Ajout de la propriété isPersonneMorale au modele Core.Models.Personne
 

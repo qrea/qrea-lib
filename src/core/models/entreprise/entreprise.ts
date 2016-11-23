@@ -1,6 +1,7 @@
 import Base from '../../../base/base';
 import { Personne, PersonnePhysique, PersonneMorale } from '../personne/personne';
 import { Identification } from '../identification/identification';
+import { Logo } from '../logo/logo';
 
 export interface IEntreprise {
 
@@ -18,7 +19,8 @@ export interface IEntreprise {
     tauxPenalitesReglement?: number;
     conditionsEscompte?: string;
     mentionsParticulieres?: string;    
-    modeReglementDefaut?: string;    
+    modeReglementDefaut?: string;
+    logo?: Logo;
 
 }
 
@@ -37,10 +39,15 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         }
 
         if(!params || !params.identification) {
-            let identification = new Identification({});
-            this.identification = identification;
+            this.identification = new Identification();
         } else {
             this.identification = params.identification;
+        }
+
+        if (!params || !params.logo) {
+            this.logo = new Logo();
+        } else {
+            this.logo = params.logo;
         }
 
         this.isAdherentCGA = params ? params.isAdherentCGA : null;
@@ -91,4 +98,11 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         this._identification = Identification.instanciate(i);
     }
 
+    private _logo: Logo;
+    get logo(): Logo {
+        return this._logo;
+    }
+    set logo(l) {
+        this._logo = Logo.instanciate(l);
+    }
 }

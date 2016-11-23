@@ -28,6 +28,16 @@ var Personne = (function (_super) {
             return PersonneMorale.instanciate(newPersonne);
         }
     };
+    Object.defineProperty(Personne.prototype, "isPersonneMorale", {
+        get: function () {
+            if (this.getName() === 'PersonneMorale') {
+                return true;
+            }
+            return false;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(Personne.prototype, "adresse", {
         get: function () {
             return this._adresse;
