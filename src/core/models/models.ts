@@ -1,10 +1,10 @@
-import { Entreprise } from './entreprise/entreprise';
+import { Entreprise, IEntreprise } from './entreprise/entreprise';
 import { Adresse } from './adresse/adresse';
 import { Identification } from './identification/identification';
 import { Personne, PersonnePhysique, PersonneMorale } from './personne/personne';
 
 export{ 
-    Entreprise,
+    Entreprise, IEntreprise,
     Adresse,
     Identification,
     Personne,

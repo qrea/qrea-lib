@@ -1,53 +1,82 @@
 import Base from '../../../base/base';
-import { Personne } from '../personne/personne';
+import { Personne, PersonnePhysique, PersonneMorale } from '../personne/personne';
 import { Identification } from '../identification/identification';
 
-export class Entreprise extends Base.BaseModel {
+export interface IEntreprise {
 
-    constructor(params: any) {
+    personne?: PersonneMorale | PersonnePhysique;
+    identification?: Identification;
+    isAdherentCGA?: boolean;
+    isExonere?: boolean;
+    isAssujettiTVA?: boolean;
+    isFranchiseEnBase?: boolean;
+    isRegimeMargeBeneficiaire?: boolean;
+    isAutoliquidation?: boolean;
+    numeroTVA?: string;
+    capital?: number;
+    isCapitalVariable?: boolean;
+    tauxPenalitesReglement?: number;
+    conditionsEscompte?: string;
+    mentionsParticulieres?: string;    
+    modeReglementDefaut?: string;    
+
+}
+
+export class Entreprise extends Base.BaseModel implements IEntreprise {
+
+    constructor(params: IEntreprise = null) {
 
         super(params);
 
-        if(!params.personne) throw new Error('Le model \'Entreprise\' requiert une propriété \'personne\' valide');
+        if(! params || !params.personne) {
+            // on créer une personne physique par défaut
+            let personne = new PersonnePhysique({});
+            this.personne = personne;
+        } else {
+            this.personne = params.personne;            
+        }
 
-        this.personne = params.personne;
-        this.isAdherentCGA = params.isAdherentCGA;
-        this.isExonere = params.isExonere;
-        this.isAssujettiTVA = params.isAssujettiTVA;
-        this.isFranchiseEnBase = params.isFranchiseEnBase;
-        this.isRegimeMargeBeneficiaire = params.isRegimeMargeBeneficiaire;
-        this.isAutoliquidation = params.isAutoliquidation;
-        this.identification = params.identification;
-        this.numeroTVA = params.numeroTVA;
-        this.capital = params.capital;
-        this.isCapitalVariable = params.isCapitalVariable;
-        this.tauxPenalitesReglement = params.tauxPenalitesReglement;
-        this.conditionsEscompte = params.conditionsEscompte;
-        this.mentionsParticulieres = params.mentionsParticulieres;
-        this.modeReglementDefaut = params.modeReglementDefaut;
+        if(!params || !params.identification) {
+            let identification = new Identification({});
+            this.identification = identification;
+        } else {
+            this.identification = params.identification;
+        }
+
+        this.isAdherentCGA = params ? params.isAdherentCGA : null;
+        this.isExonere = params ? params.isExonere : null;
+        this.isAssujettiTVA = params ? params.isAssujettiTVA : null;
+        this.isFranchiseEnBase = params ? params.isFranchiseEnBase : null;
+        this.isRegimeMargeBeneficiaire = params ? params.isRegimeMargeBeneficiaire : null;
+        this.isAutoliquidation = params ? params.isAutoliquidation : null;
+        
+        this.numeroTVA = params ? params.numeroTVA : null;
+        this.capital = params ? params.capital : null;
+        this.isCapitalVariable = params ? params.isCapitalVariable : null;
+        this.tauxPenalitesReglement = params ? params.tauxPenalitesReglement : null;
+        this.conditionsEscompte = params ? params.conditionsEscompte : null;
+        this.mentionsParticulieres = params ? params.mentionsParticulieres : null;
+        this.modeReglementDefaut = params ? params.modeReglementDefaut : null;
 
     }
-
-    // personne: Personne;
+  
     isAdherentCGA: boolean;
     isExonere: boolean;
     isAssujettiTVA: boolean;
     isFranchiseEnBase: boolean;
     isRegimeMargeBeneficiaire: boolean;
     isAutoliquidation: boolean;
-    // identification: Identification;
     numeroTVA: string;
     capital: number;
     isCapitalVariable: boolean;
     tauxPenalitesReglement: number;
     conditionsEscompte: string;
-    mentionsParticulieres: string;
-    
+    mentionsParticulieres: string;    
     modeReglementDefaut: string;
 
-    private _personne: Personne;
+    private _personne: PersonneMorale|PersonnePhysique;
     // on peut avoir une personne physique ou morale
-    get personne(): Personne{
+    get personne(): PersonneMorale|PersonnePhysique {
         return this._personne;
     }
     set personne(p){
@@ -61,6 +90,5 @@ export class Entreprise extends Base.BaseModel {
     set identification(i){
         this._identification = Identification.instanciate(i);
     }
-    
 
 }

@@ -9,24 +9,35 @@ var identification_1 = require('../identification/identification');
 var Entreprise = (function (_super) {
     __extends(Entreprise, _super);
     function Entreprise(params) {
+        if (params === void 0) { params = null; }
         _super.call(this, params);
-        if (!params.personne)
-            throw new Error('Le model \'Entreprise\' requiert une propriété \'personne\' valide');
-        this.personne = params.personne;
-        this.isAdherentCGA = params.isAdherentCGA;
-        this.isExonere = params.isExonere;
-        this.isAssujettiTVA = params.isAssujettiTVA;
-        this.isFranchiseEnBase = params.isFranchiseEnBase;
-        this.isRegimeMargeBeneficiaire = params.isRegimeMargeBeneficiaire;
-        this.isAutoliquidation = params.isAutoliquidation;
-        this.identification = params.identification;
-        this.numeroTVA = params.numeroTVA;
-        this.capital = params.capital;
-        this.isCapitalVariable = params.isCapitalVariable;
-        this.tauxPenalitesReglement = params.tauxPenalitesReglement;
-        this.conditionsEscompte = params.conditionsEscompte;
-        this.mentionsParticulieres = params.mentionsParticulieres;
-        this.modeReglementDefaut = params.modeReglementDefaut;
+        if (!params || !params.personne) {
+            var personne = new personne_1.PersonnePhysique({});
+            this.personne = personne;
+        }
+        else {
+            this.personne = params.personne;
+        }
+        if (!params || !params.identification) {
+            var identification = new identification_1.Identification({});
+            this.identification = identification;
+        }
+        else {
+            this.identification = params.identification;
+        }
+        this.isAdherentCGA = params ? params.isAdherentCGA : null;
+        this.isExonere = params ? params.isExonere : null;
+        this.isAssujettiTVA = params ? params.isAssujettiTVA : null;
+        this.isFranchiseEnBase = params ? params.isFranchiseEnBase : null;
+        this.isRegimeMargeBeneficiaire = params ? params.isRegimeMargeBeneficiaire : null;
+        this.isAutoliquidation = params ? params.isAutoliquidation : null;
+        this.numeroTVA = params ? params.numeroTVA : null;
+        this.capital = params ? params.capital : null;
+        this.isCapitalVariable = params ? params.isCapitalVariable : null;
+        this.tauxPenalitesReglement = params ? params.tauxPenalitesReglement : null;
+        this.conditionsEscompte = params ? params.conditionsEscompte : null;
+        this.mentionsParticulieres = params ? params.mentionsParticulieres : null;
+        this.modeReglementDefaut = params ? params.modeReglementDefaut : null;
     }
     Object.defineProperty(Entreprise.prototype, "personne", {
         get: function () {
