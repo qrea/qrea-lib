@@ -12,6 +12,7 @@ export interface IPersonne {
     siteInternet?: string;
     fax?: string;
     identification?: Identification;
+    isPersonneMorale?: boolean;
 
 }
 
@@ -41,6 +42,13 @@ export abstract class Personne extends Base.BaseModel {
             return PersonneMorale.instanciate(newPersonne);
         }
 
+    }
+
+    public get isPersonneMorale(): boolean {
+
+        if (this.getName() === 'PersonneMorale') { return true; }
+        return false;
+        
     }
 
     private _adresse: Adresse;

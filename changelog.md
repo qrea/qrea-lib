@@ -1,3 +1,6 @@
+#0.2.6
+* Ajout de la propriété isPersonneMorale au modele Core.Models.Personne
+
 #0.2.5
 * Correction de tout les models du Core
 * MEP tests pour Core.Models.Identification
