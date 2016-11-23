@@ -30,7 +30,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
 
         if(! params || !params.personne) {
             // on créer une personne physique par défaut
-            let personne = new PersonnePhysique({});
+            let personne = new PersonnePhysique();
             this.personne = personne;
         } else {
             this.personne = params.personne;            

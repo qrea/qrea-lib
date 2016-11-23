@@ -12,7 +12,7 @@ var Entreprise = (function (_super) {
         if (params === void 0) { params = null; }
         _super.call(this, params);
         if (!params || !params.personne) {
-            var personne = new personne_1.PersonnePhysique({});
+            var personne = new personne_1.PersonnePhysique();
             this.personne = personne;
         }
         else {

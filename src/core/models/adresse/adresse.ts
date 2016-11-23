@@ -1,19 +1,28 @@
 import Base from '../../../base/base';
 
-export class Adresse extends Base.BaseModel {
+export interface IAdresse {
 
-    constructor(params: any) {
+    nom?: string;
+    ligne1?: string;
+    ligne2?: string;
+    cp?: string;
+    ville?: string;
+    pays?: string;
+
+}
+
+export class Adresse extends Base.BaseModel implements IAdresse {
+
+    constructor(params: IAdresse) {
 
         super(params);
 
-        if(!params.nom && !params.cp && params.ville) throw new Error('Le model \'Adresse\' requiert des paramètres \'nom\', \'cp\', \'ville\' non nuls');
-
-        this.nom = params.nom;
-        this.ligne1 = params.ligne1;
-        this.ligne2 = params.ligne2 || null;
-        this.cp = params.cp;
-        this.ville = params.ville;
-        this.pays = params.pays || null;
+        this.nom = params ? params.nom : null;
+        this.ligne1 = params ? params.ligne1 : null;
+        this.ligne2 = params ? params.ligne2 : null;
+        this.cp = params ? params.cp : null;
+        this.ville = params ? params.ville : null;
+        this.pays = params ? params.pays : null;
 
     }
 
