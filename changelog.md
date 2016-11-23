@@ -1,3 +1,9 @@
+#0.2.9
+* Fix isPersonneMorale
+
+#0.2.8
+* MEP de la prop isPersonneMorale pour Core.Models.Entreprise qui déclanche la modif de personne
+
 #0.2.7
 * Ajout du Core.Models.Logo
 * Ajout de la propriété logo au Core.Models.Entreprise

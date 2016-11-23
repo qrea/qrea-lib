@@ -6,6 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var base_1 = require('../../../base/base');
 var personne_1 = require('../personne/personne');
 var identification_1 = require('../identification/identification');
+var logo_1 = require('../logo/logo');
 var Entreprise = (function (_super) {
     __extends(Entreprise, _super);
     function Entreprise(params) {
@@ -19,11 +20,16 @@ var Entreprise = (function (_super) {
             this.personne = params.personne;
         }
         if (!params || !params.identification) {
-            var identification = new identification_1.Identification({});
-            this.identification = identification;
+            this.identification = new identification_1.Identification();
         }
         else {
             this.identification = params.identification;
+        }
+        if (!params || !params.logo) {
+            this.logo = new logo_1.Logo();
+        }
+        else {
+            this.logo = params.logo;
         }
         this.isAdherentCGA = params ? params.isAdherentCGA : null;
         this.isExonere = params ? params.isExonere : null;
@@ -44,7 +50,12 @@ var Entreprise = (function (_super) {
             return this._personne;
         },
         set: function (p) {
-            this._personne = personne_1.Personne.instanciatePhysiqueOuMorale(p);
+            if (p['getName'] && ['PersonneMorale', 'PersonnePhysique'].indexOf(p.getName()) > -1) {
+                this._personne = p;
+            }
+            else {
+                this._personne = personne_1.Personne.instanciatePhysiqueOuMorale(p);
+            }
         },
         enumerable: true,
         configurable: true
@@ -55,6 +66,34 @@ var Entreprise = (function (_super) {
         },
         set: function (i) {
             this._identification = identification_1.Identification.instanciate(i);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Entreprise.prototype, "logo", {
+        get: function () {
+            return this._logo;
+        },
+        set: function (l) {
+            this._logo = logo_1.Logo.instanciate(l);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Entreprise.prototype, "isPersonneMorale", {
+        get: function () {
+            if (this.personne.getName() === 'PersonneMorale') {
+                return true;
+            }
+            return false;
+        },
+        set: function (value) {
+            if (this.personne.getName() === 'PersonneMorale' && value === false) {
+                this.personne = new personne_1.PersonnePhysique(this.personne);
+            }
+            else if (this.personne.getName() === 'PersonnePhysique' && value === true) {
+                this.personne = new personne_1.PersonneMorale(this.personne);
+            }
         },
         enumerable: true,
         configurable: true

@@ -30,4 +30,20 @@ describe('Core.Models.Entreprise', function () {
 
     });
 
+    it("doit modifier la personne", () => {
+
+        const e = new Models.Entreprise({
+            personne: {
+                nom: 'BOURDU',
+                prenom: 'Pierre'
+            }
+        });
+
+        assert.isDefined(e);
+        assert.equal(e.personne.getName(), 'PersonnePhysique');
+        e.isPersonneMorale = true;
+        assert.equal(e.personne.getName(), 'PersonneMorale');
+
+    });
+
 });

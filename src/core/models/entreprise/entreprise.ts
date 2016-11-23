@@ -87,7 +87,13 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         return this._personne;
     }
     set personne(p){
-        this._personne = Personne.instanciatePhysiqueOuMorale(p);
+
+        if(p['getName'] && ['PersonneMorale', 'PersonnePhysique'].indexOf(p.getName()) > -1){
+            this._personne = p;
+        } else {
+            this._personne = Personne.instanciatePhysiqueOuMorale(p);
+        }
+
     }
 
     private _identification: Identification;
@@ -104,5 +110,22 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
     }
     set logo(l) {
         this._logo = Logo.instanciate(l);
+    }
+
+    public get isPersonneMorale(): boolean {
+
+        if (this.personne.getName() === 'PersonneMorale') { return true; }
+        return false;
+        
+    }
+
+    public set isPersonneMorale(value) {
+
+        if (this.personne.getName() === 'PersonneMorale' && value === false) {
+            this.personne = new PersonnePhysique(this.personne);            
+        } else if(this.personne.getName() === 'PersonnePhysique' && value === true) {
+            this.personne = new PersonneMorale(this.personne);
+        }
+
     }
 }

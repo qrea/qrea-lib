@@ -44,13 +44,6 @@ export abstract class Personne extends Base.BaseModel {
 
     }
 
-    public get isPersonneMorale(): boolean {
-
-        if (this.getName() === 'PersonneMorale') { return true; }
-        return false;
-        
-    }
-
     private _adresse: Adresse;
     get adresse(): Adresse{
         return this._adresse;

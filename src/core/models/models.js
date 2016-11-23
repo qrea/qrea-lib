@@ -8,3 +8,5 @@ var personne_1 = require('./personne/personne');
 exports.Personne = personne_1.Personne;
 exports.PersonnePhysique = personne_1.PersonnePhysique;
 exports.PersonneMorale = personne_1.PersonneMorale;
+var logo_1 = require('./logo/logo');
+exports.Logo = logo_1.Logo;
