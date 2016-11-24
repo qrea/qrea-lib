@@ -1,6 +1,6 @@
 import Base from '../../../base/base';
 
-export interface IArticle {
+export interface IArticle extends Base.IBase {
 
     libelle: string;
     prix: number;

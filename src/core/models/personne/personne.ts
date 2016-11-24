@@ -2,7 +2,7 @@ import Base from '../../../base/base';
 import { Adresse } from '../adresse/adresse';
 import { Identification } from '../identification/identification';
 
-export interface IPersonne {
+export interface IPersonne extends Base.IBase {
 
     adresse?: Adresse;
     isEntreprise?: boolean;

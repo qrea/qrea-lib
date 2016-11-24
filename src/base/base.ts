@@ -1,5 +1,8 @@
 namespace Base {
 
+    export interface IBase {
+        id?: string;
+    }
     export class BaseModel {
 
         constructor(o: any) {

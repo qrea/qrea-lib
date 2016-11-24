@@ -1,6 +1,6 @@
 import Base from '../../../base/base';
 
-export interface IAdresse {
+export interface IAdresse extends Base.IBase {
 
     nom?: string;
     ligne1?: string;

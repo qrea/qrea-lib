@@ -3,7 +3,7 @@ import { Personne, PersonnePhysique, PersonneMorale } from '../personne/personne
 import { Identification } from '../identification/identification';
 import { Logo } from '../logo/logo';
 
-export interface IEntreprise {
+export interface IEntreprise extends Base.IBase {
 
     personne?: PersonneMorale | PersonnePhysique;
     identification?: Identification;
