@@ -2,6 +2,8 @@ var Base;
 (function (Base) {
     var BaseModel = (function () {
         function BaseModel(o) {
+            if (o && o.id)
+                this.id = o.id;
         }
         BaseModel.instanciate = function (o) {
             if (!o)

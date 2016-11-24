@@ -3,7 +3,7 @@ namespace Base {
     export class BaseModel {
 
         constructor(o: any) {
-            if(o.id) this.id = o.id;
+            if(o && o.id) this.id = o.id;
         }
 
         id: string;
