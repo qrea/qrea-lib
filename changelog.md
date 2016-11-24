@@ -1,3 +1,6 @@
+#0.2.10
+* Ajout de la propriété ***id*** sur la Base.BaseModel qui sert de class de base à tous les ***Models***
+
 #0.2.9
 * Fix isPersonneMorale
 

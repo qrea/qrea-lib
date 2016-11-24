@@ -3,8 +3,10 @@ namespace Base {
     export class BaseModel {
 
         constructor(o: any) {
-
+            if(o.id) this.id = o.id;
         }
+
+        id: string;
 
         // on override la fonction qui vient de baseModel
         public static instanciate(o: any){
