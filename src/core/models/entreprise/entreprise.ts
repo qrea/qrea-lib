@@ -128,4 +128,37 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         }
 
     }
+
+    public get nomComplet(): string {
+
+        let s = '';
+        if(this.isPersonneMorale){
+            const p: PersonneMorale = <PersonneMorale>this.personne;
+            s += p.denominationSociale + ' ' + p.forme;
+        } else {
+            const p: PersonnePhysique = <PersonnePhysique>this.personne;
+            s += p.nomCommercial || p.prenom + ' ' + p.nom;
+        }
+
+        return s;
+
+    }
+
+    public get nomCompletCapital(): string {
+
+        let s = this.nomComplet;
+
+        if(this.isPersonneMorale){
+
+            s += ' au capital ';
+            if(this.isCapitalVariable){
+                s += 'variable minimum ';
+            }
+            s += 'de ' + this.capital + ' €';
+
+        }
+
+        return s;
+
+    }
 }

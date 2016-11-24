@@ -98,6 +98,37 @@ var Entreprise = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(Entreprise.prototype, "nomComplet", {
+        get: function () {
+            var s = '';
+            if (this.isPersonneMorale) {
+                var p = this.personne;
+                s += p.denominationSociale + ' ' + p.forme;
+            }
+            else {
+                var p = this.personne;
+                s += p.nomCommercial || p.prenom + ' ' + p.nom;
+            }
+            return s;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Entreprise.prototype, "nomCompletCapital", {
+        get: function () {
+            var s = this.nomComplet;
+            if (this.isPersonneMorale) {
+                s += ' au capital ';
+                if (this.isCapitalVariable) {
+                    s += 'variable minimum ';
+                }
+                s += 'de ' + this.capital + ' €';
+            }
+            return s;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Entreprise;
 })(base_1.default.BaseModel);
 exports.Entreprise = Entreprise;

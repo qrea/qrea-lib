@@ -1,3 +1,6 @@
+#0.2.12
+* Ajout des propriétés ***nomComplet*** et ***nomCompletCapital*** pour l'entreprise
+
 #0.2.11
 * Fix divers
 

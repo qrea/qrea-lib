@@ -11,6 +11,39 @@ describe('Core.Models.Entreprise', function () {
         
     });
 
+    it('doit instancier une entreprise et obtenir son nom', () => {
+
+        const params1 = {
+            personne: {
+                nom: 'Bourdu',
+                prenom: 'Pierre'
+            }
+        }
+
+        let e1 = new Models.Entreprise(params1);
+        assert.equal(e1.nomComplet, 'Pierre Bourdu');
+
+        e1.personne.nomCommercial = "WorkMind";
+        assert.equal(e1.nomComplet, 'WorkMind');
+        assert.equal(e1.nomComplet, e1.nomCompletCapital);
+
+        const params2 = {
+            personne: {
+                forme: 'SAS',
+                denominationSociale: 'QREA'
+            },
+            isCapitalVariable: false,
+            capital: 16000
+        }
+
+        let e2 = new Models.Entreprise(params2);
+        assert(e2.nomComplet, 'QREA SAS');
+        assert(e2.nomCompletCapital, 'QREA SAS au capital de 16000 €');
+        e2.isCapitalVariable = true;
+        assert(e2.nomCompletCapital, 'QREA SAS au capital variable minimum de 16000 €');
+
+    });
+
     it('doit instancier une entreprise avec des paramètres', () => {
 
         const params = {
