@@ -103,11 +103,11 @@ var Entreprise = (function (_super) {
             var s = '';
             if (this.isPersonneMorale) {
                 var p = this.personne;
-                s += p.denominationSociale + ' ' + p.forme;
+                s += p.denominationSociale || '' + ' ' + p.forme || '';
             }
             else {
                 var p = this.personne;
-                s += p.nomCommercial || p.prenom + ' ' + p.nom;
+                s += p.nomCommercial || ((p.prenom || '') + ' ' + (p.nom || ''));
             }
             return s;
         },
@@ -122,7 +122,7 @@ var Entreprise = (function (_super) {
                 if (this.isCapitalVariable) {
                     s += 'variable minimum ';
                 }
-                s += 'de ' + this.capital + ' €';
+                s += 'de ' + (this.capital || '?') + ' €';
             }
             return s;
         },

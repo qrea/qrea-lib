@@ -134,10 +134,10 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         let s = '';
         if(this.isPersonneMorale){
             const p: PersonneMorale = <PersonneMorale>this.personne;
-            s += p.denominationSociale + ' ' + p.forme;
+            s += p.denominationSociale || '' + ' ' + p.forme || '';
         } else {
             const p: PersonnePhysique = <PersonnePhysique>this.personne;
-            s += p.nomCommercial || p.prenom + ' ' + p.nom;
+            s += p.nomCommercial || ((p.prenom || '') + ' ' + (p.nom || ''));
         }
 
         return s;
@@ -154,7 +154,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
             if(this.isCapitalVariable){
                 s += 'variable minimum ';
             }
-            s += 'de ' + this.capital + ' €';
+            s += 'de ' + (this.capital || '?') + ' €';
 
         }
 
