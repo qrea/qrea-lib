@@ -1,3 +1,6 @@
+#0.2.13
+* Fix Core.Models.Entreprise.nomComplet pour ne par retourner *null* ; 
+
 #0.2.12
 * Ajout des propriétés ***nomComplet*** et ***nomCompletCapital*** pour l'entreprise
 

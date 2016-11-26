@@ -42,6 +42,18 @@ describe('Core.Models.Entreprise', function () {
         e2.isCapitalVariable = true;
         assert(e2.nomCompletCapital, 'QREA SAS au capital variable minimum de 16000 €');
 
+        let e3 = new Models.Entreprise();
+        assert(e2.nomComplet, ' '); // si aucun prenom, nom on doit avoir un string = ' '
+
+        let e4 = new Models.Entreprise({
+            personne: {
+                forme: 'SAS',
+                denominationSociale: 'QREA'
+            }
+        });
+
+        assert(e4, 'QREA SAS au capital de ? €');
+
     });
 
     it('doit instancier une entreprise avec des paramètres', () => {
