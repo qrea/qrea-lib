@@ -49,9 +49,15 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
     CONSTANTES_CALCUL: any;
 
     public calculer(){
-
+        this.calculerImpotBrut
     }
 
+    /**
+     * Calcul un impot brut à partir d'un revenu net global
+     * @param {number} revenuNetGlobal le revenu net global en €
+     * @param {number} nbParts le nombre de parts du foyer fiscal
+     * @returns {number} impot brut en €
+     */
     public calculerImpotBrut(revenuNetGlobal: number, nbParts: number): number {
 
         let res = 0;
