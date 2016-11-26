@@ -1,60 +1,69 @@
 import { BaseCalculette, IParamsCalculette, ICalculette } from '../calculettes';
 
 export interface IParamsImpotRevenu extends IParamsCalculette {
+    millesime: string;
+}
 
+export interface IConstantesCalcul {
+    PLAFOND_QUOTIENT_FAMILIAL: number,
+    BAREME_IR: any,
+}
+
+const DICTIONNAIRE_CONSTANTES_2015: IConstantesCalcul = {
+    PLAFOND_QUOTIENT_FAMILIAL: 1510,
+    BAREME_IR: [
+        {
+            PLAFOND: 9700,
+            TAUX: 0
+        },
+        {
+            PLAFOND: 26791,
+            TAUX: 0.14
+        },
+        {
+            PLAFOND: 71826,
+            TAUX: 0.3
+        },
+        {
+            PLAFOND: 152108,
+            TAUX: 0.41
+        },
+        {
+            PLAFOND: -1,
+            TAUX: 0.45
+        }
+    ]         
 }
 
 export const DICTIONNAIRE_CONSTANTES = {
-    2015 : {
-        PLAFOND_QUOTIENT_FAMILIAL: 1510,
-        BAREME_IR: [
-            {
-                PLAFOND: 9700,
-                TAUX: 0
-            },
-            {
-                PLAFOND: 26791,
-                TAUX: 0.14
-            },
-            {
-                PLAFOND: 71826,
-                TAUX: 0.3
-            },
-            {
-                PLAFOND: 152108,
-                TAUX: 0.41
-            },
-            {
-                PLAFOND: -1,
-                TAUX: 0.45
-            }
-        ]          
-    }
+    "2015" : DICTIONNAIRE_CONSTANTES_2015
 }
 
-// TODO: ajouter le millésime lors de l'instanciation qu permettra de maj toutes les variables
 export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette {
     
     constructor(params: IParamsImpotRevenu){
         super(params);
+        this.CONSTANTES_CALCUL = DICTIONNAIRE_CONSTANTES[params.millesime] ?  DICTIONNAIRE_CONSTANTES[params.millesime] : null;
     }
+
+    CONSTANTES_CALCUL: any;
 
     public calculer(){
 
     }
 
-    public static calculerImpotBrut(revenuNetGlobal: number, nbParts: number): number {
+    public calculerImpotBrut(revenuNetGlobal: number, nbParts: number): number {
 
         let res = 0;
 
         let q = revenuNetGlobal / nbParts;
 
-        function calculerBarême(q){
+        function calculerBarême(q, bareme){
 
             let impot1Part = 0;
             let impotTranche = 0;
 
-            DICTIONNAIRE_CONSTANTES['2015']['BAREME_IR'].forEach( (tranche, i, arr) => {
+            bareme.forEach( (tranche, i, arr) => {
 
                 const plafondInferieur = i > 0 ? arr[i-1].PLAFOND : 0;
 
@@ -84,7 +93,7 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
         }
         
-        let impotBrut = calculerBarême(q) * nbParts;
+        let impotBrut = calculerBarême(q, this.CONSTANTES_CALCUL['BAREME_IR']) * nbParts;
 
         // console.log('impot brut %s', impotBrut)
 
@@ -92,7 +101,7 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
         if(nbParts > 2){
 
             let plafondQuotientApplicable = (nbParts - 2) / 0.5 * DICTIONNAIRE_CONSTANTES['2015']['PLAFOND_QUOTIENT_FAMILIAL'];
-            let ir = calculerBarême(revenuNetGlobal / 2) * 2;
+            let ir = calculerBarême(revenuNetGlobal / 2, this.CONSTANTES_CALCUL['BAREME_IR']) * 2;
             if(impotBrut < ir - plafondQuotientApplicable){
                 // on retraite
                 impotBrut = ir - plafondQuotientApplicable;                
