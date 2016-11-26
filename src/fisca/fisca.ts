@@ -1,5 +1,5 @@
-import * as Calculette from './calculette/calculette';
+import * as Calculettes from './calculettes/calculettes';
 
 export {
-    Calculette
+    Calculettes
 };

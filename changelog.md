@@ -1,5 +1,6 @@
 #0.2.13
-* Fix Core.Models.Entreprise.nomComplet pour ne par retourner *null* ; 
+* Fix Core.Models.Entreprise.nomComplet pour ne par retourner *null*
+* Ajout de Fisca et création de la première calculette : Fisca.Calculettes.ImpotRevenuCalculette
 
 #0.2.12
 * Ajout des propriétés ***nomComplet*** et ***nomCompletCapital*** pour l'entreprise
