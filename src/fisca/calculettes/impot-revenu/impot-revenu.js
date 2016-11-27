@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var calculettes_1 = require('../calculettes');
+var base_1 = require('../base/base');
 var DICTIONNAIRE_CONSTANTES_2015 = {
     PLAFOND_QUOTIENT_FAMILIAL: 1510,
     BAREME_IR: [
@@ -76,5 +76,5 @@ var ImpotRevenuCalculette = (function (_super) {
         return impotBrut;
     };
     return ImpotRevenuCalculette;
-})(calculettes_1.BaseCalculette);
+})(base_1.BaseCalculette);
 exports.ImpotRevenuCalculette = ImpotRevenuCalculette;

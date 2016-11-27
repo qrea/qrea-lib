@@ -1,3 +1,6 @@
+#0.2.14
+* Ajout de la calculette Fisca.Calculettes.PlusValueImmobiliereCalculette
+
 #0.2.13
 * Fix Core.Models.Entreprise.nomComplet pour ne par retourner *null*
 * Ajout de Fisca et création de la première calculette : Fisca.Calculettes.ImpotRevenuCalculette

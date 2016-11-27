@@ -1,4 +1,4 @@
-import { BaseCalculette, IParamsCalculette, ICalculette } from '../calculettes';
+import { BaseCalculette, IParamsCalculette, ICalculette } from '../base/base';
 
 export interface IParamsImpotRevenu extends IParamsCalculette {
     millesime: string;

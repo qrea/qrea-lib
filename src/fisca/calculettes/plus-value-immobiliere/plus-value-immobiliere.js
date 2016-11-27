@@ -3,7 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var calculettes_1 = require('../calculettes');
+var base_1 = require('../base/base');
 exports.TAUX_IMPOT_PV_IMMO = 0.19;
 exports.ABATTEMENTS_PV_IMMO = [
     { "annee": 6, "abattIr": 0.0165, "abattPS": 0.06 },
@@ -51,7 +51,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "dateCession", {
         get: function () {
             return this._dateCession;
-            this.calculer();
         },
         set: function (value) {
             this._dateCession = value;
@@ -61,6 +60,9 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "dateAcquisition", {
+        get: function () {
+            return this._dateAcquisition;
+        },
         set: function (value) {
             this._dateAcquisition = value;
             this.calculer();
@@ -69,6 +71,9 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "prixRevient", {
+        get: function () {
+            return this._prixRevient;
+        },
         set: function (value) {
             this._prixRevient = value;
             this.calculer();
@@ -77,6 +82,9 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "prixCession", {
+        get: function () {
+            return this._prixCession;
+        },
         set: function (value) {
             this._prixCession = value;
             this.calculer();
@@ -85,6 +93,9 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "travaux", {
+        get: function () {
+            return this._travaux;
+        },
         set: function (value) {
             this._travaux = value;
             this.calculer();
@@ -93,6 +104,9 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "fraisAcquisition", {
+        get: function () {
+            return this._fraisAcquisition;
+        },
         set: function (value) {
             this._fraisAcquisition = value;
             this.calculer();
@@ -212,10 +226,12 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    PlusValueImmobiliereCalculette.prototype.calculer = function (params) {
-        // si on passe des params on met à jout les infos
-        // if(params) this.hydrateParams(params);
-        if (params === void 0) { params = null; }
+    PlusValueImmobiliereCalculette.calculer = function (params) {
+        if (params) {
+            return new PlusValueImmobiliereCalculette(params);
+        }
+    };
+    PlusValueImmobiliereCalculette.prototype.calculer = function () {
         if (!this._dateCession && !this._dateAcquisition && !this._prixCession && !this._prixRevient)
             return;
         this._dureeDetention = this.dateDiff(this._dateAcquisition, this._dateCession);
@@ -234,9 +250,10 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         this._psCession = this._pvNettePS * 0.155;
         this._totalImpots = this._psCession + this._surtaxe + this._irCession;
         this._soldeNet = this._prixCession - this._totalImpots;
+        return null;
     };
     PlusValueImmobiliereCalculette.prototype.dateDiff = function (dateOld, dateNew) {
-        //console.log('dateOld %s dateNew %s', dateOld, dateNew);
+        // console.log('dateOld %s dateNew %s', dateOld, dateNew);
         var ynew = dateNew.getFullYear();
         var mnew = dateNew.getMonth();
         var dnew = dateNew.getDate();
@@ -340,5 +357,5 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         return surT;
     };
     return PlusValueImmobiliereCalculette;
-})(calculettes_1.BaseCalculette);
+})(base_1.BaseCalculette);
 exports.PlusValueImmobiliereCalculette = PlusValueImmobiliereCalculette;

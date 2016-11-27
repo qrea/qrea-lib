@@ -1,18 +1,7 @@
-import { ImpotRevenuCalculette } from './impot-revenu/impot-revenu';
+import { ImpotRevenuCalculette, IParamsImpotRevenu } from './impot-revenu/impot-revenu';
+import { PlusValueImmobiliereCalculette, IParamsPlusValueImmobiliere } from './plus-value-immobiliere/plus-value-immobiliere'
 
-export interface ICalculette {
-    //calculer: any; // la fonction qui appel les calculs
-    //context: any;
-}
-
-export interface IParamsCalculette {
-    //context: any;
-}
-
-export abstract class BaseCalculette {
-
-    constructor(params: any){
-
-    }
-
+export { 
+    ImpotRevenuCalculette, IParamsImpotRevenu,
+    PlusValueImmobiliereCalculette, IParamsPlusValueImmobiliere 
 }

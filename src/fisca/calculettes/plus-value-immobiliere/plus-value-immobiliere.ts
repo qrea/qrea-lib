@@ -1,4 +1,4 @@
-import { BaseCalculette, IParamsCalculette, ICalculette } from '../calculettes';
+import { BaseCalculette, IParamsCalculette, ICalculette } from '../base/base';
 
 export interface IParamsPlusValueImmobiliere extends IParamsCalculette {
     dateCession: Date;
@@ -48,7 +48,7 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
     private hydrateParams(params: IParamsPlusValueImmobiliere){
 
-        //console.log('hydrateParams()');
+        // console.log('hydrateParams()');
         this._dateCession = params.dateCession ? params.dateCession : null;
         this._dateAcquisition = params.dateAcquisition ? params.dateAcquisition : null;
         this._prixRevient = params.prixRevient ? params.prixRevient : null;
@@ -61,46 +61,75 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
     // PROPERTIES FOURNIES A L'INSTANCIATION
     _dateCession: Date;
+    /**
+     * Date de cession du bien immobilier
+     */
     set dateCession(value: Date){
         this._dateCession = value;
         this.calculer();        
     }
     get dateCession(): Date {
         return this._dateCession;
-        this.calculer();        
     }
 
     _dateAcquisition: Date;
+    /**
+     * Date d'acquisition du bien immobilier
+     */
     set dateAcquisition(value: Date){
         this._dateAcquisition = value;
         this.calculer();        
     }
+    get dateAcquisition(): Date{
+        return this._dateAcquisition;
+    }
 
     _prixRevient: number;
+    /**
+     * Prix d'achat du bien immobilier
+     */
     set prixRevient(value: number){
         this._prixRevient = value;
-        this.calculer();        
+        this.calculer();       
+    }
+    get prixRevient(): number {
+        return this._prixRevient;
     }
 
     _prixCession: number;
+    /**
+     * Prix de cession du bien immobilier
+     */
     set prixCession(value: number){
         this._prixCession = value;
-        this.calculer();
-        
+        this.calculer();        
+    }
+    get prixCession(): number {
+        return this._prixCession;
     }
 
     _travaux: number;
+    /**
+     * Le montant des travaux effectués
+     */
     set travaux(value: number){
         this._travaux = value;
-        this.calculer();
-        
+        this.calculer();        
+    }
+    get travaux(): number {
+        return this._travaux;
     }
 
     _fraisAcquisition: number;
+    /**
+     * Le montant des frais d'acquisition du bien immobilier
+     */
     set fraisAcquisition(value: number){
         this._fraisAcquisition = value;
-        this.calculer();
-        
+        this.calculer();        
+    }
+    get fraisAcquisition(): number {
+        return this._fraisAcquisition;
     }
 
     // Permet de savoir si des modification de variables d'entrées ont eu lieu
@@ -109,32 +138,49 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
     // PROPERTIES CALCULEES
     
     private _dureeDetention: number;
+    /**
+     * Durée de détention en années
+     */
     public get dureeDetention(): number {
         return this._dureeDetention;
     }
 
     private _majoFrais: number;
-    get majoFrais(): number {
-        
+    /**
+     * Frais d'acquisition retenue
+     */
+    get majoFrais(): number {        
         return this._majoFrais;
     }
 
     private _majoTravaux: number;
+    /**
+     * Montant des travaux retenus
+     */
     get majoTravaux(): number {
         return this._majoTravaux;
     }
 
     private _pxAcquisitionMajo: number;
+    /**
+     * Prix d'acquisition retenu
+     */
     get pxAcquisitionMajo(): number{
         return this._pxAcquisitionMajo;
     }
 
     private _pvBrute: number;
+    /**
+     * Plus value avant abattement pour durée de détention
+     */
     get pvBrute(): number {
         return this._pvBrute;
     }
 
     private _abattementIr: number;
+    /**
+     * Abattement retenu pour l'impôt sur le revenu
+     */
     get abattementIr(): number {
         return this._abattementIr;
     }
@@ -150,16 +196,25 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
     }
 
     private _irCession: number;
+    /**
+     * Impôt sur le revenu calculé
+     */
     get irCession(): number {
         return this._irCession;
     }
 
     private _surtaxe: number;
+    /**
+     * Surtaxe immobilière calculée
+     */
     get surtaxe(): number {
         return this._surtaxe;
     }
 
     private _abattementPs: number;
+    /**
+     * Abattement retenu pour le calcul des prélèvements sociaux
+     */
     get abattementPs(): number {
         return this._abattementPs;
     }
@@ -170,88 +225,109 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
     }
 
     private _pvNettePS:number;
+    /**
+     * Plus value nette retenue pour le calcul des prélèvements sociaux
+     */
     get pvNettePS(): number {
         return this._pvNettePS;
     }
 
     private _psCession: number;
+    /**
+     * Plus value retenue pour le calcul de la plus value imposable à l'impôt sur le revenu
+     */
     get psCession(): number {
         return this._psCession;
     }
 
     private _totalImpots: number;
+    /**
+     * Imposition totale : IR + PS
+     */
     get totalImpots(): number {
         return this._totalImpots;
     }
 
     private _soldeNet: number;
+    /**
+     * Produit de cession net de toute fiscalité
+     */
     get soldeNet(): number {
         return this._soldeNet;
     }
 
     /**
+     * Demande de calcul
+     * @param {IParamsPlusValueImmobiliere} params Les paramètres nécessaire au calcul d'une plus value immobilière
+     */
+    public static calculer(params: IParamsPlusValueImmobiliere): PlusValueImmobiliereCalculette {
+        
+        // si on passe des params on met à jout les info
+        if(params){
+            return new PlusValueImmobiliereCalculette(params);
+        }
+
+    }
+
+    /**
      * Calcul l'impot sur la plus value
      */
-    private calculer(params: IParamsPlusValueImmobiliere = null){
-
-        // si on passe des params on met à jout les infos
-        // if(params) this.hydrateParams(params);
-
-        //console.log('calculer demandé...');
+    private calculer() {        
 
         if(!this._dateCession && !this._dateAcquisition && !this._prixCession && !this._prixRevient) return;
 
-        //console.log('calculer()');
+        // console.log('calculer()');
 
         this._dureeDetention = this.dateDiff(this._dateAcquisition, this._dateCession);
-        //console.log('dureDetention %s', this._dureeDetention);
+        // console.log('dureDetention %s', this._dureeDetention);
 
         this._majoFrais = this.calculerMajorationFrais(this._fraisAcquisition, this._prixRevient);
-        //console.log('majoFrais', this._majoFrais);
+        // console.log('majoFrais', this._majoFrais);
 
         this._majoTravaux = this.calculerMajorationTravaux(this._travaux, this._prixRevient, this._dureeDetention);
-        //console.log('majoFrais', this._majoFrais);
+        // console.log('majoFrais', this._majoFrais);
 
         this._pxAcquisitionMajo = this._prixRevient + this._majoFrais + this._majoTravaux;
-        //console.log('pxAcquisitionMajo', this._pxAcquisitionMajo);
+        // console.log('pxAcquisitionMajo', this._pxAcquisitionMajo);
 
         this._pvBrute = this.retraiterZeroNegatif(this._prixCession - this._pxAcquisitionMajo);
-        //console.log('pvBrute', this._pvBrute);
+        // console.log('pvBrute', this._pvBrute);
 
         this._abattementIr = this.calculerAbattIr(this._dureeDetention);
-        //console.log('abattementIr', this._abattementIr);
+        // console.log('abattementIr', this._abattementIr);
 
         this._abttIrM = this.abattementIr / 100 * this._pvBrute;
-        //console.log('abattIr', this._abttIrM);
+        // console.log('abattIr', this._abttIrM);
 
         this._pvNetteIr = this._pvBrute - this._abttIrM;
-        //console.log('pvNette', this._pvNetteIr);
+        // console.log('pvNette', this._pvNetteIr);
 
         this._irCession = this._pvNetteIr * 0.19;
-        //console.log('irCession', this._irCession);
+        // console.log('irCession', this._irCession);
 
         this._surtaxe = this.calculerSurtaxe(this._pvNetteIr);
-        //console.log('surtaxe', this._surtaxe);
+        // console.log('surtaxe', this._surtaxe);
 
         this._abattementPs = this.calculerAbattps(this._dureeDetention);
-        //console.log('abattementPs', this._abattementPs);
+        // console.log('abattementPs', this._abattementPs);
 
         this._abttPsM = this._abattementPs / 100 * this._pvBrute;
-        //console.log('abattPS', this._abttPsM);
+        // console.log('abattPS', this._abttPsM);
 
         this._pvNettePS = this._pvBrute - this._abttPsM;
-        //console.log('pvNettePS', this._pvNettePS);
+        // console.log('pvNettePS', this._pvNettePS);
 
         this._psCession = this._pvNettePS * 0.155;
-        //console.log('psCession', this._psCession);
+        // console.log('psCession', this._psCession);
 
         this._totalImpots = this._psCession + this._surtaxe + this._irCession;
-        //console.log('totalImpots', this._totalImpots);
+        // console.log('totalImpots', this._totalImpots);
 
         this._soldeNet = this._prixCession - this._totalImpots;
-        //console.log('soldeNet', this._soldeNet);
+        
+        // console.log('soldeNet', this._soldeNet);
 
-        // if(!params) this.modificiations = false;
+        return null;
         
     }
 
@@ -262,11 +338,12 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
      */
     private dateDiff(dateOld: Date, dateNew: Date): number {
 
-        //console.log('dateOld %s dateNew %s', dateOld, dateNew);
+        // console.log('dateOld %s dateNew %s', dateOld, dateNew);
           
           var ynew = dateNew.getFullYear();
           var mnew = dateNew.getMonth();
           var dnew = dateNew.getDate();
+
           var yold = dateOld.getFullYear();
           var mold = dateOld.getMonth();
           var dold = dateOld.getDate();
