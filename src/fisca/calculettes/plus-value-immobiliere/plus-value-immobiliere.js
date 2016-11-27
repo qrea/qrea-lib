@@ -40,68 +40,68 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         this.hydrateParams(params);
     }
     PlusValueImmobiliereCalculette.prototype.hydrateParams = function (params) {
-        this.dateCession = params.dateCession ? params.dateCession : null;
-        this.dateAcquisition = params.dateAcquisition ? params.dateAcquisition : null;
-        this.prixRevient = params.prixRevient ? params.prixRevient : null;
-        this.prixCession = params.prixCession ? params.prixCession : null;
-        this.travaux = params.travaux ? params.travaux : 0;
-        this.fraisAcquisition = params.fraisAcquisition ? params.fraisAcquisition : 0;
+        this._dateCession = params.dateCession ? params.dateCession : null;
+        this._dateAcquisition = params.dateAcquisition ? params.dateAcquisition : null;
+        this._prixRevient = params.prixRevient ? params.prixRevient : null;
+        this._prixCession = params.prixCession ? params.prixCession : null;
+        this._travaux = params.travaux ? params.travaux : 0;
+        this._fraisAcquisition = params.fraisAcquisition ? params.fraisAcquisition : 0;
+        this.calculer();
     };
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "dateCession", {
         get: function () {
             return this._dateCession;
+            this.calculer();
         },
         set: function (value) {
-            this.modificiations = true;
             this._dateCession = value;
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "dateAcquisition", {
         set: function (value) {
-            this.modificiations = true;
             this._dateAcquisition = value;
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "prixRevient", {
         set: function (value) {
-            this.modificiations = true;
             this._prixRevient = value;
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "prixCession", {
         set: function (value) {
-            this.modificiations = true;
             this._prixCession = value;
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "travaux", {
         set: function (value) {
-            this.modificiations = true;
             this._travaux = value;
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "fraisAcquisition", {
         set: function (value) {
-            this.modificiations = true;
             this._fraisAcquisition = value;
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "dureeDetention", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._dureeDetention;
         },
         enumerable: true,
@@ -109,8 +109,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "majoFrais", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._majoFrais;
         },
         enumerable: true,
@@ -118,8 +116,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "majoTravaux", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._majoTravaux;
         },
         enumerable: true,
@@ -127,8 +123,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "pxAcquisitionMajo", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._pxAcquisitionMajo;
         },
         enumerable: true,
@@ -136,8 +130,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "pvBrute", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._pvBrute;
         },
         enumerable: true,
@@ -145,8 +137,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "abattementIr", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._abattementIr;
         },
         enumerable: true,
@@ -154,8 +144,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "abttIrM", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._abttIrM;
         },
         enumerable: true,
@@ -163,8 +151,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "pvNetteIr", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._pvNetteIr;
         },
         enumerable: true,
@@ -172,8 +158,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "irCession", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._irCession;
         },
         enumerable: true,
@@ -181,8 +165,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "surtaxe", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._surtaxe;
         },
         enumerable: true,
@@ -190,8 +172,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "abattementPs", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._abattementPs;
         },
         enumerable: true,
@@ -199,8 +179,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "abttPsM", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._abttPsM;
         },
         enumerable: true,
@@ -208,8 +186,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "pvNettePS", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._pvNettePS;
         },
         enumerable: true,
@@ -217,8 +193,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "psCession", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._psCession;
         },
         enumerable: true,
@@ -226,8 +200,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "totalImpots", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._totalImpots;
         },
         enumerable: true,
@@ -235,14 +207,14 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     });
     Object.defineProperty(PlusValueImmobiliereCalculette.prototype, "soldeNet", {
         get: function () {
-            if (this.modificiations === true)
-                this.calculer();
             return this._soldeNet;
         },
         enumerable: true,
         configurable: true
     });
     PlusValueImmobiliereCalculette.prototype.calculer = function (params) {
+        // si on passe des params on met à jout les infos
+        // if(params) this.hydrateParams(params);
         if (params === void 0) { params = null; }
         if (!this._dateCession && !this._dateAcquisition && !this._prixCession && !this._prixRevient)
             return;
@@ -264,6 +236,7 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         this._soldeNet = this._prixCession - this._totalImpots;
     };
     PlusValueImmobiliereCalculette.prototype.dateDiff = function (dateOld, dateNew) {
+        //console.log('dateOld %s dateNew %s', dateOld, dateNew);
         var ynew = dateNew.getFullYear();
         var mnew = dateNew.getMonth();
         var dnew = dateNew.getDate();
@@ -306,7 +279,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         }
     };
     PlusValueImmobiliereCalculette.prototype.calculerAbattIr = function (d) {
-        var abtt = 0;
         if (d < 6) {
             return 0;
         }
