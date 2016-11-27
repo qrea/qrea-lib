@@ -404,7 +404,6 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
       }
 
-      // 
       /**
        * Calcul l'abattement d'IR
        * @param {number} d La durée de détention
@@ -423,7 +422,6 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
       }
 
-      // calculer abatt PS 
       /**
        * Calcul l'abattement pour les prélèvements sociaux
        * @param {number} d La durée de détention
@@ -442,39 +440,6 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
       }
 
-    //   /**
-    //    * Calculer abtt duree détention titre ??? 
-    //    * @param {number} r
-    //    * @param {number} d
-    //    */
-    //   private abattementDuree(r, d) {
-    //       var abttD = 0;
-    //       if (r === 1) {
-    //           if (d < 2) {
-    //               abttD = 0;
-    //           }
-    //           else if (d < 8) {
-    //               abttD = 50;
-    //           }
-    //           else { abttD = 65; }
-    //       }
-    //       else {
-    //           if (d < 1) {
-    //               abttD = 0;
-    //           }
-    //           else if (d < 4) {
-    //               abttD = 50;
-    //           }
-    //           else if (d < 8) {
-    //               abttD = 65;
-    //           }
-    //           else { abttD = 85; }
-
-    //       }
-    //       { return abttD; }
-    //   }
-
-      // 
       /**
        * Calcul la sur taxe
        * @param {number} PV La plus value
@@ -497,6 +462,4 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
       }
       
-
-
 }
