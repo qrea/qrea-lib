@@ -132,9 +132,6 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
         return this._fraisAcquisition;
     }
 
-    // Permet de savoir si des modification de variables d'entrées ont eu lieu
-    private modificiations = false;
-
     // PROPERTIES CALCULEES
     
     private _dureeDetention: number;

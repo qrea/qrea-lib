@@ -36,7 +36,6 @@ var PlusValueImmobiliereCalculette = (function (_super) {
     __extends(PlusValueImmobiliereCalculette, _super);
     function PlusValueImmobiliereCalculette(params) {
         _super.call(this, params);
-        this.modificiations = false;
         this.hydrateParams(params);
     }
     PlusValueImmobiliereCalculette.prototype.hydrateParams = function (params) {

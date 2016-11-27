@@ -22,6 +22,11 @@ describe('Fisca.Calculettes.PlusValueImmobiliere', function () {
         assert.equal(calculette.totalImpots, 55086, 'Erreur dans le total impots');
         assert.equal(calculette.soldeNet, 694914, 'Erreur dans le solde net');
 
+        calculette.prixCession += 10000;
+        assert.equal(calculette.irCession, 16796 + 1900 * (1 - calculette.abattementIr));
+
     });
+
+    // TODO: tester le calcule de durée de détention en détail
     
 });
