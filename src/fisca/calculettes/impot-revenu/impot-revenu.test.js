@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var lib = require('./impot-revenu');
 
-describe('Fisca.Calculette.ImpotRevenuCalculette', function () {
+describe('Fisca.Calculettes.ImpotRevenuCalculette', function () {
 
     let calculette = new lib.ImpotRevenuCalculette({
         millesime: '2015'

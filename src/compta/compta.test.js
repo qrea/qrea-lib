@@ -1,10 +1,10 @@
 var assert = require('chai').assert;
 var Compta = require('./compta');
 
-describe('Compta', function () {
-
-    describe('#Models', () => {
+describe('Compta.Models', function () {    
         
+    describe('doit vérifier la disponibilité des Models', () => {
+
         it('doit instancier une comptabilite', () => {
             let c = new Compta.Models.Comptabilite({})
             assert.isDefined(c);
@@ -56,7 +56,7 @@ describe('Compta', function () {
             assert.equal(sommeTheorique, j.getSolde('6220'), 'Le solde du journal ne correspond pas avec les écritures renseignées');
 
         });
-
+        
     });
 
 });

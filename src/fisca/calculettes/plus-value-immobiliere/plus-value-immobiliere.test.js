@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var lib = require('./plus-value-immobiliere');
 
-describe('Fisca.Calculette.PlusValueImmobiliere', function () {
+describe('Fisca.Calculettes.PlusValueImmobiliere', function () {
 
     it('doit calculer l\'impot sur la plus value pour acquisition le 01/01/2012, cession 27/11/2016, prix achat 200k€, prix cession 300k€', function () {
 
