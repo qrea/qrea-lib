@@ -39,6 +39,7 @@ var ImpotRevenuCalculette = (function (_super) {
         this.CONSTANTES_CALCUL = exports.DICTIONNAIRE_CONSTANTES[params.millesime] ? exports.DICTIONNAIRE_CONSTANTES[params.millesime] : null;
     }
     ImpotRevenuCalculette.prototype.calculer = function () {
+        this.calculerImpotBrut;
     };
     ImpotRevenuCalculette.prototype.calculerImpotBrut = function (revenuNetGlobal, nbParts) {
         var res = 0;
