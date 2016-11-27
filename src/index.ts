@@ -3,4 +3,9 @@ import * as Facturation from './facturation/facturation';
 import * as Compta from './compta/compta';
 import * as Fisca from './fisca/fisca';
 
-export { Facturation, Core, Compta, Fisca };
+export { 
+    Facturation,
+    Core,
+    Compta,
+    Fisca
+};
