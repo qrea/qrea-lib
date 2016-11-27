@@ -9,9 +9,9 @@ Ces modèles sont utilisés par le logiciel SAAS **Qrea**, disponible [ici](http
 ### Prérequis
 
 * NodeJS
-* Mocha
-* Typescript
-* Grunt
+* Mocha `npm install -g mocha`
+* Typescript `npm install -g typescript`
+* Grunt `npm install -g grunt`
 
 ### Installation
 
