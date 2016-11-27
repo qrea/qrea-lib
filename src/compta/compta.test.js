@@ -3,7 +3,7 @@ var Compta = require('./compta');
 
 describe('Compta.Models', function () {    
         
-    describe('doit vérifier la disponibilité des Models', () => {
+    describe('#Comptabilite', () => {
 
         it('doit instancier une comptabilite', () => {
             let c = new Compta.Models.Comptabilite({})
@@ -56,7 +56,7 @@ describe('Compta.Models', function () {
             assert.equal(sommeTheorique, j.getSolde('6220'), 'Le solde du journal ne correspond pas avec les écritures renseignées');
 
         });
-        
+
     });
 
 });

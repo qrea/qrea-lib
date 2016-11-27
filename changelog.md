@@ -1,3 +1,6 @@
+#0.2.15
+* Export de la Fisca
+
 #0.2.14
 * Ajout de la calculette Fisca.Calculettes.PlusValueImmobiliereCalculette
 
