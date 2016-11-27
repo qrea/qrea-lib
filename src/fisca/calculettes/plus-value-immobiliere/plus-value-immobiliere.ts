@@ -284,28 +284,6 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
 
       }
 
-    //   /// maj IPV 
-    //   $scope.calculIpv = function () {
-    //       $scope.dureeDetention = dateDiff($scope.dateAcquisition, $scope.dateCession);
-    //       $scope.majoFrais = majorationFrais($scope.fraisacqui, $scope.prixRevient);
-    //       $scope.majoTravaux = majorationTravaux($scope.travaux, $scope.prixRevient, $scope.dureeDetention);
-    //       $scope.pxAcquisitionMajo = $scope.prixRevient + $scope.majoFrais + $scope.majoTravaux;
-    //       $scope.pvBrute = zeroNegatif($scope.prixCession - $scope.pxAcquisitionMajo);
-    //       $scope.abattementIr = calculAbattIr($scope.dureeDetention);
-    //       $scope.abttIrM = $scope.abattementIr / 100 * $scope.pvBrute;
-    //       $scope.pvNetteIr = $scope.pvBrute - $scope.abttIrM;
-    //       $scope.irCession = $scope.pvNetteIr * 0.19;
-    //       $scope.surtaxe = calculSurtaxe($scope.pvNetteIr, $scope.uniteChoisie.valeur);
-
-    //       $scope.abattementPs = calculAbattps($scope.dureeDetention);
-    //       $scope.abttPsM = $scope.abattementPs / 100 * $scope.pvBrute;
-    //       $scope.pvNettePS = $scope.pvBrute - $scope.abttPsM;
-    //       $scope.psCession = $scope.pvNettePS * 0.155;
-    //       $scope.totalImpots = $scope.psCession + $scope.surtaxe + $scope.irCession;
-          
-    //       $scope.soldeNet = $scope.prixCession - $scope.totalImpots; 
-
-    //   }
 
       /**
        * Calcul la majoration frais
