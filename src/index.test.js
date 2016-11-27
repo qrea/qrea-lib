@@ -16,4 +16,14 @@ describe('QreaLib', function () {
         });
 
     });
+
+    describe('#Compta', function () {
+    
+        it('doit instancier une comptablité', function () {
+            const c = new QreaLib.Compta.Models.Comptabilite();
+            assert.isDefined(c, 'Impossible d\'instancier une comptabilité');
+        });
+
+    });
+
 });

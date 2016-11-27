@@ -1,3 +1,6 @@
+#0.2.16
+* Fix divers bugs
+
 #0.2.15
 * Export de la Fisca
 
