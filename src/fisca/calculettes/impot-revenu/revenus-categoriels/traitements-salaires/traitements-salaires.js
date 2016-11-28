@@ -6,7 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 var RevenusCategoriels = require('../revenus-categoriels');
 exports.CONSTANTES_TS_2015 = {
     MINI_ABATTEMENT: 426,
-    MAXI_ABATTEMENT: 937,
+    MAXI_ABATTEMENT: 12170,
     ABATTEMENT: 0.1
 };
 exports.CONSTANTES_PENSIONS_2015 = {
@@ -128,6 +128,7 @@ var TraitementsSalaires = (function (_super) {
         configurable: true
     });
     TraitementsSalaires.prototype.calculerRevenuNetPrincipal = function () {
+        // console.log('calculerRevenuNetPrincipal()');
         this.revenuNetPrincipal =
             this.calculerNetImposableTraitementsSalaires(this.traitementsSalairesPrincipal, this.fraisReelPrincipal)
                 + this.calculetNetImposablePensions(this.pensionsRetraitePrincipal);
@@ -152,7 +153,10 @@ var TraitementsSalaires = (function (_super) {
                 + this.revenuNetPrincipal;
     };
     TraitementsSalaires.prototype.calculerNetImposableTraitementsSalaires = function (brut, fraisReel) {
+        // console.log('calculerNetImposableTraitementsSalaires(%s, %s: number = 0', brut, fraisReel);
         if (fraisReel === void 0) { fraisReel = 0; }
+        if (brut === 0)
+            return 0;
         var abatt = brut * exports.CONSTANTES_TS_2015['ABATTEMENT'];
         if (abatt > exports.CONSTANTES_TS_2015['MAXI_ABATTEMENT']) {
             abatt = exports.CONSTANTES_TS_2015['MAXI_ABATTEMENT'];
@@ -161,9 +165,12 @@ var TraitementsSalaires = (function (_super) {
             abatt = exports.CONSTANTES_TS_2015['MINI_ABATTEMENT'];
         }
         abatt = abatt > fraisReel ? abatt : fraisReel;
-        return brut - abatt;
+        var net = brut - abatt;
+        return net;
     };
     TraitementsSalaires.prototype.calculetNetImposablePensions = function (brut) {
+        if (brut === 0)
+            return 0;
         var abatt = brut * exports.CONSTANTES_PENSIONS_2015['ABATTEMENT'];
         if (abatt > exports.CONSTANTES_PENSIONS_2015['MAXI_ABATTEMENT']) {
             abatt = exports.CONSTANTES_PENSIONS_2015['MAXI_ABATTEMENT'];

@@ -2,7 +2,7 @@ import * as RevenusCategoriels from '../revenus-categoriels';
 
 export const CONSTANTES_TS_2015 = {
     MINI_ABATTEMENT: 426,
-    MAXI_ABATTEMENT: 937,
+    MAXI_ABATTEMENT: 12170,
     ABATTEMENT: 0.1
 }
 
@@ -27,6 +27,7 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
     }
     public set traitementsSalairesPrincipal(v : number) {
         this._traitementsSalairesPrincipal = v;
+        // console.log('traitementsSalairesPrincipal=%s', this._traitementsSalairesPrincipal);
         this.calculerRevenuNetPrincipal();
     }
 
@@ -119,9 +120,13 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
     
     private calculerRevenuNetPrincipal(){
 
+        // console.log('calculerRevenuNetPrincipal()');
+
         this.revenuNetPrincipal =
             this.calculerNetImposableTraitementsSalaires(this.traitementsSalairesPrincipal, this.fraisReelPrincipal)
             + this.calculetNetImposablePensions(this.pensionsRetraitePrincipal);
+
+        // console.log('revenuNetPrincipal=', this.revenuNetPrincipal);
         this.calculerRevenuNet();
 
     }
@@ -155,6 +160,10 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
 
     private calculerNetImposableTraitementsSalaires(brut: number, fraisReel: number = 0){
         
+        // console.log('calculerNetImposableTraitementsSalaires(%s, %s: number = 0', brut, fraisReel);
+
+        if(brut === 0) return 0;
+
         let abatt = brut * CONSTANTES_TS_2015['ABATTEMENT'];
         
         if(abatt > CONSTANTES_TS_2015['MAXI_ABATTEMENT']){
@@ -163,13 +172,23 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
             abatt = CONSTANTES_TS_2015['MINI_ABATTEMENT'];
         }
         
+        // console.log('abatt=', abatt);
+
         abatt = abatt > fraisReel ? abatt : fraisReel;
 
-        return brut - abatt;
+        // console.log('abatt retenu=', abatt);
+
+        let net = brut - abatt;
+        
+        // console.log('net=', net);
+
+        return net;
 
     }
 
     private calculetNetImposablePensions(brut: number) {
+
+        if(brut === 0) return 0;
 
         let abatt = brut * CONSTANTES_PENSIONS_2015['ABATTEMENT'];
 
