@@ -3,6 +3,9 @@ import * as RevenusCategoriels from './revenus-categoriels/revenus-categoriels';
 
 export interface IParamsImpotRevenu extends IParamsCalculette {
     millesime: string;
+    couple?: boolean;
+    revenuNetGlobal?: number;
+    nbEnfants?: number;
 }
 
 export interface IConstantesCalcul {
@@ -59,6 +62,9 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
         this.impotBrut = this.calculerImpotBrut();
     }   
     
+    /**
+    * Le nombre de parts du foyer fiscal
+    */
     private nbParts : number = 1;
     
     private _couple : boolean = false;
@@ -123,6 +129,9 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
     constructor(params: IParamsImpotRevenu){
         super(params);
         this.CONSTANTES_CALCUL = DICTIONNAIRE_CONSTANTES[params.millesime] ?  DICTIONNAIRE_CONSTANTES[params.millesime] : null;
+        this.nbEnfants = params.nbEnfants ? params.nbEnfants : 0;
+        this.couple = params.couple ? params.couple : false;
+        this.revenuNetGlobal = params.revenuNetGlobal ? params.revenuNetGlobal : 0;
     }
 
     CONSTANTES_CALCUL: any;
