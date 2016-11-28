@@ -335,6 +335,7 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
      */
     private dateDiff(dateOld: Date, dateNew: Date): number {
 
+        // TODO: Modifier ce calcul en le remplacant avec la lib Moment.js
         // console.log('dateOld %s dateNew %s', dateOld, dateNew);
           
           var ynew = dateNew.getFullYear();

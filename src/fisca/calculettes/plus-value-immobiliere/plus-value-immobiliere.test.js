@@ -25,8 +25,12 @@ describe('Fisca.Calculettes.PlusValueImmobiliere', function () {
         calculette.prixCession += 10000;
         assert.equal(calculette.irCession, 16796 + 1900 * (1 - calculette.abattementIr));
 
+        calculette.dateAcquisition = new Date(1999, 11, 31);
+        assert.equal(calculette.dureeDetention, 15, 'Erreur sur le calcul de la durée de détention');
+
     });
 
     // TODO: tester le calcule de durée de détention en détail
+
     
 });
