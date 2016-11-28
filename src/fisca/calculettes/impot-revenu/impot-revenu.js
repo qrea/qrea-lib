@@ -6,6 +6,8 @@ var __extends = (this && this.__extends) || function (d, b) {
 var base_1 = require('../base/base');
 var DICTIONNAIRE_CONSTANTES_2015 = {
     PLAFOND_QUOTIENT_FAMILIAL: 1510,
+    PLAFOND_DECOTE_CELIBATAIRE: 1165,
+    PLAFOND_DECOTE_COUPLE: 1920,
     BAREME_IR: [
         {
             PLAFOND: 9700,
@@ -36,14 +38,86 @@ var ImpotRevenuCalculette = (function (_super) {
     __extends(ImpotRevenuCalculette, _super);
     function ImpotRevenuCalculette(params) {
         _super.call(this, params);
+        this._revenuNetGlobal = 0;
+        this.nbParts = 1;
+        this._couple = false;
+        this._impotBrut = 0;
         this.CONSTANTES_CALCUL = exports.DICTIONNAIRE_CONSTANTES[params.millesime] ? exports.DICTIONNAIRE_CONSTANTES[params.millesime] : null;
+        this.nbEnfants = params.nbEnfants ? params.nbEnfants : 0;
+        this.couple = params.couple ? params.couple : false;
+        this.revenuNetGlobal = params.revenuNetGlobal ? params.revenuNetGlobal : 0;
     }
+    Object.defineProperty(ImpotRevenuCalculette.prototype, "revenuNetGlobal", {
+        get: function () {
+            return this._revenuNetGlobal;
+        },
+        set: function (value) {
+            this._revenuNetGlobal = value;
+            this.impotBrut = this.calculerImpotBrut();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImpotRevenuCalculette.prototype, "couple", {
+        get: function () {
+            return this._couple;
+        },
+        set: function (v) {
+            this._couple = v;
+            this.impotBrut = this.calculerImpotBrut();
+            this.calculerImpotBrut();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImpotRevenuCalculette.prototype, "nbEnfants", {
+        get: function () {
+            return this._nbEnfants;
+        },
+        set: function (v) {
+            this._nbEnfants = v;
+            if (this._nbEnfants <= 2) {
+                this.nbParts = this._nbEnfants * 0.5;
+            }
+            else {
+                this.nbParts = 1 + (this.nbEnfants - 2) * 1;
+            }
+            this.nbParts += this.couple ? 2 : 1;
+            this.calculerImpotBrut();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImpotRevenuCalculette.prototype, "impotBrut", {
+        get: function () {
+            return this._impotBrut;
+        },
+        set: function (v) {
+            this._impotBrut = v;
+        },
+        enumerable: true,
+        configurable: true
+    });
     ImpotRevenuCalculette.prototype.calculer = function () {
-        this.calculerImpotBrut;
+        this.calculerImpotBrut();
     };
-    ImpotRevenuCalculette.prototype.calculerImpotBrut = function (revenuNetGlobal, nbParts) {
+    ImpotRevenuCalculette.prototype.calculerRevenuBrutGlobal = function () {
+        var r = 0;
+        r += this.traitementsSalaires ? this.traitementsSalaires.revenuNet : 0;
+        r += this.beneficeAgricole ? this.beneficeAgricole.revenuNet : 0;
+        r += this.beneficeCommerciaux ? this.beneficeCommerciaux.revenuNet : 0;
+        r += this.beneficeNonCommerciaux ? this.beneficeNonCommerciaux.revenuNet : 0;
+        r += this.revenusFonciers ? this.revenusFonciers.revenuNet : 0;
+        r += this.remunerationDirigeant ? this.remunerationDirigeant.revenuNet : 0;
+        r += this.plusValues ? this.plusValues.revenuNet : 0;
+        return r;
+    };
+    ImpotRevenuCalculette.prototype.calculerRevenuNetGlobal = function () {
+        return this.calculerRevenuBrutGlobal;
+    };
+    ImpotRevenuCalculette.prototype.calculerImpotBrut = function () {
         var res = 0;
-        var q = revenuNetGlobal / nbParts;
+        var q = this.revenuNetGlobal / this.nbParts;
         function calculerBarême(q, bareme) {
             var impot1Part = 0;
             var impotTranche = 0;
@@ -65,14 +139,18 @@ var ImpotRevenuCalculette = (function (_super) {
             });
             return Math.round(impot1Part);
         }
-        var impotBrut = calculerBarême(q, this.CONSTANTES_CALCUL['BAREME_IR']) * nbParts;
-        if (nbParts > 2) {
-            var plafondQuotientApplicable = (nbParts - 2) / 0.5 * exports.DICTIONNAIRE_CONSTANTES['2015']['PLAFOND_QUOTIENT_FAMILIAL'];
-            var ir = calculerBarême(revenuNetGlobal / 2, this.CONSTANTES_CALCUL['BAREME_IR']) * 2;
+        var impotBrut = calculerBarême(q, this.CONSTANTES_CALCUL['BAREME_IR']) * this.nbParts;
+        if (this.nbParts > 2) {
+            var plafondQuotientApplicable = (this.nbParts - 2) / 0.5 * exports.DICTIONNAIRE_CONSTANTES['2015']['PLAFOND_QUOTIENT_FAMILIAL'];
+            var ir = calculerBarême(this.revenuNetGlobal / 2, this.CONSTANTES_CALCUL['BAREME_IR']) * 2;
             if (impotBrut < ir - plafondQuotientApplicable) {
                 impotBrut = ir - plafondQuotientApplicable;
             }
         }
+        var plafond = this.couple === false ? this.CONSTANTES_CALCUL['PLAFOND_DECOTE_CELIBATAIRE'] : this.CONSTANTES_CALCUL['PLAFOND_DECOTE_COUPLE'];
+        var decote = Math.round(plafond - 0.75 * impotBrut);
+        if (decote > 0)
+            impotBrut -= decote;
         return impotBrut;
     };
     return ImpotRevenuCalculette;

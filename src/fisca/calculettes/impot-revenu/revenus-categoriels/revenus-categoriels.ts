@@ -1,16 +1,33 @@
 export abstract class RevenuCategoriel {
     
+    /**
+     * Revenu net imposable
+     */
     revenuNet: number;
     
+    /**
+     * Revenu net imposable du contribuable principal
+     */
+    revenuNetPrincipal: number;
+
+    /**
+     * Revenu net imposable du conjoint
+     */
+    revenuNetConjoint: number;
+
+    /**
+     * Revenu net imposable des autres membres du foyer
+     */
+    revenuNetAutres: number;
+
     constructor(){
 
     }
 
 }
 
-export class TraitementsSalaires extends RevenuCategoriel {
-
-}
+import { TraitementsSalaires } from './traitements-salaires/traitements-salaires';
+export { TraitementsSalaires };
 
 export class RevenusFonciers extends RevenuCategoriel {
 
