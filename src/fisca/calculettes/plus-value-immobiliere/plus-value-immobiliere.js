@@ -252,6 +252,7 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         return null;
     };
     PlusValueImmobiliereCalculette.prototype.dateDiff = function (dateOld, dateNew) {
+        // TODO: Modifier ce calcul en le remplacant avec la lib Moment.js
         // console.log('dateOld %s dateNew %s', dateOld, dateNew);
         var ynew = dateNew.getFullYear();
         var mnew = dateNew.getMonth();

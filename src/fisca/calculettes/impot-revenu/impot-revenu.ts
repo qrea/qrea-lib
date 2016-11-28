@@ -1,4 +1,5 @@
 import { BaseCalculette, IParamsCalculette, ICalculette } from '../base/base';
+import * as RevenusCategoriels from './revenus-categoriels/revenus-categoriels';
 
 export interface IParamsImpotRevenu extends IParamsCalculette {
     millesime: string;
@@ -7,10 +8,14 @@ export interface IParamsImpotRevenu extends IParamsCalculette {
 export interface IConstantesCalcul {
     PLAFOND_QUOTIENT_FAMILIAL: number,
     BAREME_IR: any,
+    PLAFOND_DECOTE_CELIBATAIRE: number,
+    PLAFOND_DECOTE_COUPLE: number
 }
 
 const DICTIONNAIRE_CONSTANTES_2015: IConstantesCalcul = {
     PLAFOND_QUOTIENT_FAMILIAL: 1510,
+    PLAFOND_DECOTE_CELIBATAIRE: 1165,
+    PLAFOND_DECOTE_COUPLE: 1920,
     BAREME_IR: [
         {
             PLAFOND: 9700,
@@ -41,6 +46,79 @@ export const DICTIONNAIRE_CONSTANTES = {
 
 export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette {
     
+    private _revenuNetGlobal:number = 0;
+    /**
+     * Le revenu net global
+     */
+    get revenuNetGlobal(): number {
+        return this._revenuNetGlobal;
+    }
+
+    set revenuNetGlobal(value: number) {
+        this._revenuNetGlobal = value;
+        this.impotBrut = this.calculerImpotBrut();
+    }   
+    
+    private nbParts : number = 1;
+    
+    private _couple : boolean = false;
+    /**
+     * Couple ?
+     */
+    public get couple() : boolean {
+        return this._couple;
+    }
+    public set couple(v : boolean) {
+        this._couple = v;
+        this.impotBrut = this.calculerImpotBrut();
+        this.calculerImpotBrut();        
+    }    
+
+    private _nbEnfants : number;
+    /**
+     * Le nombre d'enfants du foyer fiscal
+     */
+    public get nbEnfants() : number {
+        return this._nbEnfants;
+    }
+    public set nbEnfants(v : number) {
+        this._nbEnfants = v;
+        if(this._nbEnfants <= 2){
+            this.nbParts = this._nbEnfants * 0.5;
+        } else {
+            this.nbParts = 1 + (this.nbEnfants - 2) * 1;
+        }
+        this.nbParts += this.couple ? 2 : 1;
+    }
+    
+
+    public traitementsSalaires: RevenusCategoriels.TraitementsSalaires;
+
+    public beneficeNonCommerciaux: RevenusCategoriels.BeneficesNonCommerciaux;
+
+    public beneficeCommerciaux: RevenusCategoriels.BeneficesCommerciaux;
+
+    public beneficeAgricole: RevenusCategoriels.BeneficesAgricoles;
+
+    public revenusFonciers: RevenusCategoriels.RevenusFonciers;
+
+    public remunerationDirigeant: RevenusCategoriels.RemunerationDirigeant62;
+
+    public plusValues: RevenusCategoriels.PlusValues;
+
+    // OUTPUTS
+    
+    private _impotBrut : number = 0;
+    /**
+     * L'impot brut
+     */
+    public get impotBrut() : number {
+        return this._impotBrut;
+    }
+    public set impotBrut(v : number) {
+        this._impotBrut = v;
+    }
+
     constructor(params: IParamsImpotRevenu){
         super(params);
         this.CONSTANTES_CALCUL = DICTIONNAIRE_CONSTANTES[params.millesime] ?  DICTIONNAIRE_CONSTANTES[params.millesime] : null;
@@ -49,20 +127,43 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
     CONSTANTES_CALCUL: any;
 
     public calculer(){
-        this.calculerImpotBrut
+        this.calculerImpotBrut();
+    }
+
+    private calculerRevenuBrutGlobal(): number {
+
+        // on ajoute les revenus categoriels
+        let r = 0;
+
+        r += this.traitementsSalaires ? this.traitementsSalaires.revenuNet : 0;
+        r += this.beneficeAgricole ? this.beneficeAgricole.revenuNet : 0;
+        r += this.beneficeCommerciaux ? this.beneficeCommerciaux.revenuNet : 0;
+        r += this.beneficeNonCommerciaux ? this.beneficeNonCommerciaux.revenuNet : 0;
+        r += this.revenusFonciers ? this.revenusFonciers.revenuNet : 0;
+        r += this.remunerationDirigeant ? this.remunerationDirigeant.revenuNet : 0;
+        r += this.plusValues ? this.plusValues.revenuNet : 0; 
+
+        // TODO: on enlève les charges déductibles
+        
+        return r;
+
+    }
+
+    /**
+     * Calcul du revenu net global imposable
+     */
+    private calculerRevenuNetGlobal(){
+        return this.calculerRevenuBrutGlobal;
     }
 
     /**
      * Calcul un impot brut à partir d'un revenu net global
-     * @param {number} revenuNetGlobal le revenu net global en €
-     * @param {number} nbParts le nombre de parts du foyer fiscal
-     * @returns {number} impot brut en €
      */
-    public calculerImpotBrut(revenuNetGlobal: number, nbParts: number): number {
+    public calculerImpotBrut(): number {
 
         let res = 0;
 
-        let q = revenuNetGlobal / nbParts;
+        let q = this.revenuNetGlobal / this.nbParts;
 
         function calculerBarême(q, bareme){
 
@@ -99,21 +200,26 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
         }
         
-        let impotBrut = calculerBarême(q, this.CONSTANTES_CALCUL['BAREME_IR']) * nbParts;
+        let impotBrut = calculerBarême(q, this.CONSTANTES_CALCUL['BAREME_IR']) * this.nbParts;
 
         // console.log('impot brut %s', impotBrut)
 
         // plafonnement du quotient familial
-        if(nbParts > 2){
+        if(this.nbParts > 2){
 
-            let plafondQuotientApplicable = (nbParts - 2) / 0.5 * DICTIONNAIRE_CONSTANTES['2015']['PLAFOND_QUOTIENT_FAMILIAL'];
-            let ir = calculerBarême(revenuNetGlobal / 2, this.CONSTANTES_CALCUL['BAREME_IR']) * 2;
+            let plafondQuotientApplicable = (this.nbParts - 2) / 0.5 * DICTIONNAIRE_CONSTANTES['2015']['PLAFOND_QUOTIENT_FAMILIAL'];
+            let ir = calculerBarême(this.revenuNetGlobal / 2, this.CONSTANTES_CALCUL['BAREME_IR']) * 2;
             if(impotBrut < ir - plafondQuotientApplicable){
                 // on retraite
                 impotBrut = ir - plafondQuotientApplicable;                
             }
             
         }
+
+        // application de la décote
+        let plafond = this.couple === false ? this.CONSTANTES_CALCUL['PLAFOND_DECOTE_CELIBATAIRE'] : this.CONSTANTES_CALCUL['PLAFOND_DECOTE_COUPLE']
+        let decote = Math.round(plafond - 0.75 * impotBrut);
+        if(decote > 0) impotBrut -= decote;
 
         // impot brut final après multiplication par nombre de parts
         return impotBrut;
