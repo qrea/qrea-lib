@@ -89,6 +89,7 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
             this.nbParts = 1 + (this.nbEnfants - 2) * 1;
         }
         this.nbParts += this.couple ? 2 : 1;
+        this.calculerImpotBrut(); 
     }
     
 
