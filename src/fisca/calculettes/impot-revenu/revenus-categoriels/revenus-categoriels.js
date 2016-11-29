@@ -11,14 +11,8 @@ var RevenuCategoriel = (function () {
 exports.RevenuCategoriel = RevenuCategoriel;
 var traitements_salaires_1 = require('./traitements-salaires/traitements-salaires');
 exports.TraitementsSalaires = traitements_salaires_1.TraitementsSalaires;
-var RevenusFonciers = (function (_super) {
-    __extends(RevenusFonciers, _super);
-    function RevenusFonciers() {
-        _super.apply(this, arguments);
-    }
-    return RevenusFonciers;
-})(RevenuCategoriel);
-exports.RevenusFonciers = RevenusFonciers;
+var revenus_fonciers_1 = require('./revenus-fonciers/revenus-fonciers');
+exports.RevenusFonciers = revenus_fonciers_1.RevenusFonciers;
 var RevenusCapitauxMobiliers = (function (_super) {
     __extends(RevenusCapitauxMobiliers, _super);
     function RevenusCapitauxMobiliers() {
