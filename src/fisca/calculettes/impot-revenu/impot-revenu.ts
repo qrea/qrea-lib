@@ -59,7 +59,7 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
     set revenuNetGlobal(value: number) {
         this._revenuNetGlobal = value;
-        this.impotBrut = this.calculerImpotBrut();
+        this.calculer();
     }   
     
     /**
@@ -77,7 +77,7 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
     public set couple(v : boolean) {
         this._couple = v;
         this.impotBrut = this.calculerImpotBrut();
-        this.calculerImpotBrut();        
+        this.calculer();       
     }    
 
     private _nbEnfants : number;
@@ -88,16 +88,28 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
         return this._nbEnfants;
     }
     public set nbEnfants(v : number) {
-        this._nbEnfants = v;
+        this._nbEnfants = v;        
+        this.calculer();
+    }
+    
+    /**
+     * Calcul le nombre de parts du foyer fiscal
+     * 
+     * @private
+     * 
+     * @memberOf ImpotRevenuCalculette
+     */
+    private calculerNbParts(){
+
         if(this._nbEnfants <= 2){
             this.nbParts = this._nbEnfants * 0.5;
         } else {
             this.nbParts = 1 + (this.nbEnfants - 2) * 1;
         }
+
         this.nbParts += this.couple ? 2 : 1;
-        this.calculerImpotBrut(); 
+
     }
-    
 
     public traitementsSalaires: RevenusCategoriels.TraitementsSalaires;
 
@@ -137,7 +149,8 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
     CONSTANTES_CALCUL: any;
 
     public calculer(){
-        this.calculerImpotBrut();
+        this.calculerNbParts();
+        this.impotBrut = this.calculerImpotBrut();
     }
 
     private calculerRevenuBrutGlobal(): number {
@@ -226,10 +239,18 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
             
         }
 
+        // console.log('impotBrut avant décote ', impotBrut);
+
         // application de la décote
         let plafond = this.couple === false ? this.CONSTANTES_CALCUL['PLAFOND_DECOTE_CELIBATAIRE'] : this.CONSTANTES_CALCUL['PLAFOND_DECOTE_COUPLE']
         let decote = Math.round(plafond - 0.75 * impotBrut);
         if(decote > 0) impotBrut -= decote;
+
+        // console.log('décote ', decote);
+
+        if(impotBrut < 0) impotBrut = 0;
+
+        // console.log('impotBrut ', impotBrut);
 
         // impot brut final après multiplication par nombre de parts
         return impotBrut;

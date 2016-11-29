@@ -53,7 +53,7 @@ var ImpotRevenuCalculette = (function (_super) {
         },
         set: function (value) {
             this._revenuNetGlobal = value;
-            this.impotBrut = this.calculerImpotBrut();
+            this.calculer();
         },
         enumerable: true,
         configurable: true
@@ -65,7 +65,7 @@ var ImpotRevenuCalculette = (function (_super) {
         set: function (v) {
             this._couple = v;
             this.impotBrut = this.calculerImpotBrut();
-            this.calculerImpotBrut();
+            this.calculer();
         },
         enumerable: true,
         configurable: true
@@ -76,18 +76,20 @@ var ImpotRevenuCalculette = (function (_super) {
         },
         set: function (v) {
             this._nbEnfants = v;
-            if (this._nbEnfants <= 2) {
-                this.nbParts = this._nbEnfants * 0.5;
-            }
-            else {
-                this.nbParts = 1 + (this.nbEnfants - 2) * 1;
-            }
-            this.nbParts += this.couple ? 2 : 1;
-            this.calculerImpotBrut();
+            this.calculer();
         },
         enumerable: true,
         configurable: true
     });
+    ImpotRevenuCalculette.prototype.calculerNbParts = function () {
+        if (this._nbEnfants <= 2) {
+            this.nbParts = this._nbEnfants * 0.5;
+        }
+        else {
+            this.nbParts = 1 + (this.nbEnfants - 2) * 1;
+        }
+        this.nbParts += this.couple ? 2 : 1;
+    };
     Object.defineProperty(ImpotRevenuCalculette.prototype, "impotBrut", {
         get: function () {
             return this._impotBrut;
@@ -99,7 +101,8 @@ var ImpotRevenuCalculette = (function (_super) {
         configurable: true
     });
     ImpotRevenuCalculette.prototype.calculer = function () {
-        this.calculerImpotBrut();
+        this.calculerNbParts();
+        this.impotBrut = this.calculerImpotBrut();
     };
     ImpotRevenuCalculette.prototype.calculerRevenuBrutGlobal = function () {
         var r = 0;
@@ -151,6 +154,8 @@ var ImpotRevenuCalculette = (function (_super) {
         var decote = Math.round(plafond - 0.75 * impotBrut);
         if (decote > 0)
             impotBrut -= decote;
+        if (impotBrut < 0)
+            impotBrut = 0;
         return impotBrut;
     };
     return ImpotRevenuCalculette;

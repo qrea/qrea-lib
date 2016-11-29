@@ -1,3 +1,6 @@
+#0.2.19
+* Divers améliorations à Fisca.Calculettes.ImpotRevenuCalculette (plafonnement, décote, nbParts, couple...)
+
 #0.2.18
 * Ajout des revenus catégoriels pour Fisca.Calculettes.ImpotRevenuCalculette
 * Ajout de TraitementsSalaires (Fisca.Calculettes.ImpotRevenuCalculette)
