@@ -7,10 +7,12 @@ export interface IParamsCalculette {
     //context: any;
 }
 
-export abstract class BaseCalculette {
+import Base from '../../../base/base';
+
+export abstract class BaseCalculette extends Base.BaseModel {
 
     constructor(params: any){
-
+        super(params);
     }
 
 }

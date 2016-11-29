@@ -1,3 +1,8 @@
+#0.2.18
+* Ajout des revenus catégoriels pour Fisca.Calculettes.ImpotRevenuCalculette
+* Ajout de TraitementsSalaires (Fisca.Calculettes.ImpotRevenuCalculette)
+* Ajout de RevenusFonciers (Fisca.Calculettes.ImpotRevenuCalculette)
+
 #0.2.17
 * Fix
 
