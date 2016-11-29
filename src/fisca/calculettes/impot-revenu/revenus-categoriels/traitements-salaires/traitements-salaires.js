@@ -147,10 +147,8 @@ var TraitementsSalaires = (function (_super) {
         this.calculerRevenuNet();
     };
     TraitementsSalaires.prototype.calculerRevenuNet = function () {
-        this.revenuNet =
-            this.revenuNetAutres
-                + this.revenuNetConjoint
-                + this.revenuNetPrincipal;
+        var total = this.revenuNetAutres + this.revenuNetConjoint + this.revenuNetPrincipal;
+        this.revenuNet = total;
     };
     TraitementsSalaires.prototype.calculerNetImposableTraitementsSalaires = function (brut, fraisReel) {
         // console.log('calculerNetImposableTraitementsSalaires(%s, %s: number = 0', brut, fraisReel);
@@ -178,7 +176,8 @@ var TraitementsSalaires = (function (_super) {
         else if (abatt < exports.CONSTANTES_PENSIONS_2015['MINI_ABATTEMENT']) {
             abatt = exports.CONSTANTES_PENSIONS_2015['MINI_ABATTEMENT'];
         }
-        return brut - abatt;
+        var net = brut - abatt;
+        return net;
     };
     return TraitementsSalaires;
 })(RevenusCategoriels.RevenuCategoriel);

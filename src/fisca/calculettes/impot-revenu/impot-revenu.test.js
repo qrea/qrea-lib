@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
 var lib = require('./impot-revenu');
+var RevenusCategoriels = require('./revenus-categoriels/revenus-categoriels');
 
 describe('Fisca.Calculettes.ImpotRevenuCalculette', function () {
 
@@ -38,5 +39,30 @@ describe('Fisca.Calculettes.ImpotRevenuCalculette', function () {
         calculette.revenuNetGlobal = 370509;
         assert.equal(calculette.impotBrut, 121430);
     });
+
+    it('doit ajouter un revenu categoriel et verifier la maj', () => {
+
+        let c = new lib.ImpotRevenuCalculette({
+            couple: false,
+            revenuNetGlobal: 0,
+            nbEnfants: 0,
+            millesime: '2015'
+        });
+
+        c.ajouterRevenu(new RevenusCategoriels.TraitementsSalaires());
+        assert.equal(c.impotBrut, 0, 'Impot brut != 0');
+
+        c.revenus[0].revenuNet = 15000;
+        assert.equal(c.impotBrut, 133, 'Erreur après la maj du revenu net');
+
+        c.revenus[0].pensionsRetraiteAutres = 0;
+        assert.equal(c.impotBrut, 0, 'Impot brut != 0');
+        assert.isDefined(c.impotBrut, 'Impot brut undefined');
+
+        c.revenus[0].pensionsRetraiteAutres = 15000 / 0.9;
+        assert.equal(c.impotBrut, 133, 'Impot brut != 133');        
+
+    });
+
 
 });

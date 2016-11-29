@@ -1,3 +1,6 @@
+#0.2.20
+* Ajout de la répercusion des modification faite dans les revenus catégoriels grâce à un handler
+
 #0.2.19
 * Divers améliorations à Fisca.Calculettes.ImpotRevenuCalculette (plafonnement, décote, nbParts, couple...)
 

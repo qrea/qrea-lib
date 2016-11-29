@@ -1,5 +1,7 @@
 import { BaseCalculette, IParamsCalculette, ICalculette } from '../base/base';
+
 import * as RevenusCategoriels from './revenus-categoriels/revenus-categoriels';
+export { RevenusCategoriels };
 
 export interface IParamsImpotRevenu extends IParamsCalculette {
     millesime: string;
@@ -59,8 +61,9 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
     set revenuNetGlobal(value: number) {
         this._revenuNetGlobal = value;
+        //console.log('revenuNetGlobal ', value);
         this.calculer();
-    }   
+    }
     
     /**
     * Le nombre de parts du foyer fiscal
@@ -111,19 +114,29 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
     }
 
-    public traitementsSalaires: RevenusCategoriels.TraitementsSalaires;
+    /**
+     * La liste des revenus entrés dans la calculette
+     * 
+     * @type {Array<RevenusCategoriels.IRevenu>}
+     * @memberOf ImpotRevenuCalculette
+     */
+    public revenus: Array<RevenusCategoriels.IRevenu> = new Array<RevenusCategoriels.IRevenu>();
 
-    public beneficeNonCommerciaux: RevenusCategoriels.BeneficesNonCommerciaux;
+    public ajouterRevenu(revenu: RevenusCategoriels.IRevenu) {
 
-    public beneficeCommerciaux: RevenusCategoriels.BeneficesCommerciaux;
+        revenu.handler = (oldval, val) => {
+            
+            let total = 0;
+            this.revenus.forEach( r => {
+                total += r.revenuNet;
+            })
+            this.revenuNetGlobal = total;
 
-    public beneficeAgricole: RevenusCategoriels.BeneficesAgricoles;
+        }        
+       
+        this.revenus.push(revenu);
 
-    public revenusFonciers: RevenusCategoriels.RevenusFonciers;
-
-    public remunerationDirigeant: RevenusCategoriels.RemunerationDirigeant62;
-
-    public plusValues: RevenusCategoriels.PlusValues;
+    }
 
     // OUTPUTS
     
@@ -148,36 +161,12 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
     CONSTANTES_CALCUL: any;
 
-    public calculer(){
+    public calculer(nePasMaj: boolean = true){
         this.calculerNbParts();
-        this.impotBrut = this.calculerImpotBrut();
+        this.impotBrut = this.calculerImpotBrut();        
     }
 
-    private calculerRevenuBrutGlobal(): number {
-
-        // on ajoute les revenus categoriels
-        let r = 0;
-
-        r += this.traitementsSalaires ? this.traitementsSalaires.revenuNet : 0;
-        r += this.beneficeAgricole ? this.beneficeAgricole.revenuNet : 0;
-        r += this.beneficeCommerciaux ? this.beneficeCommerciaux.revenuNet : 0;
-        r += this.beneficeNonCommerciaux ? this.beneficeNonCommerciaux.revenuNet : 0;
-        r += this.revenusFonciers ? this.revenusFonciers.revenuNet : 0;
-        r += this.remunerationDirigeant ? this.remunerationDirigeant.revenuNet : 0;
-        r += this.plusValues ? this.plusValues.revenuNet : 0; 
-
-        // TODO: on enlève les charges déductibles
-        
-        return r;
-
-    }
-
-    /**
-     * Calcul du revenu net global imposable
-     */
-    private calculerRevenuNetGlobal(){
-        return this.calculerRevenuBrutGlobal;
-    }
+    
 
     /**
      * Calcul un impot brut à partir d'un revenu net global

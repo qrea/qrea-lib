@@ -3,11 +3,33 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var RevenuCategoriel = (function () {
+var base_1 = require('../../../../base/base');
+var RevenuCategoriel = (function (_super) {
+    __extends(RevenuCategoriel, _super);
     function RevenuCategoriel() {
+        _super.call(this);
+        this._revenuNet = 0;
+        this.revenuNetPrincipal = 0;
+        this.revenuNetConjoint = 0;
+        this.revenuNetAutres = 0;
     }
+    Object.defineProperty(RevenuCategoriel.prototype, "revenuNet", {
+        get: function () {
+            return this._revenuNet;
+        },
+        set: function (v) {
+            if (v !== this._revenuNet) {
+                var old = this._revenuNet;
+                this._revenuNet = v;
+                if (this.handler)
+                    this.handler.call(this, old, v);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     return RevenuCategoriel;
-})();
+})(base_1.default.BaseModel);
 exports.RevenuCategoriel = RevenuCategoriel;
 var traitements_salaires_1 = require('./traitements-salaires/traitements-salaires');
 exports.TraitementsSalaires = traitements_salaires_1.TraitementsSalaires;

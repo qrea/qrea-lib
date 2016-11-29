@@ -115,6 +115,7 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
     }
     public set pensionsRetraiteAutres(v : number) {
         this._pensionsRetraiteAutres = v;
+        // console.log('pension', v);
         this.calculerRevenuNetAutres();
     }
     
@@ -151,11 +152,10 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
 
     private calculerRevenuNet(){
 
-        this.revenuNet =
-            this.revenuNetAutres
-            + this.revenuNetConjoint
-            + this.revenuNetPrincipal;
-            
+        // console.log('--->', this.revenuNetAutres, this.revenuNetConjoint, this.revenuNetPrincipal);
+        const total = this.revenuNetAutres + this.revenuNetConjoint + this.revenuNetPrincipal;
+        // console.log('total revenu traitement et salaire ', total); 
+        this.revenuNet = total;
     }
 
     private calculerNetImposableTraitementsSalaires(brut: number, fraisReel: number = 0){
@@ -198,7 +198,12 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
             abatt = CONSTANTES_PENSIONS_2015['MINI_ABATTEMENT'];
         }
 
-        return brut - abatt;
+        let net = brut - abatt;
+        
+        // console.log('net=', net);
+
+        return net;
+
 
     }
 

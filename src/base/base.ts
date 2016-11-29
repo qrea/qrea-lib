@@ -1,12 +1,13 @@
-namespace Base {
+namespace Base {    
 
     export interface IBase {
-        id?: string;
+        id?: string;    
     }
+
     export class BaseModel {
 
-        constructor(o: any) {
-            if(o && o.id) this.id = o.id;
+        constructor(o: any = null) {
+            if(o && o.id) this.id = o.id;            
         }
 
         id: string;

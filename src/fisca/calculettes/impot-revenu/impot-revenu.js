@@ -4,6 +4,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var base_1 = require('../base/base');
+var RevenusCategoriels = require('./revenus-categoriels/revenus-categoriels');
+exports.RevenusCategoriels = RevenusCategoriels;
 var DICTIONNAIRE_CONSTANTES_2015 = {
     PLAFOND_QUOTIENT_FAMILIAL: 1510,
     PLAFOND_DECOTE_CELIBATAIRE: 1165,
@@ -41,6 +43,7 @@ var ImpotRevenuCalculette = (function (_super) {
         this._revenuNetGlobal = 0;
         this.nbParts = 1;
         this._couple = false;
+        this.revenus = new Array();
         this._impotBrut = 0;
         this.CONSTANTES_CALCUL = exports.DICTIONNAIRE_CONSTANTES[params.millesime] ? exports.DICTIONNAIRE_CONSTANTES[params.millesime] : null;
         this.nbEnfants = params.nbEnfants ? params.nbEnfants : 0;
@@ -90,6 +93,17 @@ var ImpotRevenuCalculette = (function (_super) {
         }
         this.nbParts += this.couple ? 2 : 1;
     };
+    ImpotRevenuCalculette.prototype.ajouterRevenu = function (revenu) {
+        var _this = this;
+        revenu.handler = function (oldval, val) {
+            var total = 0;
+            _this.revenus.forEach(function (r) {
+                total += r.revenuNet;
+            });
+            _this.revenuNetGlobal = total;
+        };
+        this.revenus.push(revenu);
+    };
     Object.defineProperty(ImpotRevenuCalculette.prototype, "impotBrut", {
         get: function () {
             return this._impotBrut;
@@ -100,23 +114,10 @@ var ImpotRevenuCalculette = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    ImpotRevenuCalculette.prototype.calculer = function () {
+    ImpotRevenuCalculette.prototype.calculer = function (nePasMaj) {
+        if (nePasMaj === void 0) { nePasMaj = true; }
         this.calculerNbParts();
         this.impotBrut = this.calculerImpotBrut();
-    };
-    ImpotRevenuCalculette.prototype.calculerRevenuBrutGlobal = function () {
-        var r = 0;
-        r += this.traitementsSalaires ? this.traitementsSalaires.revenuNet : 0;
-        r += this.beneficeAgricole ? this.beneficeAgricole.revenuNet : 0;
-        r += this.beneficeCommerciaux ? this.beneficeCommerciaux.revenuNet : 0;
-        r += this.beneficeNonCommerciaux ? this.beneficeNonCommerciaux.revenuNet : 0;
-        r += this.revenusFonciers ? this.revenusFonciers.revenuNet : 0;
-        r += this.remunerationDirigeant ? this.remunerationDirigeant.revenuNet : 0;
-        r += this.plusValues ? this.plusValues.revenuNet : 0;
-        return r;
-    };
-    ImpotRevenuCalculette.prototype.calculerRevenuNetGlobal = function () {
-        return this.calculerRevenuBrutGlobal;
     };
     ImpotRevenuCalculette.prototype.calculerImpotBrut = function () {
         var res = 0;

@@ -2,6 +2,7 @@ var Base;
 (function (Base) {
     var BaseModel = (function () {
         function BaseModel(o) {
+            if (o === void 0) { o = null; }
             if (o && o.id)
                 this.id = o.id;
         }
