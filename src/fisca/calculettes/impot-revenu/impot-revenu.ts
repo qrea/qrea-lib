@@ -122,6 +122,13 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
      */
     public revenus: Array<RevenusCategoriels.IRevenu> = new Array<RevenusCategoriels.IRevenu>();
 
+    /**
+     * Ajouter un revenu à la calculette ne pas utiliser la méthode Array.push
+     * 
+     * @type {void}
+     * @memberOf ImpotRevenuCalculette
+     * @param {RevenusCategoriels.IRevenu} revenu Le revenu à ajouter
+     */
     public ajouterRevenu(revenu: RevenusCategoriels.IRevenu) {
 
         revenu.handler = (oldval, val) => {

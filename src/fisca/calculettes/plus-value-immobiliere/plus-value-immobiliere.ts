@@ -1,4 +1,5 @@
 import { BaseCalculette, IParamsCalculette, ICalculette } from '../base/base';
+import * as moment from 'moment';
 
 export interface IParamsPlusValueImmobiliere extends IParamsCalculette {
     dateCession: Date;
@@ -335,29 +336,12 @@ export class PlusValueImmobiliereCalculette extends BaseCalculette implements IC
      */
     private dateDiff(dateOld: Date, dateNew: Date): number {
 
-        // TODO: Modifier ce calcul en le remplacant avec la lib Moment.js
-        // console.log('dateOld %s dateNew %s', dateOld, dateNew);
-          
-          var ynew = dateNew.getFullYear();
-          var mnew = dateNew.getMonth();
-          var dnew = dateNew.getDate();
+        let old = moment(dateOld);
+        let n = moment(dateNew);
 
-          var yold = dateOld.getFullYear();
-          var mold = dateOld.getMonth();
-          var dold = dateOld.getDate();
-          var diffa = ynew - yold;
+        return n.diff(old, 'years');
 
-          if (mold > mnew) {
-              diffa = diffa - 1;
-          } else if (mold == mnew) {
-              if (dold > dnew) {
-                  diffa = diffa - 1;
-              }
-          }
-
-          return diffa;
-
-      }
+    }
 
 
       /**

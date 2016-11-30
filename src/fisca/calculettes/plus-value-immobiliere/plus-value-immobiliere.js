@@ -4,6 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var base_1 = require('../base/base');
+var moment = require('moment');
 exports.TAUX_IMPOT_PV_IMMO = 0.19;
 exports.ABATTEMENTS_PV_IMMO = [
     { "annee": 6, "abattPS": 0.0165, "abattIr": 0.06 },
@@ -252,24 +253,9 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         return null;
     };
     PlusValueImmobiliereCalculette.prototype.dateDiff = function (dateOld, dateNew) {
-        // TODO: Modifier ce calcul en le remplacant avec la lib Moment.js
-        // console.log('dateOld %s dateNew %s', dateOld, dateNew);
-        var ynew = dateNew.getFullYear();
-        var mnew = dateNew.getMonth();
-        var dnew = dateNew.getDate();
-        var yold = dateOld.getFullYear();
-        var mold = dateOld.getMonth();
-        var dold = dateOld.getDate();
-        var diffa = ynew - yold;
-        if (mold > mnew) {
-            diffa = diffa - 1;
-        }
-        else if (mold == mnew) {
-            if (dold > dnew) {
-                diffa = diffa - 1;
-            }
-        }
-        return diffa;
+        var old = moment(dateOld);
+        var n = moment(dateNew);
+        return n.diff(old, 'years');
     };
     PlusValueImmobiliereCalculette.prototype.calculerMajorationFrais = function (f, s) {
         var majo = 0.075 * s;

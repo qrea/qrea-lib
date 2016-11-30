@@ -13,8 +13,12 @@
     "entreprise",
     "qrea"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@types/moment": "2.13.0",
+    "moment": "2.13.0"
+  },
   "devDependencies": {
+    "@types/moment": "^2.13.0",
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",

@@ -15,7 +15,6 @@ describe('Fisca.Calculettes.ImpotRevenuCalculette.TraitementsSalaires', function
         ts.traitementsSalairesAutres = 20000;
         ts.fraisReelAutres = 3500;
         assert.equal(ts.revenuNetAutres, 20000 - 3500, 'Erreur dans l\'application des frais réels');
-
         assert.equal(ts.revenuNet, 20000 - 3500 + 1000000 - 12170 + 1000 - 426, 'Erreur dans le revenu net');
         
     });
