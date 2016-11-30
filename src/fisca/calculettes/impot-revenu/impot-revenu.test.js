@@ -49,18 +49,20 @@ describe('Fisca.Calculettes.ImpotRevenuCalculette', function () {
             millesime: '2015'
         });
 
-        c.ajouterRevenu(new RevenusCategoriels.TraitementsSalaires());
+        c.ajouterRevenu(new RevenusCategoriels.TraitementsSalaires({
+            typeRevenu: RevenusCategoriels.typeTraitementSalaire.traitementSalaire,
+            revenuBrut: 20000
+        }));
+
+        assert.equal(c.revenus[0].revenuNet, 20000 * 0.9, 'Erreur dans le calcul du net');
+
+        assert.equal(c.impotBrut, 868, 'Erreur après la maj du revenu net');
+        c.revenus[0].revenuBrut = 0;
         assert.equal(c.impotBrut, 0, 'Impot brut != 0');
-
-        c.revenus[0].revenuNet = 15000;
-        assert.equal(c.impotBrut, 133, 'Erreur après la maj du revenu net');
-
-        c.revenus[0].pensionsRetraiteAutres = 0;
-        assert.equal(c.impotBrut, 0, 'Impot brut != 0');
-        assert.isDefined(c.impotBrut, 'Impot brut undefined');
-
-        c.revenus[0].pensionsRetraiteAutres = 15000 / 0.9;
-        assert.equal(c.impotBrut, 133, 'Impot brut != 133');        
+        c.revenus[0].revenuBrut = 15000 / 0.9;
+        c.revenus[0].typeRevenu = RevenusCategoriels.typeTraitementSalaire.pension;
+        assert.equal(c.impotBrut, 133, 'Impot brut != 133');
+               
 
     });
 

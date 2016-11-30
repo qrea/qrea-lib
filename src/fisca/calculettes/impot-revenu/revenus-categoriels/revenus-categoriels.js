@@ -4,14 +4,17 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var base_1 = require('../../../../base/base');
+(function (proprietaireRevenu) {
+    proprietaireRevenu[proprietaireRevenu["principal"] = 0] = "principal";
+    proprietaireRevenu[proprietaireRevenu["conjoint"] = 1] = "conjoint";
+    proprietaireRevenu[proprietaireRevenu["autre"] = 2] = "autre";
+})(exports.proprietaireRevenu || (exports.proprietaireRevenu = {}));
+var proprietaireRevenu = exports.proprietaireRevenu;
 var RevenuCategoriel = (function (_super) {
     __extends(RevenuCategoriel, _super);
     function RevenuCategoriel() {
         _super.call(this);
         this._revenuNet = 0;
-        this.revenuNetPrincipal = 0;
-        this.revenuNetConjoint = 0;
-        this.revenuNetAutres = 0;
     }
     Object.defineProperty(RevenuCategoriel.prototype, "revenuNet", {
         get: function () {
@@ -33,6 +36,7 @@ var RevenuCategoriel = (function (_super) {
 exports.RevenuCategoriel = RevenuCategoriel;
 var traitements_salaires_1 = require('./traitements-salaires/traitements-salaires');
 exports.TraitementsSalaires = traitements_salaires_1.TraitementsSalaires;
+exports.typeTraitementSalaire = traitements_salaires_1.typeTraitementSalaire;
 var revenus_fonciers_1 = require('./revenus-fonciers/revenus-fonciers');
 exports.RevenusFonciers = revenus_fonciers_1.RevenusFonciers;
 var RevenusCapitauxMobiliers = (function (_super) {

@@ -95,13 +95,15 @@ var ImpotRevenuCalculette = (function (_super) {
     };
     ImpotRevenuCalculette.prototype.ajouterRevenu = function (revenu) {
         var _this = this;
-        revenu.handler = function (oldval, val) {
+        revenu.handler = function (oldVal, newVal) {
             var total = 0;
             _this.revenus.forEach(function (r) {
                 total += r.revenuNet;
             });
             _this.revenuNetGlobal = total;
         };
+        if (!this.revenus || this.revenus.length == 0)
+            this.revenuNetGlobal = revenu.revenuNet;
         this.revenus.push(revenu);
     };
     Object.defineProperty(ImpotRevenuCalculette.prototype, "impotBrut", {

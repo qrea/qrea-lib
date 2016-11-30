@@ -12,167 +12,91 @@ export const CONSTANTES_PENSIONS_2015 = {
     ABATTEMENT: 0.1
 }
 
+export enum typeTraitementSalaire {
+    traitementSalaire,
+    pension
+}
+
+export interface ITraitementSalaire {
+    typeRevenu?: typeTraitementSalaire;
+    revenuBrut?: number;
+    fraisReel?: number;
+}
+
 export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
 
-    constructor(){
+    constructor(params: ITraitementSalaire = null){
+        
         super();
+        if(params){
+            this.typeRevenu = params.typeRevenu ? params.typeRevenu : typeTraitementSalaire.traitementSalaire;
+            this.revenuBrut = params.revenuBrut ? params.revenuBrut : 0;
+            this.fraisReel = params.fraisReel ? params.fraisReel : 0;
+        }
+
+        // console.log('typeRevenu=%s, revenuBrut=%s, fraisReel=%s', this.typeRevenu, this.revenuBrut, this.fraisReel);        
+        
+    }
+    
+    private _typeRevenu : typeTraitementSalaire = typeTraitementSalaire.traitementSalaire;
+    public get typeRevenu() : typeTraitementSalaire {
+        return this._typeRevenu;
+    }
+    public set typeRevenu(v : typeTraitementSalaire) {
+        this._typeRevenu = v;
+        this.calculer();
+    }
+
+    private calculer(){
+
+        switch (this.typeRevenu) {
+            case typeTraitementSalaire.pension:
+                // console.log('calculer pension');
+                this.revenuNet = this.calculetNetImposablePensions(this.revenuBrut);
+                break;
+            case typeTraitementSalaire.traitementSalaire:
+                // console.log('calculer traitement salaire')
+                this.revenuNet = this.calculerNetImposableTraitementsSalaires(this.revenuBrut, this.fraisReel);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private _revenuBrut: number = 0;
+    public get revenuBrut() : number {
+        return this._revenuBrut;
+    }
+    public set revenuBrut(v : number) {
+        this._revenuBrut = v;
+        this.calculer();
+    }
+
+    private _fraisReel : number = 0;
+    public get fraisReel() : number {
+        return this._fraisReel;
+    }
+    public set fraisReel(v : number) {
+        this._fraisReel = v;
+        this.calculer();
     }
 
     get description(): string {
 
         let d = '';
-        if(this.traitementsSalairesPrincipal > 0) d += 'Salaires ' + this.traitementsSalairesPrincipal;
-        if(this.traitementsSalairesConjoint > 0) d += 'Salaires ' + this.traitementsSalairesConjoint;
-        if(this.traitementsSalairesAutres > 0) d += 'Salaires ' + this.traitementsSalairesAutres;
-        if(this.pensionsRetraitePrincipal > 0) d += 'Pension ' + this.pensionsRetraitePrincipal;
-        if(this.pensionsRetraiteConjoint > 0) d += 'Pension ' + this.pensionsRetraiteConjoint;
-        if(this.pensionsRetraiteAutres > 0) d += 'Pension ' + this.pensionsRetraiteAutres;
+        if(this.typeRevenu = typeTraitementSalaire.pension) {
+            d += 'Pension ';
+        } else if(this.typeRevenu = typeTraitementSalaire.traitementSalaire){
+            d += 'Salaire '
+        }
+        d += this.revenuNet;
         return d;
 
     }
 
     categorie: string = 'Traitements et salaires';
     categorieShort: string = 'TS';
-    
-    private _traitementsSalairesPrincipal : number = 0;
-    /**
-     * Traitements et salaire du contribuable principal
-     */
-    public get traitementsSalairesPrincipal() : number {
-        return this._traitementsSalairesPrincipal;
-    }
-    public set traitementsSalairesPrincipal(v : number) {
-        this._traitementsSalairesPrincipal = v;
-        // console.log('traitementsSalairesPrincipal=%s', this._traitementsSalairesPrincipal);
-        this.calculerRevenuNetPrincipal();
-    }
-
-    private _fraisReelPrincipal : number = 0;
-    public get fraisReelPrincipal() : number {
-        return this._fraisReelPrincipal;
-    }
-    public set fraisReelPrincipal(v : number) {
-        this._fraisReelPrincipal = v;
-        this.calculerRevenuNetPrincipal();
-    }
-    
-    private _traitementsSalairesConjoint : number = 0;
-    /**
-     * Traitements et salaires du conjoint
-     */
-    public get traitementsSalairesConjoint() : number {
-        return this._traitementsSalairesConjoint;
-    }
-    public set traitementsSalairesConjoint(v : number) {
-        this._traitementsSalairesConjoint = v;
-        this.calculerRevenuNetConjoint();
-    }
-    
-    private _fraisReelConjoint : number = 0;
-    public get fraisReelConjoint() : number {
-        return this._fraisReelConjoint;
-    }
-    public set fraisReelConjoint(v : number) {
-        this._fraisReelConjoint = v;
-        this.calculerRevenuNetConjoint();
-    }    
-    
-    private _traitementsSalairesAutres : number = 0;
-    /**
-     * Traitements et salaires des autres membres du foyer fiscal
-     */
-    public get traitementsSalairesAutres() : number {
-        return this._traitementsSalairesAutres;
-    }
-    public set traitementsSalairesAutres(v : number) {
-        this._traitementsSalairesAutres = v;
-        this.calculerRevenuNetAutres();
-    }
-    
-    private _fraisReelAutres : number = 0;
-    public get fraisReelAutres() : number {
-        return this._fraisReelAutres;
-    }
-    public set fraisReelAutres(v : number) {
-        this._fraisReelAutres = v;
-        this.calculerRevenuNetAutres();        
-    }    
-    
-    private _pensionsRetraitePrincipal : number = 0;
-    /**
-     * Pension du contribuable principal
-     */
-    public get pensionsRetraitePrincipal() : number {
-        return this._pensionsRetraitePrincipal;
-    }
-    public set pensionsRetraitePrincipal(v : number) {
-        this._pensionsRetraitePrincipal = v;
-        this.calculerRevenuNetPrincipal();
-    }    
-    
-    private _pensionsRetraiteConjoint : number = 0;
-    /**
-     * Pension du conjoint
-     */
-    public get pensionsRetraiteConjoint() : number {
-        return this._pensionsRetraiteConjoint;
-    }
-    public set pensionsRetraiteConjoint(v : number) {
-        this._pensionsRetraiteConjoint = v;
-        this.calculerRevenuNetConjoint();
-    }
-    
-    private _pensionsRetraiteAutres : number = 0;
-    /**
-     * Pension des autres membres du foyer fiscal
-     */
-    public get pensionsRetraiteAutres() : number {
-        return this._pensionsRetraiteAutres;
-    }
-    public set pensionsRetraiteAutres(v : number) {
-        this._pensionsRetraiteAutres = v;
-        // console.log('pension', v);
-        this.calculerRevenuNetAutres();
-    }
-    
-    private calculerRevenuNetPrincipal(){
-
-        // console.log('calculerRevenuNetPrincipal()');
-
-        this.revenuNetPrincipal =
-            this.calculerNetImposableTraitementsSalaires(this.traitementsSalairesPrincipal, this.fraisReelPrincipal)
-            + this.calculetNetImposablePensions(this.pensionsRetraitePrincipal);
-
-        // console.log('revenuNetPrincipal=', this.revenuNetPrincipal);
-        this.calculerRevenuNet();
-
-    }
-
-    private calculerRevenuNetConjoint(){
-
-        this.revenuNetConjoint =
-            this.calculerNetImposableTraitementsSalaires(this.traitementsSalairesConjoint, this.fraisReelConjoint)
-            + this.calculetNetImposablePensions(this.pensionsRetraiteConjoint);
-        this.calculerRevenuNet();
-
-    }
-
-    private calculerRevenuNetAutres(){
-
-        this.revenuNetAutres = 
-            this.calculerNetImposableTraitementsSalaires(this.traitementsSalairesAutres, this.fraisReelAutres)
-            + this.calculetNetImposablePensions(this.pensionsRetraiteAutres);
-        this.calculerRevenuNet();
-
-    }
-
-    private calculerRevenuNet(){
-
-        // console.log('--->', this.revenuNetAutres, this.revenuNetConjoint, this.revenuNetPrincipal);
-        const total = this.revenuNetAutres + this.revenuNetConjoint + this.revenuNetPrincipal;
-        // console.log('total revenu traitement et salaire ', total); 
-        this.revenuNet = total;
-    }
 
     private calculerNetImposableTraitementsSalaires(brut: number, fraisReel: number = 0){
         

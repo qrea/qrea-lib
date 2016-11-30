@@ -1,3 +1,7 @@
+#0.2.22
+* Refactor traitement et salaires
+* Nettoyage
+
 #0.2.21
 * Ajout de la description, la catégorie au RevenuCategoriel
 

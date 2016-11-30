@@ -61,7 +61,6 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
 
     set revenuNetGlobal(value: number) {
         this._revenuNetGlobal = value;
-        //console.log('revenuNetGlobal ', value);
         this.calculer();
     }
     
@@ -131,18 +130,17 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
      */
     public ajouterRevenu(revenu: RevenusCategoriels.IRevenu) {
 
-        revenu.handler = (oldval, val) => {
-            
+        revenu.handler = (oldVal, newVal) => {
             let total = 0;
             this.revenus.forEach( r => {
                 total += r.revenuNet;
-            })
+            });
             this.revenuNetGlobal = total;
+        };
 
-        }        
-       
+        if(!this.revenus || this.revenus.length == 0) this.revenuNetGlobal = revenu.revenuNet;
         this.revenus.push(revenu);
-
+        
     }
 
     // OUTPUTS
@@ -169,8 +167,10 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
     CONSTANTES_CALCUL: any;
 
     public calculer(nePasMaj: boolean = true){
+        // console.log('calculer, revenu net %s', this.revenuNetGlobal);
         this.calculerNbParts();
-        this.impotBrut = this.calculerImpotBrut();        
+        this.impotBrut = this.calculerImpotBrut();      
+        // console.log('impotBrut %s', this.impotBrut);  
     }
 
     
@@ -209,19 +209,19 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
                     impotTranche = 0;
                 }
 
-                // console.log('r %s, tranche.plafond %s, impotTranche %s', q, tranche.PLAFOND, impotTranche);
+                // // console.log('r %s, tranche.plafond %s, impotTranche %s', q, tranche.PLAFOND, impotTranche);
                 impot1Part += impotTranche;
 
             });
 
-            // console.log('impot brut 1 part %s', impot1Part);
+            // // console.log('impot brut 1 part %s', impot1Part);
             return Math.round(impot1Part);
 
         }
         
         let impotBrut = calculerBarême(q, this.CONSTANTES_CALCUL['BAREME_IR']) * this.nbParts;
 
-        // console.log('impot brut %s', impotBrut)
+        // // console.log('impot brut %s', impotBrut)
 
         // plafonnement du quotient familial
         if(this.nbParts > 2){
@@ -235,18 +235,18 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
             
         }
 
-        // console.log('impotBrut avant décote ', impotBrut);
+        // // console.log('impotBrut avant décote ', impotBrut);
 
         // application de la décote
         let plafond = this.couple === false ? this.CONSTANTES_CALCUL['PLAFOND_DECOTE_CELIBATAIRE'] : this.CONSTANTES_CALCUL['PLAFOND_DECOTE_COUPLE']
         let decote = Math.round(plafond - 0.75 * impotBrut);
         if(decote > 0) impotBrut -= decote;
 
-        // console.log('décote ', decote);
+        // // console.log('décote ', decote);
 
         if(impotBrut < 0) impotBrut = 0;
 
-        // console.log('impotBrut ', impotBrut);
+        // // console.log('impotBrut ', impotBrut);
 
         // impot brut final après multiplication par nombre de parts
         return impotBrut;
