@@ -49,6 +49,22 @@ export enum typeCession {
 }
 
 export class PlusValues extends RevenusCategoriels.RevenuCategoriel {
+
+    get description(): string {
+
+        let d = '';
+        if(this.revenuNet < 0){
+            d += 'Plus value ' + this.revenuNet;
+        } else {
+            d += 'Moins value reportable ' + this.revenuNet;
+        }
+        
+        return d;
+
+    }
+
+    categorie: string = 'Plus value';
+    categorieShort: string = 'PV';
     
     private _regime : regimeCessionValeurMobiliere = regimeCessionValeurMobiliere.droitCommun;
     /**

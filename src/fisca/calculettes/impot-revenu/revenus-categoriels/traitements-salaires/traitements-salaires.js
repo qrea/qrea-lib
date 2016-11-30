@@ -18,6 +18,8 @@ var TraitementsSalaires = (function (_super) {
     __extends(TraitementsSalaires, _super);
     function TraitementsSalaires() {
         _super.call(this);
+        this.categorie = 'Traitements et salaires';
+        this.categorieShort = 'TS';
         this._traitementsSalairesPrincipal = 0;
         this._fraisReelPrincipal = 0;
         this._traitementsSalairesConjoint = 0;
@@ -28,6 +30,26 @@ var TraitementsSalaires = (function (_super) {
         this._pensionsRetraiteConjoint = 0;
         this._pensionsRetraiteAutres = 0;
     }
+    Object.defineProperty(TraitementsSalaires.prototype, "description", {
+        get: function () {
+            var d = '';
+            if (this.traitementsSalairesPrincipal > 0)
+                d += 'Salaires ' + this.traitementsSalairesPrincipal;
+            if (this.traitementsSalairesConjoint > 0)
+                d += 'Salaires ' + this.traitementsSalairesConjoint;
+            if (this.traitementsSalairesAutres > 0)
+                d += 'Salaires ' + this.traitementsSalairesAutres;
+            if (this.pensionsRetraitePrincipal > 0)
+                d += 'Pension ' + this.pensionsRetraitePrincipal;
+            if (this.pensionsRetraiteConjoint > 0)
+                d += 'Pension ' + this.pensionsRetraiteConjoint;
+            if (this.pensionsRetraiteAutres > 0)
+                d += 'Pension ' + this.pensionsRetraiteAutres;
+            return d;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(TraitementsSalaires.prototype, "traitementsSalairesPrincipal", {
         get: function () {
             return this._traitementsSalairesPrincipal;

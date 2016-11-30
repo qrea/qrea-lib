@@ -18,6 +18,8 @@ var RevenusFonciers = (function (_super) {
     __extends(RevenusFonciers, _super);
     function RevenusFonciers() {
         _super.call(this);
+        this.categorie = 'Revenus fonciers';
+        this.categorieShort = 'RF';
         this._regime = 0;
         this._loyersBruts = 0;
         this._interetsEmprunt = 0;
@@ -26,6 +28,20 @@ var RevenusFonciers = (function (_super) {
         this._deficitReportable = 0;
         this._interetsEmpruntReportable = 0;
     }
+    Object.defineProperty(RevenusFonciers.prototype, "description", {
+        get: function () {
+            var d = '';
+            if (this.revenuNet < 0) {
+                d += 'Déficit foncier ' + this.revenuNet;
+            }
+            else {
+                d += 'Revenu foncier ' + this.revenuNet;
+            }
+            return d;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(RevenusFonciers.prototype, "regime", {
         get: function () {
             return this._regime;

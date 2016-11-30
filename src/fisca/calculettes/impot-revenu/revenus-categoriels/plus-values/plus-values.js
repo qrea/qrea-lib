@@ -55,6 +55,8 @@ var PlusValues = (function (_super) {
     __extends(PlusValues, _super);
     function PlusValues() {
         _super.call(this);
+        this.categorie = 'Plus value';
+        this.categorieShort = 'PV';
         this._regime = regimeCessionValeurMobiliere.droitCommun;
         this._typeCession = typeCession.titres;
         this._dateAcquisition = new Date();
@@ -64,6 +66,20 @@ var PlusValues = (function (_super) {
         this._prixCession = 0;
         this._plusValueBrute = 0;
     }
+    Object.defineProperty(PlusValues.prototype, "description", {
+        get: function () {
+            var d = '';
+            if (this.revenuNet < 0) {
+                d += 'Plus value ' + this.revenuNet;
+            }
+            else {
+                d += 'Moins value reportable ' + this.revenuNet;
+            }
+            return d;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(PlusValues.prototype, "regime", {
         get: function () {
             return this._regime;

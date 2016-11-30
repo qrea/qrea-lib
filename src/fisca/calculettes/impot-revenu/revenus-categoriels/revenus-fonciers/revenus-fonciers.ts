@@ -12,6 +12,22 @@ export enum regimesFonciers {
 }
 
 export class RevenusFonciers extends RevenusCategoriels.RevenuCategoriel {
+
+     get description(): string {
+
+        let d = '';
+        if(this.revenuNet < 0){
+            d += 'Déficit foncier ' + this.revenuNet;
+        } else {
+            d += 'Revenu foncier ' + this.revenuNet;
+        }
+        
+        return d;
+
+    }
+
+    categorie: string = 'Revenus fonciers';
+    categorieShort: string = 'RF';
     
     private _regime : regimesFonciers = 0;
     /**

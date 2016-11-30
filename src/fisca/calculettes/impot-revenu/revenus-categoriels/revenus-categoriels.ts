@@ -21,7 +21,10 @@ export abstract class RevenuCategoriel extends Base.BaseModel implements IRevenu
         
     }
 
-    handler: Function;
+    handler: Function;  
+    description: string;
+    categorie: string;
+    categorieShort: string;  
 
     /**
      * Revenu net imposable du contribuable principal
@@ -50,6 +53,9 @@ export interface IRevenu {
     revenuNetAutres: number;
     revenuNetPrincipal: number;
     handler: Function;
+    description: string;
+    categorie: string;
+    categorieShort: string;
 }
 
 import { TraitementsSalaires } from './traitements-salaires/traitements-salaires';

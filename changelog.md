@@ -1,3 +1,6 @@
+#0.2.21
+* Ajout de la description, la catégorie au RevenuCategoriel
+
 #0.2.20
 * Ajout de la répercusion des modification faite dans les revenus catégoriels grâce à un handler
 * Ajout du calcul des plus value sur titres

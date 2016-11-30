@@ -17,6 +17,22 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
     constructor(){
         super();
     }
+
+    get description(): string {
+
+        let d = '';
+        if(this.traitementsSalairesPrincipal > 0) d += 'Salaires ' + this.traitementsSalairesPrincipal;
+        if(this.traitementsSalairesConjoint > 0) d += 'Salaires ' + this.traitementsSalairesConjoint;
+        if(this.traitementsSalairesAutres > 0) d += 'Salaires ' + this.traitementsSalairesAutres;
+        if(this.pensionsRetraitePrincipal > 0) d += 'Pension ' + this.pensionsRetraitePrincipal;
+        if(this.pensionsRetraiteConjoint > 0) d += 'Pension ' + this.pensionsRetraiteConjoint;
+        if(this.pensionsRetraiteAutres > 0) d += 'Pension ' + this.pensionsRetraiteAutres;
+        return d;
+
+    }
+
+    categorie: string = 'Traitements et salaires';
+    categorieShort: string = 'TS';
     
     private _traitementsSalairesPrincipal : number = 0;
     /**
