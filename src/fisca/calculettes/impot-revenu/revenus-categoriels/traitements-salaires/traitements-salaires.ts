@@ -17,9 +17,8 @@ export enum typeTraitementSalaire {
     pension
 }
 
-export interface ITraitementSalaire {
-    typeRevenu?: typeTraitementSalaire;
-    revenuBrut?: number;
+export interface ITraitementSalaire extends RevenusCategoriels.IParamsRevenusCategoriel {
+    typeRevenu?: typeTraitementSalaire;    
     fraisReel?: number;
 }
 
@@ -86,11 +85,11 @@ export class TraitementsSalaires extends RevenusCategoriels.RevenuCategoriel {
 
         let d = '';
         if(this.typeRevenu = typeTraitementSalaire.pension) {
-            d += 'Pension ';
+            d += 'Pension';
         } else if(this.typeRevenu = typeTraitementSalaire.traitementSalaire){
-            d += 'Salaire '
+            d += 'Salaire'
         }
-        d += this.revenuNet;
+
         return d;
 
     }

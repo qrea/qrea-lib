@@ -6,6 +6,11 @@ export enum proprietaireRevenu {
     autre
 }
 
+export interface IParamsRevenusCategoriel {
+    revenuBrut?: number;
+    proprietaire?: proprietaireRevenu;
+}
+
 export abstract class RevenuCategoriel extends Base.BaseModel implements IRevenu {
     
     /**

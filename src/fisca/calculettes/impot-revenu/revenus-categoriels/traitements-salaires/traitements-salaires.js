@@ -84,12 +84,11 @@ var TraitementsSalaires = (function (_super) {
         get: function () {
             var d = '';
             if (this.typeRevenu = typeTraitementSalaire.pension) {
-                d += 'Pension ';
+                d += 'Pension';
             }
             else if (this.typeRevenu = typeTraitementSalaire.traitementSalaire) {
-                d += 'Salaire ';
+                d += 'Salaire';
             }
-            d += this.revenuNet;
             return d;
         },
         enumerable: true,
