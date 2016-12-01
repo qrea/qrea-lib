@@ -130,16 +130,21 @@ export class ImpotRevenuCalculette extends BaseCalculette implements ICalculette
      */
     public ajouterRevenu(revenu: RevenusCategoriels.IRevenu) {
 
-        revenu.handler = (oldVal, newVal) => {
+        var self = this;
+
+        function calc(){
             let total = 0;
-            this.revenus.forEach( r => {
+            self.revenus.forEach( r => {
                 total += r.revenuNet;
             });
-            this.revenuNetGlobal = total;
-        };
+            self.revenuNetGlobal = total;
+        }
 
-        if(!this.revenus || this.revenus.length == 0) this.revenuNetGlobal = revenu.revenuNet;
+        revenu.handler = calc;
+
         this.revenus.push(revenu);
+
+        calc();
         
     }
 

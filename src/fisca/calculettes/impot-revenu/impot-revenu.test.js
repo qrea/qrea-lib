@@ -49,20 +49,36 @@ describe('Fisca.Calculettes.ImpotRevenuCalculette', function () {
             millesime: '2015'
         });
 
-        c.ajouterRevenu(new RevenusCategoriels.TraitementsSalaires({
+        let revenu1 = new RevenusCategoriels.TraitementsSalaires({
             typeRevenu: RevenusCategoriels.typeTraitementSalaire.traitementSalaire,
             revenuBrut: 20000
-        }));
+        });
 
-        assert.equal(c.revenus[0].revenuNet, 20000 * 0.9, 'Erreur dans le calcul du net');
+        c.ajouterRevenu(revenu1);
+
+        assert.equal(revenu1.revenuNet, 20000 * 0.9, 'Erreur dans le calcul du net');
 
         assert.equal(c.impotBrut, 868, 'Erreur après la maj du revenu net');
-        c.revenus[0].revenuBrut = 0;
+        revenu1.revenuBrut = 0;
         assert.equal(c.impotBrut, 0, 'Impot brut != 0');
-        c.revenus[0].revenuBrut = 15000 / 0.9;
-        c.revenus[0].typeRevenu = RevenusCategoriels.typeTraitementSalaire.pension;
+        revenu1.revenuBrut = 15000 / 0.9;
+        revenu1.typeRevenu = RevenusCategoriels.typeTraitementSalaire.pension;
         assert.equal(c.impotBrut, 133, 'Impot brut != 133');
-               
+
+        let revenu2 = new RevenusCategoriels.TraitementsSalaires({
+            typeRevenu: RevenusCategoriels.typeTraitementSalaire.pension,
+            revenuBrut: 4000
+        });
+
+        assert.equal(revenu2.revenuNet, 4000 * 0.9, 'Erreur dans le calcul du net de la pension');
+        c.ajouterRevenu(revenu2);
+
+        revenu1.revenuBrut = 6666.667;
+        revenu2.revenuBrut = 10000;
+        assert.equal(revenu2.revenuBrut, c.revenus[1].revenuBrut, 'Perte de la référence');
+
+        assert.equal(c.revenuNetGlobal, revenu1.revenuNet + revenu2.revenuNet, 'Erreur dans le calcul du revenu net global');
+        assert.equal(c.impotBrut, 133, 'Erreur dans le total...');
 
     });
 

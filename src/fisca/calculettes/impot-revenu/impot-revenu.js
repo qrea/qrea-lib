@@ -94,17 +94,17 @@ var ImpotRevenuCalculette = (function (_super) {
         this.nbParts += this.couple ? 2 : 1;
     };
     ImpotRevenuCalculette.prototype.ajouterRevenu = function (revenu) {
-        var _this = this;
-        revenu.handler = function (oldVal, newVal) {
+        var self = this;
+        function calc() {
             var total = 0;
-            _this.revenus.forEach(function (r) {
+            self.revenus.forEach(function (r) {
                 total += r.revenuNet;
             });
-            _this.revenuNetGlobal = total;
-        };
-        if (!this.revenus || this.revenus.length == 0)
-            this.revenuNetGlobal = revenu.revenuNet;
+            self.revenuNetGlobal = total;
+        }
+        revenu.handler = calc;
         this.revenus.push(revenu);
+        calc();
     };
     Object.defineProperty(ImpotRevenuCalculette.prototype, "impotBrut", {
         get: function () {
