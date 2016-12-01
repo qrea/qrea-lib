@@ -63,7 +63,7 @@ var PlusValues = (function (_super) {
         this._dateCession = new Date();
         this._dureeDetention = 0;
         this._prixRevient = 0;
-        this._prixCession = 0;
+        this._revenuBrut = 0;
         this._plusValueBrute = 0;
     }
     Object.defineProperty(PlusValues.prototype, "description", {
@@ -142,12 +142,12 @@ var PlusValues = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(PlusValues.prototype, "prixCession", {
+    Object.defineProperty(PlusValues.prototype, "revenuBrut", {
         get: function () {
-            return this._prixCession;
+            return this._revenuBrut;
         },
         set: function (v) {
-            this._prixCession = v;
+            this._revenuBrut = v;
             this.calcuerRevenuNet();
         },
         enumerable: true,
@@ -161,7 +161,7 @@ var PlusValues = (function (_super) {
         configurable: true
     });
     PlusValues.prototype.calcuerRevenuNet = function () {
-        this._plusValueBrute = this.prixCession - this.prixRevient;
+        this._plusValueBrute = this.revenuBrut - this.prixRevient;
         if (this.plusValueBrute < 0) {
             this.revenuNet = this.plusValueBrute;
             return;

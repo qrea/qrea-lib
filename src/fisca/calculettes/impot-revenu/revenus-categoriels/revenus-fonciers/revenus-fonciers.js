@@ -21,7 +21,7 @@ var RevenusFonciers = (function (_super) {
         this.categorie = 'Revenus fonciers';
         this.categorieShort = 'RF';
         this._regime = 0;
-        this._loyersBruts = 0;
+        this._revenuBrut = 0;
         this._interetsEmprunt = 0;
         this._chargesDeductibles = 0;
         this._travaux = 0;
@@ -53,13 +53,13 @@ var RevenusFonciers = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(RevenusFonciers.prototype, "loyersBruts", {
+    Object.defineProperty(RevenusFonciers.prototype, "revenuBrut", {
         get: function () {
-            return this._loyersBruts;
+            return this._revenuBrut;
         },
         set: function (v) {
-            this._loyersBruts = v;
-            if (this._loyersBruts > exports.CONSTANTES_RF_2015['PLAFOND_MICRO']) {
+            this._revenuBrut = v;
+            if (this._revenuBrut > exports.CONSTANTES_RF_2015['PLAFOND_MICRO']) {
                 this.regime = regimesFonciers.reel;
             }
             this.calcuerRevenuNet();
@@ -70,7 +70,7 @@ var RevenusFonciers = (function (_super) {
     Object.defineProperty(RevenusFonciers.prototype, "abattement", {
         get: function () {
             if (this.regime === regimesFonciers.micro) {
-                return Math.round(this.loyersBruts * exports.CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER']);
+                return Math.round(this.revenuBrut * exports.CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER']);
             }
             else {
                 return 0;
@@ -128,10 +128,10 @@ var RevenusFonciers = (function (_super) {
     });
     RevenusFonciers.prototype.calcuerRevenuNet = function () {
         if (this.regime === regimesFonciers.micro) {
-            this.revenuNet = Math.round(this.loyersBruts * (1 - exports.CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER']));
+            this.revenuNet = Math.round(this.revenuBrut * (1 - exports.CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER']));
         }
         else {
-            var r = this.loyersBruts;
+            var r = this.revenuBrut;
             r -= this.interetsEmprunt;
             if (r < 0) {
                 this._interetsEmpruntReportable = Math.abs(r);

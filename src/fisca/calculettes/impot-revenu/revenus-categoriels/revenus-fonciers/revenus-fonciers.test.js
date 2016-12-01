@@ -8,7 +8,7 @@ describe('Fisca.Calculettes.ImpotRevenuCalculette.RevenusCategoriels.RevenusFonc
         let ts = new lib.RevenusFonciers();
 
         ts.regime = lib.regimesFonciers.micro;
-        ts.loyersBruts = 12000;
+        ts.revenuBrut = 12000;
         assert.equal(ts.abattement, 12000 * 0.3, 'Erreur dans le calcul de l`\'abattement micro foncier');
         assert.equal(ts.revenuNet, 12000 * 0.7, 'Erreur dans le calcul du revenu net micro');
 

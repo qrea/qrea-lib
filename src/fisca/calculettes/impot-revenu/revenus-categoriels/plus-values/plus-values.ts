@@ -131,15 +131,15 @@ export class PlusValues extends RevenusCategoriels.RevenuCategoriel {
         this.calcuerRevenuNet();
     }    
     
-    private _prixCession : number = 0;
+    private _revenuBrut : number = 0;
     /**
      * Le prix de cession
      */
-    public get prixCession() : number {
-        return this._prixCession;
+    public get revenuBrut() : number {
+        return this._revenuBrut;
     }
-    public set prixCession(v : number) {
-        this._prixCession = v;
+    public set revenuBrut(v : number) {
+        this._revenuBrut = v;
         this.calcuerRevenuNet();
     }
     
@@ -154,7 +154,7 @@ export class PlusValues extends RevenusCategoriels.RevenuCategoriel {
     private calcuerRevenuNet(){
 
         // on calcul la plus value brute
-        this._plusValueBrute = this.prixCession - this.prixRevient;
+        this._plusValueBrute = this.revenuBrut - this.prixRevient;
 
         // on évacue si moins value
         if(this.plusValueBrute < 0){
@@ -209,7 +209,7 @@ export class PlusValues extends RevenusCategoriels.RevenuCategoriel {
         this.revenuNet = this.plusValueBrute - abatt;
         if(this.revenuNet < 0) this.revenuNet = 0; // si l'application des 500k€ nous enmène < 0 on corrige
         
-        // console.log('abattement %s sur prix de cession %s = net %s', abatt, this.prixCession, this.revenuNet);
+        // console.log('abattement %s sur prix de cession %s = net %s', abatt, this.revenuBrut, this.revenuNet);
 
     }
 

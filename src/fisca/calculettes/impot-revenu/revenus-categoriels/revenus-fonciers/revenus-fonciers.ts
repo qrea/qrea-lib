@@ -41,16 +41,16 @@ export class RevenusFonciers extends RevenusCategoriels.RevenuCategoriel {
         this.calcuerRevenuNet();
     }
 
-    private _loyersBruts : number = 0;
+    private _revenuBrut : number = 0;
     /**
      * Loyer bruts perçus
      */
-    public get loyersBruts() : number {
-        return this._loyersBruts;
+    public get revenuBrut() : number {
+        return this._revenuBrut;
     }
-    public set loyersBruts(v : number) {
-        this._loyersBruts = v;
-        if(this._loyersBruts > CONSTANTES_RF_2015['PLAFOND_MICRO']){
+    public set revenuBrut(v : number) {
+        this._revenuBrut = v;
+        if(this._revenuBrut > CONSTANTES_RF_2015['PLAFOND_MICRO']){
             this.regime = regimesFonciers.reel;
         }
         this.calcuerRevenuNet();
@@ -61,7 +61,7 @@ export class RevenusFonciers extends RevenusCategoriels.RevenuCategoriel {
      */
     get abattement(): number {
         if(this.regime === regimesFonciers.micro) {
-            return Math.round(this.loyersBruts * CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER'])
+            return Math.round(this.revenuBrut * CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER'])
         } else {
             return 0;
         }
@@ -117,11 +117,11 @@ export class RevenusFonciers extends RevenusCategoriels.RevenuCategoriel {
         
         if(this.regime === regimesFonciers.micro){
 
-            this.revenuNet = Math.round(this.loyersBruts * (1 - CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER']));
+            this.revenuNet = Math.round(this.revenuBrut * (1 - CONSTANTES_RF_2015['ABATTEMENT_MICRO_FONCIER']));
 
         } else {
 
-            let r = this.loyersBruts;
+            let r = this.revenuBrut;
             r -= this.interetsEmprunt;
             
             if(r < 0) {

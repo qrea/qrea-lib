@@ -1,3 +1,7 @@
+#0.2.23
+* MEP de la popriété revenuBrut pour tous les revenus categoriels
+* MEP de la propriété proprietaireLibelle sur tous les revenus categoriels
+
 #0.2.22
 * Refactor traitement et salaires
 * Nettoyage

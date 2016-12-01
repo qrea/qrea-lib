@@ -10,9 +10,8 @@ export abstract class RevenuCategoriel extends Base.BaseModel implements IRevenu
     
     /**
      * Revenu net imposable
-     */
-    
-    private _revenuNet: number = 0;
+     */    
+    protected _revenuNet: number = 0;
     get revenuNet(): number {
         return this._revenuNet;
     }
@@ -27,11 +26,27 @@ export abstract class RevenuCategoriel extends Base.BaseModel implements IRevenu
         
     }
 
-    handler: Function;  
+    
+    revenuBrut: number = 0;
+    handler: Function;
     description: string;
     categorie: string;
     categorieShort: string;
-    proprietaire: proprietaireRevenu;   
+
+    proprietaire: proprietaireRevenu;
+    
+    get proprietaireLibelle(): string {
+        switch (this.proprietaire) {
+            case proprietaireRevenu.autre:
+                return 'Autre';
+            case proprietaireRevenu.conjoint:
+                return 'Conjoint';
+            case proprietaireRevenu.principal:
+                return 'Principal';
+            default:
+                return 'Non défini';
+        }
+    }  
 
     constructor(){
         super();

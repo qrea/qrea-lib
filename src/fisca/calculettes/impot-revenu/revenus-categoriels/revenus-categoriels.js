@@ -15,6 +15,7 @@ var RevenuCategoriel = (function (_super) {
     function RevenuCategoriel() {
         _super.call(this);
         this._revenuNet = 0;
+        this.revenuBrut = 0;
     }
     Object.defineProperty(RevenuCategoriel.prototype, "revenuNet", {
         get: function () {
@@ -26,6 +27,22 @@ var RevenuCategoriel = (function (_super) {
                 this._revenuNet = v;
                 if (this.handler)
                     this.handler.call(this, old, v);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(RevenuCategoriel.prototype, "proprietaireLibelle", {
+        get: function () {
+            switch (this.proprietaire) {
+                case proprietaireRevenu.autre:
+                    return 'Autre';
+                case proprietaireRevenu.conjoint:
+                    return 'Conjoint';
+                case proprietaireRevenu.principal:
+                    return 'Principal';
+                default:
+                    return 'Non défini';
             }
         },
         enumerable: true,
