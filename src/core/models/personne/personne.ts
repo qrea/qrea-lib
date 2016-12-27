@@ -35,7 +35,7 @@ export abstract class Personne extends Base.BaseModel {
 
     public static instanciatePhysiqueOuMorale(newPersonne: any){
 
-        if(!newPersonne.denominationSociale){
+        if(!newPersonne || !newPersonne.denominationSociale){
             // on instancie une personne physique
             return PersonnePhysique.instanciate(newPersonne);
         } else {
