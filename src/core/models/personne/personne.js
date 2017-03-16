@@ -11,17 +11,18 @@ var Personne = (function (_super) {
     function Personne(params) {
         if (params === void 0) { params = null; }
         _super.call(this, params);
-        this.adresse = params ? params.adresse : new adresse_1.Adresse({});
-        this.isEntreprise = params ? params.isEntreprise : false;
-        this.numeroTVA = params ? params.numeroTVA : null;
-        this.telephone = params ? params.telephone : null;
-        this.email = params ? params.email : null;
-        this.siteInternet = params ? params.siteInternet : null;
-        this.fax = params ? params.fax : null;
-        this.identification = params ? params.identification : new identification_1.Identification();
+        this.adresse = params && params.adresse ? params.adresse : new adresse_1.Adresse({});
+        this.isEntreprise = params && params.isEntreprise ? params.isEntreprise : false;
+        this.numeroTVA = params && params.numeroTVA ? params.numeroTVA : null;
+        this.telephone = params && params.telephone ? params.telephone : null;
+        this.email = params && params.email ? params.email : null;
+        this.siteInternet = params && params.siteInternet ? params.siteInternet : null;
+        this.fax = params && params.fax ? params.fax : null;
+        this.identification = params && params.identification ? params.identification : new identification_1.Identification();
+        this.nomComplet = params && params.nomComplet ? params.nomComplet : null;
     }
     Personne.instanciatePhysiqueOuMorale = function (newPersonne) {
-        if (!newPersonne.denominationSociale) {
+        if (!newPersonne || !newPersonne.denominationSociale) {
             return PersonnePhysique.instanciate(newPersonne);
         }
         else {
@@ -51,6 +52,19 @@ var PersonnePhysique = (function (_super) {
         this.prenom = params ? params.prenom : null;
         this.nomCommercial = params ? params.nomCommercial : null;
     }
+    Object.defineProperty(PersonnePhysique.prototype, "nomComplet", {
+        get: function () {
+            var nom = this.civilite ? this.civilite + ' ' : '';
+            nom += this.nom.toUpperCase() + ' ' +
+                this.prenom.toUpperCase();
+            return nom;
+        },
+        set: function (v) {
+            this._nomComplet = v;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return PersonnePhysique;
 })(Personne);
 exports.PersonnePhysique = PersonnePhysique;
@@ -64,6 +78,17 @@ var PersonneMorale = (function (_super) {
         this.capitalSocial = params ? params.capitalSocial : null;
         this.isCapitalVariable = params ? params.isCapitalVariable : false;
     }
+    Object.defineProperty(PersonneMorale.prototype, "nomComplet", {
+        get: function () {
+            var nom = this.forme.toUpperCase() + ' ' + this.denominationSociale.toUpperCase();
+            return nom;
+        },
+        set: function (v) {
+            this._nomComplet = v;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return PersonneMorale;
 })(Personne);
 exports.PersonneMorale = PersonneMorale;

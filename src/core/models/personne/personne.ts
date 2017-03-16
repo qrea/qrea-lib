@@ -13,29 +13,31 @@ export interface IPersonne extends Base.IBase {
     fax?: string;
     identification?: Identification;
     isPersonneMorale?: boolean;
+    nomComplet?: string;
 
 }
 
-export abstract class Personne extends Base.BaseModel {
+export class Personne extends Base.BaseModel {
 
     constructor(params: IPersonne = null) {
 
         super(params);
 
-        this.adresse = params ? params.adresse : new Adresse({}); // TODO: SUPPR OBJET PASSE DANS LINSTANCIATION...
-        this.isEntreprise = params ? params.isEntreprise : false;
-        this.numeroTVA = params ? params.numeroTVA : null;
-        this.telephone = params ? params.telephone : null;
-        this.email = params ? params.email : null;
-        this.siteInternet = params ? params.siteInternet : null;
-        this.fax = params ? params.fax : null;
-        this.identification = params ? params.identification : new Identification();        
+        this.adresse = params && params.adresse ? params.adresse : new Adresse({}); // TODO: SUPPR OBJET PASSE DANS LINSTANCIATION...
+        this.isEntreprise = params && params.isEntreprise ? params.isEntreprise : false;
+        this.numeroTVA = params && params.numeroTVA ? params.numeroTVA : null;
+        this.telephone = params && params.telephone ? params.telephone : null;
+        this.email = params && params.email ? params.email : null;
+        this.siteInternet = params && params.siteInternet ? params.siteInternet : null;
+        this.fax = params && params.fax ? params.fax : null;
+        this.identification = params && params.identification ? params.identification : new Identification();
+        this.nomComplet = params && params.nomComplet ? params.nomComplet : null;
 
     }
 
-    public static instanciatePhysiqueOuMorale(newPersonne: any){
+    public static instanciatePhysiqueOuMorale(newPersonne: any) {
 
-        if(!newPersonne || !newPersonne.denominationSociale){
+        if (!newPersonne || !newPersonne.denominationSociale) {
             // on instancie une personne physique
             return PersonnePhysique.instanciate(newPersonne);
         } else {
@@ -45,10 +47,10 @@ export abstract class Personne extends Base.BaseModel {
     }
 
     private _adresse: Adresse;
-    get adresse(): Adresse{
+    get adresse(): Adresse {
         return this._adresse;
     }
-    set adresse(a){
+    set adresse(a) {
         this._adresse = Adresse.instanciate(a);
     }
 
@@ -58,7 +60,9 @@ export abstract class Personne extends Base.BaseModel {
     email: string;
     siteInternet: string;
     fax: string;
-    identification: Identification;   
+    identification: Identification;
+    protected nomComplet: string;
+
 
 }
 
@@ -68,7 +72,7 @@ export interface IPersonnePhysique extends IPersonne {
     nom?: string;
     prenom?: string;
     nomCommercial?: string;
-    
+
 }
 
 export class PersonnePhysique extends Personne {
@@ -89,6 +93,21 @@ export class PersonnePhysique extends Personne {
     prenom: string;
     nomCommercial: string;
 
+
+    private _nomComplet: string;
+    get nomComplet(): string {
+
+        let nom = this.civilite ? this.civilite + ' ' : '';
+        nom += this.nom.toUpperCase() + ' ' +
+            this.prenom.toUpperCase();
+
+        return nom;
+
+    }
+    set nomComplet(v: string) {
+        this._nomComplet = v;
+    }
+
 }
 
 export interface IPersonneMorale extends IPersonne {
@@ -97,7 +116,7 @@ export interface IPersonneMorale extends IPersonne {
     denominationSociale?: string;
     capitalSocial?: number;
     isCapitalVariable?: boolean;
-    
+
 }
 
 export class PersonneMorale extends Personne {
@@ -117,5 +136,17 @@ export class PersonneMorale extends Personne {
     denominationSociale: string;
     capitalSocial: number;
     isCapitalVariable: boolean;
+
+
+    private _nomComplet: string;
+    public get nomComplet(): string {
+        let nom = this.forme.toUpperCase() + ' ' + this.denominationSociale.toUpperCase();
+        return nom;
+        // return this._nomComplet;
+    }
+
+    public set nomComplet(v: string) {
+        this._nomComplet = v;
+    }
 
 }
