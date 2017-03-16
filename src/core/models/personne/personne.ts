@@ -61,7 +61,7 @@ export class Personne extends Base.BaseModel {
     siteInternet: string;
     fax: string;
     identification: Identification;
-    protected nomComplet: string;
+    nomComplet: string;
 
 
 }
