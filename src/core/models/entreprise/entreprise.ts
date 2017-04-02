@@ -5,7 +5,7 @@ import { Logo } from '../logo/logo';
 
 export interface IEntreprise extends Base.IBase {
 
-    personne?: PersonneMorale | PersonnePhysique;
+    personne?: PersonneMorale | PersonnePhysique | Personne;
     identification?: Identification;
     isAdherentCGA?: boolean;
     isExonere?: boolean;
@@ -18,7 +18,7 @@ export interface IEntreprise extends Base.IBase {
     isCapitalVariable?: boolean;
     tauxPenalitesReglement?: number;
     conditionsEscompte?: string;
-    mentionsParticulieres?: string;    
+    mentionsParticulieres?: string;
     modeReglementDefaut?: string;
     logo?: Logo;
 
@@ -30,15 +30,15 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
 
         super(params);
 
-        if(! params || !params.personne) {
+        if (!params || !params.personne) {
             // on créer une personne physique par défaut
             let personne = new PersonnePhysique();
             this.personne = personne;
         } else {
-            this.personne = params.personne;            
+            this.personne = params.personne;
         }
 
-        if(!params || !params.identification) {
+        if (!params || !params.identification) {
             this.identification = new Identification();
         } else {
             this.identification = params.identification;
@@ -56,7 +56,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         this.isFranchiseEnBase = params ? params.isFranchiseEnBase : null;
         this.isRegimeMargeBeneficiaire = params ? params.isRegimeMargeBeneficiaire : null;
         this.isAutoliquidation = params ? params.isAutoliquidation : null;
-        
+
         this.numeroTVA = params ? params.numeroTVA : null;
         this.capital = params ? params.capital : null;
         this.isCapitalVariable = params ? params.isCapitalVariable : null;
@@ -66,7 +66,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         this.modeReglementDefaut = params ? params.modeReglementDefaut : null;
 
     }
-  
+
     isAdherentCGA: boolean;
     isExonere: boolean;
     isAssujettiTVA: boolean;
@@ -78,29 +78,30 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
     isCapitalVariable: boolean;
     tauxPenalitesReglement: number;
     conditionsEscompte: string;
-    mentionsParticulieres: string;    
+    mentionsParticulieres: string;
     modeReglementDefaut: string;
 
-    private _personne: PersonneMorale|PersonnePhysique;
+    private _personne: PersonneMorale | PersonnePhysique | Personne;
     // on peut avoir une personne physique ou morale
-    get personne(): PersonneMorale|PersonnePhysique {
+    get personne(): PersonneMorale | PersonnePhysique | Personne {
         return this._personne;
     }
-    set personne(p){
+    set personne(p) {
+        this._personne = p;
 
-        if(p['getName'] && ['PersonneMorale', 'PersonnePhysique'].indexOf(p.getName()) > -1){
-            this._personne = p;
-        } else {
-            this._personne = Personne.instanciatePhysiqueOuMorale(p);
-        }
+        // if(p['getName'] && ['PersonneMorale', 'PersonnePhysique'].indexOf(p.getName()) > -1){
+        //     this._personne = p;
+        // } else {
+        //     this._personne = Personne.instanciatePhysiqueOuMorale(p);
+        // }
 
     }
 
     private _identification: Identification;
-    get identification(): Identification{
+    get identification(): Identification {
         return this._identification;
     }
-    set identification(i){
+    set identification(i) {
         this._identification = Identification.instanciate(i);
     }
 
@@ -116,14 +117,14 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
 
         if (this.personne.getName() === 'PersonneMorale') { return true; }
         return false;
-        
+
     }
 
     public set isPersonneMorale(value) {
 
         if (this.personne.getName() === 'PersonneMorale' && value === false) {
-            this.personne = new PersonnePhysique(this.personne);            
-        } else if(this.personne.getName() === 'PersonnePhysique' && value === true) {
+            this.personne = new PersonnePhysique(this.personne);
+        } else if (this.personne.getName() === 'PersonnePhysique' && value === true) {
             this.personne = new PersonneMorale(this.personne);
         }
 
@@ -132,7 +133,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
     public get nomComplet(): string {
 
         let s = '';
-        if(this.isPersonneMorale){
+        if (this.isPersonneMorale) {
             const p: PersonneMorale = <PersonneMorale>this.personne;
             s += p.denominationSociale || '' + ' ' + p.forme || '';
         } else {
@@ -148,10 +149,10 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
 
         let s = this.nomComplet;
 
-        if(this.isPersonneMorale){
+        if (this.isPersonneMorale) {
 
             s += ' au capital ';
-            if(this.isCapitalVariable){
+            if (this.isCapitalVariable) {
                 s += 'variable minimum ';
             }
             s += 'de ' + (this.capital || '?') + ' €';
