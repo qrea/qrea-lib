@@ -93,17 +93,26 @@ export class PersonnePhysique extends Personne {
     prenom: string;
     nomCommercial: string;
 
-
     private _nomComplet: string;
     get nomComplet(): string {
 
-        let nom = this.civilite ? this.civilite + ' ' : '';
-        nom += this.nom.toUpperCase() + ' ' +
-            this.prenom.toUpperCase();
+        // if (this.getName() == 'PersonnePhysique') {
 
-        return nom;
+        //     let nom = this.civilite ? this.civilite + ' ' : '';
+        //     nom += this.nom ? this.nom.toUpperCase() : '';
+        //     nom += ' ';
+        //     nom += this.prenom ? this.prenom.toUpperCase() : '';
+
+        //     return nom;
+
+        // } else {
+
+        // }
+
+        return this._nomComplet;
 
     }
+
     set nomComplet(v: string) {
         this._nomComplet = v;
     }
