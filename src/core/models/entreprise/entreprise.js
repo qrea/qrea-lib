@@ -50,7 +50,12 @@ var Entreprise = (function (_super) {
             return this._personne;
         },
         set: function (p) {
-            this._personne = p;
+            if (p['getName'] && ['PersonneMorale', 'PersonnePhysique', 'Personne'].indexOf(p.getName()) > -1) {
+                this._personne = p;
+            }
+            else {
+                this._personne = personne_1.Personne.instanciatePhysiqueOuMorale(p);
+            }
         },
         enumerable: true,
         configurable: true
@@ -95,16 +100,7 @@ var Entreprise = (function (_super) {
     });
     Object.defineProperty(Entreprise.prototype, "nomComplet", {
         get: function () {
-            var s = '';
-            if (this.isPersonneMorale) {
-                var p = this.personne;
-                s += p.denominationSociale || '' + ' ' + p.forme || '';
-            }
-            else {
-                var p = this.personne;
-                s += p.nomCommercial || ((p.prenom || '') + ' ' + (p.nom || ''));
-            }
-            return s;
+            return this.personne.nomComplet;
         },
         enumerable: true,
         configurable: true

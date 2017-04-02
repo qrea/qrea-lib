@@ -57,12 +57,15 @@ var PersonnePhysique = (function (_super) {
             if (this._nomComplet) {
                 return this._nomComplet;
             }
-            else {
+            else if (this.nom && this.prenom) {
                 var nom = this.civilite ? this.civilite + ' ' : '';
                 nom += this.nom ? this.nom.toUpperCase() : '';
                 nom += ' ';
                 nom += this.prenom ? this.prenom.toUpperCase() : '';
                 return nom;
+            }
+            else {
+                return this._nomComplet;
             }
         },
         set: function (v) {
@@ -86,10 +89,16 @@ var PersonneMorale = (function (_super) {
     }
     Object.defineProperty(PersonneMorale.prototype, "nomComplet", {
         get: function () {
-            if (this._nomComplet)
+            if (this._nomComplet) {
                 return this._nomComplet;
-            var nom = this.forme.toUpperCase() + ' ' + this.denominationSociale.toUpperCase();
-            return nom;
+            }
+            else if (this.forme && this.denominationSociale) {
+                var nom = this.forme.toUpperCase() + ' ' + this.denominationSociale.toUpperCase();
+                return nom;
+            }
+            else {
+                return this._nomComplet;
+            }
         },
         set: function (v) {
             this._nomComplet = v;

@@ -37,11 +37,21 @@ export class Personne extends Base.BaseModel {
 
     public static instanciatePhysiqueOuMorale(newPersonne: any) {
 
-        if (!newPersonne || !newPersonne.denominationSociale) {
+        if (!newPersonne ||
+            (!newPersonne.denominationSociale && !newPersonne.nom)
+        ) {
+
+            return new Personne();
+
+        } else if (!newPersonne.denominationSociale) {
+
             // on instancie une personne physique
             return PersonnePhysique.instanciate(newPersonne);
+
         } else {
+
             return PersonneMorale.instanciate(newPersonne);
+
         }
 
     }
