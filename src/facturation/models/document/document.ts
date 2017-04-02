@@ -172,8 +172,8 @@ export abstract class Document extends Base.BaseModel {
     get entreprise(): CoreModels.Entreprise {
         return this._entreprise;
     }
-    set entreprise(e) {
-        this._entreprise = CoreModels.Entreprise.instanciate(e);
+    set entreprise(e: CoreModels.Entreprise) {
+        this._entreprise = e;
     }
 
     private _logo: Logo;
@@ -188,8 +188,8 @@ export abstract class Document extends Base.BaseModel {
     get client(): CoreModels.Personne {
         return this._client;
     }
-    set client(c) {
-        this._client = CoreModels.Personne.instanciatePhysiqueOuMorale(c);
+    set client(c: CoreModels.Personne) {
+        this._client = c;
     }
 
     private _reglements: Array<Reglement>;
@@ -197,45 +197,16 @@ export abstract class Document extends Base.BaseModel {
         return this._reglements;
     }
 
-    set reglements(reglts) {
-        if (!reglts) return;
-        this._reglements ? this._reglements.length = 0 : this._reglements = [];
-        if (Array.isArray(reglts)) {
-            for (var i = 0; i < reglts.length; i++) {
-                var element = reglts[i];
-                this._reglements.push(Reglement.instanciate(element));
-            }
-        } else {
-            this._reglements.push(Reglement.instanciate(reglts));
-        }
+    set reglements(reglts: Array<Reglement>) {
+        this._reglements = reglts;
     }
 
     private _ventes: Array<Vente>;
     get ventes(): Array<Vente> {
         return this._ventes;
     }
-    set ventes(ventes) {
-
-        if (!ventes) return;
-
-        this._ventes ? this._ventes.length = 0 : this._ventes = []; // reset du tableau;
-
-        // on vérifie si c'est un seul object ou un tableau
-        if (Array.isArray(ventes)) {
-
-            for (var i = 0; i < ventes.length; i++) {
-
-                var element = ventes[i];
-                this._ventes.push(Vente.instanciate(element));
-
-            }
-
-        } else {
-
-            this._ventes.push(Vente.instanciate(ventes));
-
-        }
-
+    set ventes(ventes: Array<Vente>) {
+        this._ventes = ventes;
     }
 
     public addVente(newVente: any) {
