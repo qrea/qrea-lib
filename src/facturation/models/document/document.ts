@@ -6,33 +6,47 @@ import { Logo } from '../logo/logo';
 
 import { DocumentDefinitionObjectHelper } from '../../helpers/helpers';
 
+export interface IDocument {
+    libelle?: string;
+    date?: Date;
+    numero?: string;
+    entreprise?: CoreModels.Entreprise;
+    client?: CoreModels.Personne;
+    ventes?: Array<Vente>;
+    prctRemiseGlobale?: number;
+    isAutoliquidation?: boolean;
+    reglements?: Array<Reglement>;
+    adresseLivraison?: CoreModels.Adresse;
+    details?: string;
+    logo?: Logo;
+    detailsTva?: any;
+}
+
 export abstract class Document extends Base.BaseModel {
 
-    constructor(params: any) {
+    constructor(params?: IDocument) {
 
         super(params);
 
-        //this.typeDocument = null;
-        this.libelle = params.libelle || null;
-        this.date = params.date || Date.now();
-        this.numero = params.numero || null;
-        this.entreprise = params.entreprise;
-        this.client = params.client;
-        this.ventes = params.ventes || [];
-        this.prctRemiseGlobale = params.prctRemiseGlobale || 0;
-        this.isAutoliquidation = params.isAutoliquidation || false;
-        this.reglements = params.reglements || [];
-        // this.logoEntreprise = params.logoEntreprise || null;
-        this.adresseLivraison = params.adresseLivraison || null;
-        this.details = params.details || null;
-        this.logo = params.logo || null;
-        this.detailsTVA = {};
+        this.libelle = params && params.libelle ? params.libelle : null;
+        this.date = params && params.date ? params.date : new Date();
+        this.numero = params && params.numero ? params.numero : null;
+        this.entreprise = params && params.entreprise ? params.entreprise : new CoreModels.Entreprise();
+        this.client = params && params.client ? params.client : new CoreModels.Personne();
+        this.ventes = params && params.ventes ? params.ventes : new Array<Vente>();
+        this.prctRemiseGlobale = params && params.prctRemiseGlobale ? params.prctRemiseGlobale : 0;
+        this.isAutoliquidation = params && params.isAutoliquidation ? params.isAutoliquidation : false;
+        this.reglements = params && params.reglements ? params.reglements : new Array<Reglement>();
+        this.adresseLivraison = params && params.adresseLivraison ? params.adresseLivraison : new CoreModels.Adresse({});
+        this.details = params.details && params ? params.details : null;
+        this.logo = params && params.logo ? params.logo : null;
+        this.detailsTVA = params && params.detailsTva ? params.detailsTva : {};
 
-        if(this['calculate']) this.calculate();
+        if (this['calculate']) this.calculate();
 
     }
 
-    protected calculate(){
+    protected calculate() {
 
         var self = this;
 
@@ -43,28 +57,28 @@ export abstract class Document extends Base.BaseModel {
 
         // TODO : facture d'acompte => scinder par taux de tva pour dans le calcul du details
 
-        if(self.ventes && Array.isArray(self.ventes)){
+        if (self.ventes && Array.isArray(self.ventes)) {
 
-            self.ventes.forEach(function(vente){
+            self.ventes.forEach(function (vente) {
 
-            self._totalHT += vente.totalHT;
-            self._totalTVA += vente.totalTVA;
-            self._totalTTC += vente.totalTTC;
+                self._totalHT += vente.totalHT;
+                self._totalTVA += vente.totalTVA;
+                self._totalTTC += vente.totalTTC;
 
-            //if(!vente.article) return;
+                //if(!vente.article) return;
 
-            // si le taux n'existe pas dans le calcul du details
-            if(!d[vente.article.tauxTVA.toString()]){
-                var details = new DetailsTVA(vente.article.tauxTVA);
-                d[vente.article.tauxTVA.toString()] = details;
-            }
+                // si le taux n'existe pas dans le calcul du details
+                if (!d[vente.article.tauxTVA.toString()]) {
+                    var details = new DetailsTVA(vente.article.tauxTVA);
+                    d[vente.article.tauxTVA.toString()] = details;
+                }
 
-            // ajout de la base
-            d[vente.article.tauxTVA.toString()].base += vente.totalHT;
+                // ajout de la base
+                d[vente.article.tauxTVA.toString()].base += vente.totalHT;
 
             });
 
-        }        
+        }
 
         // ON arrondire
         self._totalTVA = self.round(self._totalTVA);
@@ -76,15 +90,15 @@ export abstract class Document extends Base.BaseModel {
         calculateNetAPayer();
 
         // calculer le net à payer de la facture
-        function calculateNetAPayer(){
+        function calculateNetAPayer() {
 
             var regle = 0; // le total deja payé
 
             // si les règlements ont été définis
-            if(Array.isArray(self.reglements)){
-            self.reglements.forEach(function(r){
-                if(r.paye === true) regle = r.montant;
-            });
+            if (Array.isArray(self.reglements)) {
+                self.reglements.forEach(function (r) {
+                    if (r.paye === true) regle = r.montant;
+                });
             }
 
             // on stock le res
@@ -94,17 +108,17 @@ export abstract class Document extends Base.BaseModel {
 
     }
 
-    removeVenteByIndex(index: number){
+    removeVenteByIndex(index: number) {
         this.ventes.splice(index, 1);
         this.calculate();
     }
 
-    addReglement(newReglt: Reglement){
+    addReglement(newReglt: Reglement) {
         this.reglements.push(Reglement.instanciate(newReglt));
         this.calculate();
     }
 
-    removeReglementByIndex(index: number){
+    removeReglementByIndex(index: number) {
         this.reglements.splice(index, 1);
         this.calculate();
     }
@@ -115,7 +129,7 @@ export abstract class Document extends Base.BaseModel {
      *
      * @return {object}  ddo
      */
-    toDDO(){
+    toDDO() {
         var ddo = DocumentDefinitionObjectHelper.getDDO('template1');
         return ddo;
     }
@@ -123,16 +137,9 @@ export abstract class Document extends Base.BaseModel {
     libelle: string;
     date: Date;
     numero: string;
-    // entreprise: Entreprise; passage en mode instanciation
-    // client: Personne;
-    // ventes: Array<Vente>;
     prctRemiseGlobale: number;
     isAutoliquidation: boolean;
-    // reglements: Array<Reglement>;
-    // logoEntreprise: any;
-    // adresseLivraison: Adresse;
     details: string;
-    //logo: Logo;
 
     // propriété calculées
     private _totalHT: number; // calculé
@@ -140,7 +147,7 @@ export abstract class Document extends Base.BaseModel {
         this.calculate();
         return this._totalHT;
     }
-    
+
 
     private _totalTTC: number; // calculé
     get totalTTC(): number {
@@ -153,7 +160,7 @@ export abstract class Document extends Base.BaseModel {
         this.calculate();
         return this._totalTVA;
     }
-    
+
 
     private _netAPayer: number;
     get netAPayer(): number {
@@ -165,38 +172,38 @@ export abstract class Document extends Base.BaseModel {
     get entreprise(): CoreModels.Entreprise {
         return this._entreprise;
     }
-    set entreprise(e){
-        this._entreprise = CoreModels.Entreprise.instanciate(e);        
+    set entreprise(e) {
+        this._entreprise = CoreModels.Entreprise.instanciate(e);
     }
 
     private _logo: Logo;
-    get logo(): Logo{
+    get logo(): Logo {
         return this._logo;
     }
-    set logo(l){
+    set logo(l) {
         this._logo = Logo.instanciate(l);
     }
-    
+
     private _client: CoreModels.Personne;
     get client(): CoreModels.Personne {
         return this._client;
     }
-    set client(c){
+    set client(c) {
         this._client = CoreModels.Personne.instanciatePhysiqueOuMorale(c);
     }
 
     private _reglements: Array<Reglement>;
-    get reglements(): Array<Reglement>{
+    get reglements(): Array<Reglement> {
         return this._reglements;
     }
 
-    set reglements(reglts){
-        if(!reglts) return;
+    set reglements(reglts) {
+        if (!reglts) return;
         this._reglements ? this._reglements.length = 0 : this._reglements = [];
-        if(Array.isArray(reglts)){
+        if (Array.isArray(reglts)) {
             for (var i = 0; i < reglts.length; i++) {
-            var element = reglts[i];
-            this._reglements.push(Reglement.instanciate(element));
+                var element = reglts[i];
+                this._reglements.push(Reglement.instanciate(element));
             }
         } else {
             this._reglements.push(Reglement.instanciate(reglts));
@@ -207,19 +214,19 @@ export abstract class Document extends Base.BaseModel {
     get ventes(): Array<Vente> {
         return this._ventes;
     }
-    set ventes(ventes){
-    
-        if(!ventes) return;
+    set ventes(ventes) {
+
+        if (!ventes) return;
 
         this._ventes ? this._ventes.length = 0 : this._ventes = []; // reset du tableau;
 
         // on vérifie si c'est un seul object ou un tableau
-        if(Array.isArray(ventes)){
-            
+        if (Array.isArray(ventes)) {
+
             for (var i = 0; i < ventes.length; i++) {
-            
-            var element = ventes[i];
-            this._ventes.push(Vente.instanciate(element));
+
+                var element = ventes[i];
+                this._ventes.push(Vente.instanciate(element));
 
             }
 
@@ -231,7 +238,7 @@ export abstract class Document extends Base.BaseModel {
 
     }
 
-    public addVente(newVente: any){
+    public addVente(newVente: any) {
         this._ventes.push(Vente.instanciate(newVente));
         this.calculate();
     }
@@ -241,7 +248,7 @@ export abstract class Document extends Base.BaseModel {
         return this._adresseLivraison;
     }
 
-    set adresseLivraison(a){
+    set adresseLivraison(a) {
         this._adresseLivraison = CoreModels.Adresse.instanciate(a);
     }
 
@@ -251,14 +258,14 @@ export abstract class Document extends Base.BaseModel {
 
 export class DetailsTVA extends Base.BaseModel {
 
-    constructor(taux: number, base?: number){
+    constructor(taux: number, base?: number) {
         super({});
         this._taux = taux;
         this._base = base || 0;
         this.calculate();
     }
 
-    private calculate(){
+    private calculate() {
         this.tva = this._taux * this._base;
         this.tva = this.round(this.tva);
     }
@@ -267,7 +274,7 @@ export class DetailsTVA extends Base.BaseModel {
     get taux(): number {
         return this._taux;
     }
-    set taux(newValue: number){
+    set taux(newValue: number) {
         this._taux = newValue;
         this.calculate();
     }
@@ -276,7 +283,7 @@ export class DetailsTVA extends Base.BaseModel {
     get base(): number {
         return this._base;
     }
-    set base(newValue: number){
+    set base(newValue: number) {
         this._base = newValue;
         this.calculate();
     }
@@ -286,42 +293,55 @@ export class DetailsTVA extends Base.BaseModel {
 
 }
 
+export interface IFacture extends IDocument {
+
+}
+
 export class Facture extends Document {
 
-    constructor(params: any) {
+    constructor(params: IFacture) {
 
-    super(params);
-    
+        super(params);
+
     }
 
+}
+
+export interface IFactureAcompte extends IFacture {
+    acompteHT?: number;
+    acompteTVA?: number;
 }
 
 export class FactureAcompte extends Document {
 
-    constructor(params: any){
+    constructor(params: IFactureAcompte) {
 
         super(params);
-        this.acompteHT = params.acompteHT || 0;
-        this.acompteTVA = params.acompteTVA || 0;
+        this.acompteHT = params && params.acompteHT ? params.acompteHT : 0;
+        this.acompteTVA = params && params.acompteTVA ? params.acompteTVA : 0;
     }
 
     acompteHT: number;
     acompteTVA: number;
-        
-    get acompteTTC(): number{
+
+    get acompteTTC(): number {
         return this.acompteHT + this.acompteTVA;
 
     }
-    
+
+}
+
+export interface IDevis extends IDocument {
+    dateValidite?: Date;
 }
 
 export class Devis extends Document {
 
-    constructor(params: any) {
+    constructor(params: IDevis) {
 
         super(params);
 
-        this.dateValidite = params.dateValidite;
+        this.dateValidite = params && params.dateValidite ? params.dateValidite : new Date(this.date.getFullYear(), this.date.getMonth() < 11 ? this.date.getMonth() + 1 : 0, this.date.getDate());
 
     }
 

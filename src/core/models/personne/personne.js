@@ -22,7 +22,11 @@ var Personne = (function (_super) {
         this.nomComplet = params && params.nomComplet ? params.nomComplet : null;
     }
     Personne.instanciatePhysiqueOuMorale = function (newPersonne) {
-        if (!newPersonne || !newPersonne.denominationSociale) {
+        if (!newPersonne ||
+            (!newPersonne.denominationSociale && !newPersonne.nom)) {
+            return new Personne();
+        }
+        else if (!newPersonne.denominationSociale) {
             return PersonnePhysique.instanciate(newPersonne);
         }
         else {
