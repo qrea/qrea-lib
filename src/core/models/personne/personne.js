@@ -54,10 +54,8 @@ var PersonnePhysique = (function (_super) {
     }
     Object.defineProperty(PersonnePhysique.prototype, "nomComplet", {
         get: function () {
-            var nom = this.civilite ? this.civilite + ' ' : '';
-            nom += this.nom.toUpperCase() + ' ' +
-                this.prenom.toUpperCase();
-            return nom;
+            // if (this.getName() == 'PersonnePhysique') {
+            return this._nomComplet;
         },
         set: function (v) {
             this._nomComplet = v;
