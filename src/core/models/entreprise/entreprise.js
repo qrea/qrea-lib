@@ -50,12 +50,7 @@ var Entreprise = (function (_super) {
             return this._personne;
         },
         set: function (p) {
-            if (p['getName'] && ['PersonneMorale', 'PersonnePhysique'].indexOf(p.getName()) > -1) {
-                this._personne = p;
-            }
-            else {
-                this._personne = personne_1.Personne.instanciatePhysiqueOuMorale(p);
-            }
+            this._personne = p;
         },
         enumerable: true,
         configurable: true

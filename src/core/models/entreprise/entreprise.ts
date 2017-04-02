@@ -82,18 +82,17 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
     modeReglementDefaut: string;
 
     private _personne: PersonneMorale | PersonnePhysique | Personne;
-    // on peut avoir une personne physique ou morale
+    // on peut avoir une personne physique ou morale ou une personne
     get personne(): PersonneMorale | PersonnePhysique | Personne {
         return this._personne;
     }
     set personne(p) {
-        this._personne = p;
 
-        // if(p['getName'] && ['PersonneMorale', 'PersonnePhysique'].indexOf(p.getName()) > -1){
-        //     this._personne = p;
-        // } else {
-        //     this._personne = Personne.instanciatePhysiqueOuMorale(p);
-        // }
+        if (p['getName'] && ['PersonneMorale', 'PersonnePhysique', 'Personne'].indexOf(p.getName()) > -1) {
+            this._personne = p;
+        } else {
+            this._personne = Personne.instanciatePhysiqueOuMorale(p);
+        }
 
     }
 
@@ -132,16 +131,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
 
     public get nomComplet(): string {
 
-        let s = '';
-        if (this.isPersonneMorale) {
-            const p: PersonneMorale = <PersonneMorale>this.personne;
-            s += p.denominationSociale || '' + ' ' + p.forme || '';
-        } else {
-            const p: PersonnePhysique = <PersonnePhysique>this.personne;
-            s += p.nomCommercial || ((p.prenom || '') + ' ' + (p.nom || ''));
-        }
-
-        return s;
+        return this.personne.nomComplet;
 
     }
 

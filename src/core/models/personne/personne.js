@@ -54,13 +54,16 @@ var PersonnePhysique = (function (_super) {
     }
     Object.defineProperty(PersonnePhysique.prototype, "nomComplet", {
         get: function () {
-            if (this._nomComplet)
+            if (this._nomComplet) {
                 return this._nomComplet;
-            var nom = this.civilite ? this.civilite + ' ' : '';
-            nom += this.nom ? this.nom.toUpperCase() : '';
-            nom += ' ';
-            nom += this.prenom ? this.prenom.toUpperCase() : '';
-            return nom;
+            }
+            else {
+                var nom = this.civilite ? this.civilite + ' ' : '';
+                nom += this.nom ? this.nom.toUpperCase() : '';
+                nom += ' ';
+                nom += this.prenom ? this.prenom.toUpperCase() : '';
+                return nom;
+            }
         },
         set: function (v) {
             this._nomComplet = v;

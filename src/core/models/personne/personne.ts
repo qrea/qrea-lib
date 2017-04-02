@@ -100,7 +100,7 @@ export class PersonnePhysique extends Personne {
 
             return this._nomComplet;
 
-        } else {
+        } else if (this.nom && this.prenom) {
 
             let nom = this.civilite ? this.civilite + ' ' : '';
             nom += this.nom ? this.nom.toUpperCase() : '';
@@ -108,6 +108,10 @@ export class PersonnePhysique extends Personne {
             nom += this.prenom ? this.prenom.toUpperCase() : '';
 
             return nom;
+
+        } else {
+
+            return this._nomComplet;
 
         }
 
@@ -146,15 +150,24 @@ export class PersonneMorale extends Personne {
     capitalSocial: number;
     isCapitalVariable: boolean;
 
-
     private _nomComplet: string;
     public get nomComplet(): string {
 
-        if (this._nomComplet) return this._nomComplet;
+        if (this._nomComplet) {
 
-        let nom = this.forme.toUpperCase() + ' ' + this.denominationSociale.toUpperCase();
-        return nom;
-        // return this._nomComplet;
+            return this._nomComplet;
+
+        } else if (this.forme && this.denominationSociale) {
+
+            let nom = this.forme.toUpperCase() + ' ' + this.denominationSociale.toUpperCase();
+            return nom;
+
+        } else {
+
+            return this._nomComplet;
+
+        }
+
     }
 
     public set nomComplet(v: string) {
