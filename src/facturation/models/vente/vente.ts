@@ -13,9 +13,9 @@ export class Vente extends Base.BaseModel {
 
         super(params);
 
-        this.article = params.article ? params.article : new Article();
-        this.quantite = params.quantite ? params.quantite : 0;
-        this.prctRemise = params.prctRemise ? params.prctRemise : 0;
+        this.article = params && params.article ? params.article : new Article();
+        this.quantite = params && params.quantite ? params.quantite : 0;
+        this.prctRemise = params && params.prctRemise ? params.prctRemise : 0;
 
         this.calculate();
 
