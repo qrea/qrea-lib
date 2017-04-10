@@ -10,12 +10,12 @@ export interface IBaseArticle extends Base.IBase {
 
 export class BaseArticle extends Base.BaseModel {
 
-    constructor(params: IBaseArticle) {
+    constructor(params?: IBaseArticle) {
 
         super(params);
 
-        this.libelle = params.libelle ? params.libelle : 'Nouvel article';
-        this.reference = params.reference ? params.reference : null;
+        this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
+        this.reference = params && params.reference ? params.reference : null;
 
     }
 
@@ -42,12 +42,12 @@ export interface IQteArticles extends IBaseArticle {
 
 export class QteArticles extends Base.BaseModel {
 
-    constructor(params: IQteArticles) {
+    constructor(params?: IQteArticles) {
 
         super(params);
 
-        this.quantite = params.quantite ? params.quantite : 0;
-        this.article = params.article ? params.article : null;
+        this.quantite = params && params.quantite ? params.quantite : 0;
+        this.article = params && params.article ? params.article : null;
 
     }
 
@@ -76,11 +76,11 @@ export interface IGroupeArticles extends IBaseArticle {
 
 export class GroupeArticles extends BaseArticle implements IBaseArticle {
 
-    constructor(params: IGroupeArticles) {
+    constructor(params?: IGroupeArticles) {
 
         super(params);
 
-        this.qteArticles = params.qteArticles ? params.qteArticles : new Array<QteArticles>();
+        this.qteArticles = params && params.qteArticles ? params.qteArticles : new Array<QteArticles>();
 
 
     }
@@ -149,12 +149,12 @@ export interface IArticle extends IBaseArticle {
 
 export class Article extends BaseArticle implements IArticle {
 
-    constructor(params: IArticle) {
+    constructor(params?: IArticle) {
 
         super(params);
-        this.unite = params.unite ? params.unite : null;
-        this.prix = params.prix ? params.prix : 0;
-        this.tauxTVA = params.tauxTVA ? params.tauxTVA : 0;
+        this.unite = params && params.unite ? params.unite : null;
+        this.prix = params && params.prix ? params.prix : 0;
+        this.tauxTVA = params && params.tauxTVA ? params.tauxTVA : 0;
 
     }
 
