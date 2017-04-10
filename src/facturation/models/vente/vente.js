@@ -9,9 +9,9 @@ var Vente = (function (_super) {
     __extends(Vente, _super);
     function Vente(params) {
         _super.call(this, params);
-        this.article = params.article ? params.article : new article_1.Article();
-        this.quantite = params.quantite ? params.quantite : 0;
-        this.prctRemise = params.prctRemise ? params.prctRemise : 0;
+        this.article = params && params.article ? params.article : new article_1.Article();
+        this.quantite = params && params.quantite ? params.quantite : 0;
+        this.prctRemise = params && params.prctRemise ? params.prctRemise : 0;
         this.calculate();
     }
     Vente.prototype.calculate = function () {

@@ -22,8 +22,8 @@ export class BaseArticle extends Base.BaseModel {
     libelle: string;
     reference: string;
 
-    static instanciateArticleOuGroupe(o: any) {
-        if (o.qteArticles) {
+    static instanciateArticleOuGroupe(o?: any) {
+        if (o && o.qteArticles) {
             // on créer un groupe d'articles
             return GroupeArticles.instanciate(o);
         } else {
