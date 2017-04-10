@@ -4,10 +4,18 @@ import { Article, IArticle, BaseArticle } from '../article/article';
 export interface IVente {
     article?: Article,
     quantite?: number,
-    prctRemise?: number
+    prctRemise?: number,
+    typeRemise?: typeRemise
+}
+
+export enum typeRemise {
+    decimal,
+    pourcent
 }
 
 export class Vente extends Base.BaseModel {
+
+    typeRemise: typeRemise;
 
     constructor(params?: IVente) {
 
@@ -16,6 +24,7 @@ export class Vente extends Base.BaseModel {
         this.article = params && params.article ? params.article : new Article();
         this.quantite = params && params.quantite ? params.quantite : 0;
         this.prctRemise = params && params.prctRemise ? params.prctRemise : 0;
+        this.typeRemise = params && params.typeRemise ? params.typeRemise : typeRemise.pourcent;
 
         this.calculate();
 
@@ -37,7 +46,19 @@ export class Vente extends Base.BaseModel {
             this._totalHT = this.article.prix * this._quantite;
 
             if (this.prctRemise) {
-                this._totalHT = this._totalHT * (1 - this.prctRemise);
+
+                let remise = this.prctRemise;
+
+                if (this.typeRemise == typeRemise.pourcent) {
+                    remise = remise / 100;
+                }
+
+                if (remise > 1) {
+                    remise = 1;
+                    console.warn('attention la remise est > à 100% !');
+                }
+
+                this._totalHT = this._totalHT * (1 - remise);
             }
 
             this._totalHT = this.round(this._totalHT);

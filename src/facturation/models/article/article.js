@@ -12,7 +12,7 @@ var BaseArticle = (function (_super) {
         this.reference = params && params.reference ? params.reference : null;
     }
     BaseArticle.instanciateArticleOuGroupe = function (o) {
-        if (o.qteArticles) {
+        if (o && o.qteArticles) {
             return GroupeArticles.instanciate(o);
         }
         else {
