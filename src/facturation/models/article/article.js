@@ -8,8 +8,8 @@ var BaseArticle = (function (_super) {
     __extends(BaseArticle, _super);
     function BaseArticle(params) {
         _super.call(this, params);
-        this.libelle = params.libelle ? params.libelle : 'Nouvel article';
-        this.reference = params.reference ? params.reference : null;
+        this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
+        this.reference = params && params.reference ? params.reference : null;
     }
     BaseArticle.instanciateArticleOuGroupe = function (o) {
         if (o.qteArticles) {
@@ -26,8 +26,8 @@ var QteArticles = (function (_super) {
     __extends(QteArticles, _super);
     function QteArticles(params) {
         _super.call(this, params);
-        this.quantite = params.quantite ? params.quantite : 0;
-        this.article = params.article ? params.article : null;
+        this.quantite = params && params.quantite ? params.quantite : 0;
+        this.article = params && params.article ? params.article : null;
     }
     Object.defineProperty(QteArticles.prototype, "total", {
         get: function () {
@@ -57,7 +57,7 @@ var GroupeArticles = (function (_super) {
     __extends(GroupeArticles, _super);
     function GroupeArticles(params) {
         _super.call(this, params);
-        this.qteArticles = params.qteArticles ? params.qteArticles : new Array();
+        this.qteArticles = params && params.qteArticles ? params.qteArticles : new Array();
     }
     Object.defineProperty(GroupeArticles.prototype, "qteArticles", {
         get: function () {
@@ -116,9 +116,9 @@ var Article = (function (_super) {
     __extends(Article, _super);
     function Article(params) {
         _super.call(this, params);
-        this.unite = params.unite ? params.unite : null;
-        this.prix = params.prix ? params.prix : 0;
-        this.tauxTVA = params.tauxTVA ? params.tauxTVA : 0;
+        this.unite = params && params.unite ? params.unite : null;
+        this.prix = params && params.prix ? params.prix : 0;
+        this.tauxTVA = params && params.tauxTVA ? params.tauxTVA : 0;
     }
     return Article;
 })(BaseArticle);

@@ -9,7 +9,7 @@ export interface IVente {
 
 export class Vente extends Base.BaseModel {
 
-    constructor(params: IVente) {
+    constructor(params?: IVente) {
 
         super(params);
 
