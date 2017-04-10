@@ -116,7 +116,7 @@ var Document = (function (_super) {
             return this._entreprise;
         },
         set: function (e) {
-            this._entreprise = core_1.Models.Entreprise.instanciate(e);
+            this._entreprise = e;
         },
         enumerable: true,
         configurable: true
@@ -136,7 +136,7 @@ var Document = (function (_super) {
             return this._client;
         },
         set: function (c) {
-            this._client = core_1.Models.Personne.instanciatePhysiqueOuMorale(c);
+            this._client = c;
         },
         enumerable: true,
         configurable: true
@@ -146,18 +146,7 @@ var Document = (function (_super) {
             return this._reglements;
         },
         set: function (reglts) {
-            if (!reglts)
-                return;
-            this._reglements ? this._reglements.length = 0 : this._reglements = [];
-            if (Array.isArray(reglts)) {
-                for (var i = 0; i < reglts.length; i++) {
-                    var element = reglts[i];
-                    this._reglements.push(reglement_1.Reglement.instanciate(element));
-                }
-            }
-            else {
-                this._reglements.push(reglement_1.Reglement.instanciate(reglts));
-            }
+            this._reglements = reglts;
         },
         enumerable: true,
         configurable: true
@@ -167,18 +156,7 @@ var Document = (function (_super) {
             return this._ventes;
         },
         set: function (ventes) {
-            if (!ventes)
-                return;
-            this._ventes ? this._ventes.length = 0 : this._ventes = [];
-            if (Array.isArray(ventes)) {
-                for (var i = 0; i < ventes.length; i++) {
-                    var element = ventes[i];
-                    this._ventes.push(vente_1.Vente.instanciate(element));
-                }
-            }
-            else {
-                this._ventes.push(vente_1.Vente.instanciate(ventes));
-            }
+            this._ventes = ventes;
         },
         enumerable: true,
         configurable: true

@@ -1,27 +1,30 @@
 import Base from '../../../base/base';
 import { Article, IArticle, BaseArticle } from '../article/article';
 
+export interface IVente {
+    article?: Article,
+    quantite?: number,
+    prctRemise?: number
+}
+
 export class Vente extends Base.BaseModel {
 
-    constructor(params: any) {
+    constructor(params: IVente) {
 
         super(params);
 
-        if(!params.article) throw new Error('L\'objet vente requiert une propriété \'article\' valide');
-        if(!params.quantite) throw new Error('L\'objet vente requiert une propriété \'quantite\'');
-
-        this.article = params.article;
-        this.quantite = params.quantite;
-        this.prctRemise = params.prctRemise || null;
+        this.article = params.article ? params.article : new Article();
+        this.quantite = params.quantite ? params.quantite : 0;
+        this.prctRemise = params.prctRemise ? params.prctRemise : 0;
 
         this.calculate();
 
     }
 
-    private calculate(){
+    private calculate() {
 
         // si les infos nécessaires au calcul ne sont pas donnée on set tout à 0 et on arrête
-        if(!this.article || !this._quantite){
+        if (!this.article || !this._quantite) {
 
             this._totalHT = 0;
             this._totalTTC = 0;
@@ -33,8 +36,8 @@ export class Vente extends Base.BaseModel {
 
             this._totalHT = this.article.prix * this._quantite;
 
-            if(this.prctRemise){
-            this._totalHT = this._totalHT * (1 - this.prctRemise);
+            if (this.prctRemise) {
+                this._totalHT = this._totalHT * (1 - this.prctRemise);
             }
 
             this._totalHT = this.round(this._totalHT);
@@ -42,16 +45,16 @@ export class Vente extends Base.BaseModel {
             this._totalTVA = this.round(this._totalHT * this.article.tauxTVA);
             this._totalTTC = this._totalTVA + this._totalHT;
 
-        }        
+        }
 
     }
 
     // article: IArticle;
     private _article: IArticle;
-    get article(): IArticle{
+    get article(): IArticle {
         return this._article;
     }
-    set article(a){
+    set article(a) {
         // on instancie un article ou un groupe d'articles
         this._article = BaseArticle.instanciateArticleOuGroupe(a);
     }
@@ -60,7 +63,7 @@ export class Vente extends Base.BaseModel {
     get quantite(): number {
         return this._quantite;
     }
-    set quantite(newQuantite: number){
+    set quantite(newQuantite: number) {
         this._quantite = newQuantite;
         this.calculate();
     }

@@ -9,13 +9,9 @@ var Vente = (function (_super) {
     __extends(Vente, _super);
     function Vente(params) {
         _super.call(this, params);
-        if (!params.article)
-            throw new Error('L\'objet vente requiert une propriété \'article\' valide');
-        if (!params.quantite)
-            throw new Error('L\'objet vente requiert une propriété \'quantite\'');
-        this.article = params.article;
-        this.quantite = params.quantite;
-        this.prctRemise = params.prctRemise || null;
+        this.article = params.article ? params.article : new article_1.Article();
+        this.quantite = params.quantite ? params.quantite : 0;
+        this.prctRemise = params.prctRemise ? params.prctRemise : 0;
         this.calculate();
     }
     Vente.prototype.calculate = function () {
