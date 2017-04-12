@@ -14,7 +14,7 @@ export class BaseArticle extends Base.BaseModel {
 
         super(params);
 
-        this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
+        this.libelle = params && params.libelle ? params.libelle : null;
         this.reference = params && params.reference ? params.reference : null;
 
     }
