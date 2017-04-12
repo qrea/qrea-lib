@@ -8,7 +8,7 @@ describe('Core.Models.Entreprise', function () {
         const e = new Models.Entreprise();
         assert.isDefined(e, 'L\'entreprise n\'est pas instanciée');
         assert.equal(e.personne.getName(), 'PersonnePhysique', 'Le type de personne par défaut n\'est pas PersonnePhysique');
-        
+
     });
 
     it('doit instancier une entreprise et obtenir son nom', () => {
@@ -21,7 +21,7 @@ describe('Core.Models.Entreprise', function () {
         }
 
         let e1 = new Models.Entreprise(params1);
-        assert.equal(e1.nomComplet, 'Pierre Bourdu');
+        assert.equal(e1.nomComplet, 'BOURDU PIERRE');
 
         e1.personne.nomCommercial = "WorkMind";
         assert.equal(e1.nomComplet, 'WorkMind');
