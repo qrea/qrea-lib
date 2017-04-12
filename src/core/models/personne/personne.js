@@ -58,7 +58,10 @@ var PersonnePhysique = (function (_super) {
     }
     Object.defineProperty(PersonnePhysique.prototype, "nomComplet", {
         get: function () {
-            if (this._nomComplet) {
+            if (this.nomCommercial) {
+                return this.nomCommercial.toUpperCase();
+            }
+            else if (this._nomComplet) {
                 return this._nomComplet;
             }
             else if (this.nom && this.prenom) {

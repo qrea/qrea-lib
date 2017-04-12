@@ -24,7 +24,7 @@ describe('Core.Models.Entreprise', function () {
         assert.equal(e1.nomComplet, 'BOURDU PIERRE');
 
         e1.personne.nomCommercial = "WorkMind";
-        assert.equal(e1.nomComplet, 'WorkMind');
+        assert.equal(e1.nomComplet, 'WORKMIND');
         assert.equal(e1.nomComplet, e1.nomCompletCapital);
 
         const params2 = {
