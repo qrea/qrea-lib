@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var BaseWriter = (function () {
     function BaseWriter() {
     }
@@ -49,5 +51,5 @@ var BaseWriter = (function () {
         return params;
     };
     return BaseWriter;
-})();
+}());
 exports.BaseWriter = BaseWriter;

@@ -1,25 +1,33 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var base_1 = require('../../../base/base');
-var adresse_1 = require('../adresse/adresse');
-var identification_1 = require('../identification/identification');
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var base_1 = require("../../../base/base");
+var adresse_1 = require("../adresse/adresse");
+var identification_1 = require("../identification/identification");
 var Personne = (function (_super) {
     __extends(Personne, _super);
     function Personne(params) {
         if (params === void 0) { params = null; }
-        _super.call(this, params);
-        this.adresse = params && params.adresse ? params.adresse : new adresse_1.Adresse({});
-        this.isEntreprise = params && params.isEntreprise ? params.isEntreprise : false;
-        this.numeroTVA = params && params.numeroTVA ? params.numeroTVA : null;
-        this.telephone = params && params.telephone ? params.telephone : null;
-        this.email = params && params.email ? params.email : null;
-        this.siteInternet = params && params.siteInternet ? params.siteInternet : null;
-        this.fax = params && params.fax ? params.fax : null;
-        this.identification = params && params.identification ? params.identification : new identification_1.Identification();
-        this.nomComplet = params && params.nomComplet ? params.nomComplet : null;
+        var _this = _super.call(this, params) || this;
+        _this.adresse = params && params.adresse ? params.adresse : new adresse_1.Adresse({});
+        _this.isEntreprise = params && params.isEntreprise ? params.isEntreprise : false;
+        _this.numeroTVA = params && params.numeroTVA ? params.numeroTVA : null;
+        _this.telephone = params && params.telephone ? params.telephone : null;
+        _this.email = params && params.email ? params.email : null;
+        _this.siteInternet = params && params.siteInternet ? params.siteInternet : null;
+        _this.fax = params && params.fax ? params.fax : null;
+        _this.identification = params && params.identification ? params.identification : new identification_1.Identification();
+        _this.nomComplet = params && params.nomComplet ? params.nomComplet : null;
+        return _this;
     }
     Personne.instanciatePhysiqueOuMorale = function (newPersonne) {
         if (!newPersonne ||
@@ -44,17 +52,18 @@ var Personne = (function (_super) {
         configurable: true
     });
     return Personne;
-})(base_1.default.BaseModel);
+}(base_1.default.BaseModel));
 exports.Personne = Personne;
 var PersonnePhysique = (function (_super) {
     __extends(PersonnePhysique, _super);
     function PersonnePhysique(params) {
         if (params === void 0) { params = null; }
-        _super.call(this, params);
-        this.civilite = params ? params.civilite : null;
-        this.nom = params ? params.nom : null;
-        this.prenom = params ? params.prenom : null;
-        this.nomCommercial = params ? params.nomCommercial : null;
+        var _this = _super.call(this, params) || this;
+        _this.civilite = params ? params.civilite : null;
+        _this.nom = params ? params.nom : null;
+        _this.prenom = params ? params.prenom : null;
+        _this.nomCommercial = params ? params.nomCommercial : null;
+        return _this;
     }
     Object.defineProperty(PersonnePhysique.prototype, "nomComplet", {
         get: function () {
@@ -79,17 +88,18 @@ var PersonnePhysique = (function (_super) {
         configurable: true
     });
     return PersonnePhysique;
-})(Personne);
+}(Personne));
 exports.PersonnePhysique = PersonnePhysique;
 var PersonneMorale = (function (_super) {
     __extends(PersonneMorale, _super);
     function PersonneMorale(params) {
         if (params === void 0) { params = null; }
-        _super.call(this, params);
-        this.forme = params ? params.forme : null;
-        this.denominationSociale = params ? params.denominationSociale : null;
-        this.capitalSocial = params ? params.capitalSocial : null;
-        this.isCapitalVariable = params ? params.isCapitalVariable : false;
+        var _this = _super.call(this, params) || this;
+        _this.forme = params ? params.forme : null;
+        _this.denominationSociale = params ? params.denominationSociale : null;
+        _this.capitalSocial = params ? params.capitalSocial : null;
+        _this.isCapitalVariable = params ? params.isCapitalVariable : false;
+        return _this;
     }
     Object.defineProperty(PersonneMorale.prototype, "nomComplet", {
         get: function () {
@@ -111,5 +121,5 @@ var PersonneMorale = (function (_super) {
         configurable: true
     });
     return PersonneMorale;
-})(Personne);
+}(Personne));
 exports.PersonneMorale = PersonneMorale;
