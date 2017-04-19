@@ -8,7 +8,7 @@ var BaseArticle = (function (_super) {
     __extends(BaseArticle, _super);
     function BaseArticle(params) {
         _super.call(this, params);
-        this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
+        this.libelle = params && params.libelle ? params.libelle : null;
         this.reference = params && params.reference ? params.reference : null;
     }
     BaseArticle.instanciateArticleOuGroupe = function (o) {

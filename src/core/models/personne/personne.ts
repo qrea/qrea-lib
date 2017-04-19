@@ -106,7 +106,11 @@ export class PersonnePhysique extends Personne {
     private _nomComplet: string;
     get nomComplet(): string {
 
-        if (this._nomComplet) {
+        if (this.nomCommercial) {
+
+            return this.nomCommercial.toUpperCase();
+
+        } else if (this._nomComplet) {
 
             return this._nomComplet;
 
