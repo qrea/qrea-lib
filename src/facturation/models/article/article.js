@@ -1,23 +1,15 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = require("../../../base/base");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_1 = require('../../../base/base');
 var BaseArticle = (function (_super) {
     __extends(BaseArticle, _super);
     function BaseArticle(params) {
-        var _this = _super.call(this, params) || this;
-        _this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
-        _this.reference = params && params.reference ? params.reference : null;
-        return _this;
+        _super.call(this, params);
+        this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
+        this.reference = params && params.reference ? params.reference : null;
     }
     BaseArticle.instanciateArticleOuGroupe = function (o) {
         if (o && o.qteArticles) {
@@ -28,15 +20,14 @@ var BaseArticle = (function (_super) {
         }
     };
     return BaseArticle;
-}(base_1.default.BaseModel));
+})(base_1.default.BaseModel);
 exports.BaseArticle = BaseArticle;
 var QteArticles = (function (_super) {
     __extends(QteArticles, _super);
     function QteArticles(params) {
-        var _this = _super.call(this, params) || this;
-        _this.quantite = params && params.quantite ? params.quantite : 0;
-        _this.article = params && params.article ? params.article : null;
-        return _this;
+        _super.call(this, params);
+        this.quantite = params && params.quantite ? params.quantite : 0;
+        this.article = params && params.article ? params.article : null;
     }
     Object.defineProperty(QteArticles.prototype, "total", {
         get: function () {
@@ -60,14 +51,13 @@ var QteArticles = (function (_super) {
         configurable: true
     });
     return QteArticles;
-}(base_1.default.BaseModel));
+})(base_1.default.BaseModel);
 exports.QteArticles = QteArticles;
 var GroupeArticles = (function (_super) {
     __extends(GroupeArticles, _super);
     function GroupeArticles(params) {
-        var _this = _super.call(this, params) || this;
-        _this.qteArticles = params && params.qteArticles ? params.qteArticles : new Array();
-        return _this;
+        _super.call(this, params);
+        this.qteArticles = params && params.qteArticles ? params.qteArticles : new Array();
     }
     Object.defineProperty(GroupeArticles.prototype, "qteArticles", {
         get: function () {
@@ -120,17 +110,16 @@ var GroupeArticles = (function (_super) {
         configurable: true
     });
     return GroupeArticles;
-}(BaseArticle));
+})(BaseArticle);
 exports.GroupeArticles = GroupeArticles;
 var Article = (function (_super) {
     __extends(Article, _super);
     function Article(params) {
-        var _this = _super.call(this, params) || this;
-        _this.unite = params && params.unite ? params.unite : null;
-        _this.prix = params && params.prix ? params.prix : 0;
-        _this.tauxTVA = params && params.tauxTVA ? params.tauxTVA : 0;
-        return _this;
+        _super.call(this, params);
+        this.unite = params && params.unite ? params.unite : null;
+        this.prix = params && params.prix ? params.prix : 0;
+        this.tauxTVA = params && params.tauxTVA ? params.tauxTVA : 0;
     }
     return Article;
-}(BaseArticle));
+})(BaseArticle);
 exports.Article = Article;

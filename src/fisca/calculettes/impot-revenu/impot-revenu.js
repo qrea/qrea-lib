@@ -1,17 +1,10 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = require("../base/base");
-var RevenusCategoriels = require("./revenus-categoriels/revenus-categoriels");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_1 = require('../base/base');
+var RevenusCategoriels = require('./revenus-categoriels/revenus-categoriels');
 exports.RevenusCategoriels = RevenusCategoriels;
 var DICTIONNAIRE_CONSTANTES_2015 = {
     PLAFOND_QUOTIENT_FAMILIAL: 1510,
@@ -46,17 +39,16 @@ exports.DICTIONNAIRE_CONSTANTES = {
 var ImpotRevenuCalculette = (function (_super) {
     __extends(ImpotRevenuCalculette, _super);
     function ImpotRevenuCalculette(params) {
-        var _this = _super.call(this, params) || this;
-        _this._revenuNetGlobal = 0;
-        _this.nbParts = 1;
-        _this._couple = false;
-        _this.revenus = new Array();
-        _this._impotBrut = 0;
-        _this.CONSTANTES_CALCUL = exports.DICTIONNAIRE_CONSTANTES[params.millesime] ? exports.DICTIONNAIRE_CONSTANTES[params.millesime] : null;
-        _this.nbEnfants = params.nbEnfants ? params.nbEnfants : 0;
-        _this.couple = params.couple ? params.couple : false;
-        _this.revenuNetGlobal = params.revenuNetGlobal ? params.revenuNetGlobal : 0;
-        return _this;
+        _super.call(this, params);
+        this._revenuNetGlobal = 0;
+        this.nbParts = 1;
+        this._couple = false;
+        this.revenus = new Array();
+        this._impotBrut = 0;
+        this.CONSTANTES_CALCUL = exports.DICTIONNAIRE_CONSTANTES[params.millesime] ? exports.DICTIONNAIRE_CONSTANTES[params.millesime] : null;
+        this.nbEnfants = params.nbEnfants ? params.nbEnfants : 0;
+        this.couple = params.couple ? params.couple : false;
+        this.revenuNetGlobal = params.revenuNetGlobal ? params.revenuNetGlobal : 0;
     }
     Object.defineProperty(ImpotRevenuCalculette.prototype, "revenuNetGlobal", {
         get: function () {
@@ -170,5 +162,5 @@ var ImpotRevenuCalculette = (function (_super) {
         return impotBrut;
     };
     return ImpotRevenuCalculette;
-}(base_1.BaseCalculette));
+})(base_1.BaseCalculette);
 exports.ImpotRevenuCalculette = ImpotRevenuCalculette;
