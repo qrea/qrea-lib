@@ -1,5 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Base;
 (function (Base) {
     var BaseModel = (function () {
@@ -69,9 +67,10 @@ var Base;
         };
         ;
         return BaseModel;
-    }());
+    })();
     Base.BaseModel = BaseModel;
     ;
 })(Base || (Base = {}));
 ;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Base;

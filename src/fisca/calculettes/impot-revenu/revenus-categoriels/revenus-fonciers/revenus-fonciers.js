@@ -1,40 +1,32 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var RevenusCategoriels = require("../revenus-categoriels");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var RevenusCategoriels = require('../revenus-categoriels');
 exports.CONSTANTES_RF_2015 = {
     MAXI_DEFICIT_IMPUTABLE: 10700,
     ABATTEMENT_MICRO_FONCIER: 0.3,
     PLAFOND_MICRO: 15300
 };
-var regimesFonciers;
 (function (regimesFonciers) {
     regimesFonciers[regimesFonciers["micro"] = 0] = "micro";
     regimesFonciers[regimesFonciers["reel"] = 1] = "reel";
-})(regimesFonciers = exports.regimesFonciers || (exports.regimesFonciers = {}));
+})(exports.regimesFonciers || (exports.regimesFonciers = {}));
+var regimesFonciers = exports.regimesFonciers;
 var RevenusFonciers = (function (_super) {
     __extends(RevenusFonciers, _super);
     function RevenusFonciers() {
-        var _this = _super.call(this) || this;
-        _this.categorie = 'Revenus fonciers';
-        _this.categorieShort = 'RF';
-        _this._regime = 0;
-        _this._revenuBrut = 0;
-        _this._interetsEmprunt = 0;
-        _this._chargesDeductibles = 0;
-        _this._travaux = 0;
-        _this._deficitReportable = 0;
-        _this._interetsEmpruntReportable = 0;
-        return _this;
+        _super.call(this);
+        this.categorie = 'Revenus fonciers';
+        this.categorieShort = 'RF';
+        this._regime = 0;
+        this._revenuBrut = 0;
+        this._interetsEmprunt = 0;
+        this._chargesDeductibles = 0;
+        this._travaux = 0;
+        this._deficitReportable = 0;
+        this._interetsEmpruntReportable = 0;
     }
     Object.defineProperty(RevenusFonciers.prototype, "description", {
         get: function () {
@@ -161,5 +153,5 @@ var RevenusFonciers = (function (_super) {
         }
     };
     return RevenusFonciers;
-}(RevenusCategoriels.RevenuCategoriel));
+})(RevenusCategoriels.RevenuCategoriel);
 exports.RevenusFonciers = RevenusFonciers;
