@@ -1,10 +1,17 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var RevenusCategoriels = require('../revenus-categoriels');
-var moment = require('moment');
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var RevenusCategoriels = require("../revenus-categoriels");
+var moment = require("moment");
 exports.CONSTANTES_PLUS_VALUE_VALEUR_MOBILIERE_2015 = {
     ABATTEMENT_FIXE_DEPART_RETRAITE: 500000,
     ABATTEMENTS_REGIME_DROIT_COMMUN: [
@@ -40,31 +47,32 @@ exports.CONSTANTES_PLUS_VALUE_VALEUR_MOBILIERE_2015 = {
         }
     ]
 };
+var regimeCessionValeurMobiliere;
 (function (regimeCessionValeurMobiliere) {
     regimeCessionValeurMobiliere[regimeCessionValeurMobiliere["droitCommun"] = 0] = "droitCommun";
     regimeCessionValeurMobiliere[regimeCessionValeurMobiliere["incitatif"] = 1] = "incitatif";
     regimeCessionValeurMobiliere[regimeCessionValeurMobiliere["departRetraite"] = 2] = "departRetraite";
-})(exports.regimeCessionValeurMobiliere || (exports.regimeCessionValeurMobiliere = {}));
-var regimeCessionValeurMobiliere = exports.regimeCessionValeurMobiliere;
+})(regimeCessionValeurMobiliere = exports.regimeCessionValeurMobiliere || (exports.regimeCessionValeurMobiliere = {}));
+var typeCession;
 (function (typeCession) {
     typeCession[typeCession["titres"] = 0] = "titres";
     typeCession[typeCession["cessionPEA"] = 1] = "cessionPEA";
-})(exports.typeCession || (exports.typeCession = {}));
-var typeCession = exports.typeCession;
+})(typeCession = exports.typeCession || (exports.typeCession = {}));
 var PlusValues = (function (_super) {
     __extends(PlusValues, _super);
     function PlusValues() {
-        _super.call(this);
-        this.categorie = 'Plus value';
-        this.categorieShort = 'PV';
-        this._regime = regimeCessionValeurMobiliere.droitCommun;
-        this._typeCession = typeCession.titres;
-        this._dateAcquisition = new Date();
-        this._dateCession = new Date();
-        this._dureeDetention = 0;
-        this._prixRevient = 0;
-        this._revenuBrut = 0;
-        this._plusValueBrute = 0;
+        var _this = _super.call(this) || this;
+        _this.categorie = 'Plus value';
+        _this.categorieShort = 'PV';
+        _this._regime = regimeCessionValeurMobiliere.droitCommun;
+        _this._typeCession = typeCession.titres;
+        _this._dateAcquisition = new Date();
+        _this._dateCession = new Date();
+        _this._dureeDetention = 0;
+        _this._prixRevient = 0;
+        _this._revenuBrut = 0;
+        _this._plusValueBrute = 0;
+        return _this;
     }
     Object.defineProperty(PlusValues.prototype, "description", {
         get: function () {
@@ -211,5 +219,5 @@ var PlusValues = (function (_super) {
         return abatt;
     };
     return PlusValues;
-})(RevenusCategoriels.RevenuCategoriel);
+}(RevenusCategoriels.RevenuCategoriel));
 exports.PlusValues = PlusValues;

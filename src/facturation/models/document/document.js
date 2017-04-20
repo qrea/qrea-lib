@@ -1,34 +1,47 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var base_1 = require('../../../base/base');
-var core_1 = require('../../../core/core');
-var reglement_1 = require('../reglement/reglement');
-var vente_1 = require('../vente/vente');
-var logo_1 = require('../logo/logo');
-var helpers_1 = require('../../helpers/helpers');
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var base_1 = require("../../../base/base");
+var core_1 = require("../../../core/core");
+var reglement_1 = require("../reglement/reglement");
+var vente_1 = require("../vente/vente");
+var logo_1 = require("../logo/logo");
+var jsPDF = require("jspdf");
+var helpers_1 = require("../../helpers/helpers");
 var Document = (function (_super) {
     __extends(Document, _super);
     function Document(params) {
-        _super.call(this, params);
-        this.libelle = params && params.libelle ? params.libelle : null;
-        this.date = params && params.date ? params.date : new Date();
-        this.numero = params && params.numero ? params.numero : null;
-        this.entreprise = params && params.entreprise ? params.entreprise : new core_1.Models.Entreprise();
-        this.client = params && params.client ? params.client : new core_1.Models.Personne();
-        this.ventes = params && params.ventes ? params.ventes : new Array();
-        this.prctRemiseGlobale = params && params.prctRemiseGlobale ? params.prctRemiseGlobale : 0;
-        this.isAutoliquidation = params && params.isAutoliquidation ? params.isAutoliquidation : false;
-        this.reglements = params && params.reglements ? params.reglements : new Array();
-        this.adresseLivraison = params && params.adresseLivraison ? params.adresseLivraison : new core_1.Models.Adresse({});
-        this.details = params.details && params ? params.details : null;
-        this.logo = params && params.logo ? params.logo : null;
-        this.detailsTVA = params && params.detailsTva ? params.detailsTva : {};
-        if (this['calculate'])
-            this.calculate();
+        var _this = _super.call(this, params) || this;
+        _this.libelle = params && params.libelle ? params.libelle : null;
+        _this.date = params && params.date ? params.date : new Date();
+        _this.numero = params && params.numero ? params.numero : null;
+        _this.entreprise = params && params.entreprise ? params.entreprise : new core_1.Models.Entreprise();
+        _this.client = params && params.client ? params.client : new core_1.Models.Personne();
+        _this.ventes = params && params.ventes ? params.ventes : new Array();
+        _this.prctRemiseGlobale = params && params.prctRemiseGlobale ? params.prctRemiseGlobale : 0;
+        _this.isAutoliquidation = params && params.isAutoliquidation ? params.isAutoliquidation : false;
+        _this.reglements = params && params.reglements ? params.reglements : new Array();
+        _this.adresseLivraison = params && params.adresseLivraison ? params.adresseLivraison : new core_1.Models.Adresse({});
+        _this.details = params.details && params ? params.details : null;
+        _this.logo = params && params.logo ? params.logo : null;
+        _this.detailsTVA = params && params.detailsTva ? params.detailsTva : {};
+        if (_this['calculate'])
+            _this.calculate();
+        return _this;
     }
+    Document.prototype.output = function () {
+        var pdf = new jsPDF();
+        return pdf.output();
+    };
     Document.prototype.calculate = function () {
         var self = this;
         var d = {};
@@ -176,15 +189,16 @@ var Document = (function (_super) {
         configurable: true
     });
     return Document;
-})(base_1.default.BaseModel);
+}(base_1.default.BaseModel));
 exports.Document = Document;
 var DetailsTVA = (function (_super) {
     __extends(DetailsTVA, _super);
     function DetailsTVA(taux, base) {
-        _super.call(this, {});
-        this._taux = taux;
-        this._base = base || 0;
-        this.calculate();
+        var _this = _super.call(this, {}) || this;
+        _this._taux = taux;
+        _this._base = base || 0;
+        _this.calculate();
+        return _this;
     }
     DetailsTVA.prototype.calculate = function () {
         this.tva = this._taux * this._base;
@@ -213,22 +227,23 @@ var DetailsTVA = (function (_super) {
         configurable: true
     });
     return DetailsTVA;
-})(base_1.default.BaseModel);
+}(base_1.default.BaseModel));
 exports.DetailsTVA = DetailsTVA;
 var Facture = (function (_super) {
     __extends(Facture, _super);
     function Facture(params) {
-        _super.call(this, params);
+        return _super.call(this, params) || this;
     }
     return Facture;
-})(Document);
+}(Document));
 exports.Facture = Facture;
 var FactureAcompte = (function (_super) {
     __extends(FactureAcompte, _super);
     function FactureAcompte(params) {
-        _super.call(this, params);
-        this.acompteHT = params && params.acompteHT ? params.acompteHT : 0;
-        this.acompteTVA = params && params.acompteTVA ? params.acompteTVA : 0;
+        var _this = _super.call(this, params) || this;
+        _this.acompteHT = params && params.acompteHT ? params.acompteHT : 0;
+        _this.acompteTVA = params && params.acompteTVA ? params.acompteTVA : 0;
+        return _this;
     }
     Object.defineProperty(FactureAcompte.prototype, "acompteTTC", {
         get: function () {
@@ -238,14 +253,15 @@ var FactureAcompte = (function (_super) {
         configurable: true
     });
     return FactureAcompte;
-})(Document);
+}(Document));
 exports.FactureAcompte = FactureAcompte;
 var Devis = (function (_super) {
     __extends(Devis, _super);
     function Devis(params) {
-        _super.call(this, params);
-        this.dateValidite = params && params.dateValidite ? params.dateValidite : new Date(this.date.getFullYear(), this.date.getMonth() < 11 ? this.date.getMonth() + 1 : 0, this.date.getDate());
+        var _this = _super.call(this, params) || this;
+        _this.dateValidite = params && params.dateValidite ? params.dateValidite : new Date(_this.date.getFullYear(), _this.date.getMonth() < 11 ? _this.date.getMonth() + 1 : 0, _this.date.getDate());
+        return _this;
     }
     return Devis;
-})(Document);
+}(Document));
 exports.Devis = Devis;
