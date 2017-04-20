@@ -14,16 +14,10 @@ var base_1 = require("../../../base/base");
 var BaseArticle = (function (_super) {
     __extends(BaseArticle, _super);
     function BaseArticle(params) {
-<<<<<<< 9d426e63bc1712e6e37e49fa6b7609ab45ef2d39
-        _super.call(this, params);
-        this.libelle = params && params.libelle ? params.libelle : null;
-        this.reference = params && params.reference ? params.reference : null;
-=======
         var _this = _super.call(this, params) || this;
-        _this.libelle = params && params.libelle ? params.libelle : 'Nouvel article';
+        _this.libelle = params && params.libelle ? params.libelle : null;
         _this.reference = params && params.reference ? params.reference : null;
         return _this;
->>>>>>> ajout de jspdf en dépendances
     }
     BaseArticle.instanciateArticleOuGroupe = function (o) {
         if (o && o.qteArticles) {

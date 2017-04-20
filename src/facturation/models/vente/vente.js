@@ -1,26 +1,3 @@
-<<<<<<< 9d426e63bc1712e6e37e49fa6b7609ab45ef2d39
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var base_1 = require('../../../base/base');
-var article_1 = require('../article/article');
-(function (typeRemise) {
-    typeRemise[typeRemise["decimal"] = 0] = "decimal";
-    typeRemise[typeRemise["pourcent"] = 1] = "pourcent";
-})(exports.typeRemise || (exports.typeRemise = {}));
-var typeRemise = exports.typeRemise;
-var Vente = (function (_super) {
-    __extends(Vente, _super);
-    function Vente(params) {
-        _super.call(this, params);
-        this.article = params && params.article ? params.article : new article_1.Article();
-        this.quantite = params && params.quantite ? params.quantite : 0;
-        this.prctRemise = params && params.prctRemise ? params.prctRemise : 0;
-        this.typeRemise = params && params.typeRemise ? params.typeRemise : typeRemise.pourcent;
-        this.calculate();
-=======
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -50,7 +27,6 @@ var Vente = (function (_super) {
         _this.typeRemise = params && params.typeRemise ? params.typeRemise : typeRemise.pourcent;
         _this.calculate();
         return _this;
->>>>>>> ajout de jspdf en dépendances
     }
     Vente.prototype.calculate = function () {
         if (!this.article || !this._quantite) {
