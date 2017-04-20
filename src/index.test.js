@@ -1,24 +1,9 @@
-var assert = require('chai').assert;
-var QreaLib = require('./index');
-
-describe('QreaLib', function () {
-
-    describe('#Compta', function () {
-
-        it('doit instancier une comptablité', function () {
-            const c = new QreaLib.Compta.Models.Comptabilite();
-            assert.isDefined(c, 'Impossible d\'instancier une comptabilité');
-        });
-
+var Lib = require('./index');
+require('mocha');
+var chai_1 = require('chai');
+describe('Hello function', function () {
+    it('should return hello world', function () {
+        var result = new Lib.Core.Models.Adresse({});
+        chai_1.expect(result).to.exist;
     });
-
-    describe('#Facturation', function () {
-
-        it('doit pouvoir créer une facture', function () {
-            const c = new QreaLib.Facturation.Models.Facture();
-            assert.isDefined(c, 'Impossible d\'instancier une facture');
-        });
-
-    });
-
 });

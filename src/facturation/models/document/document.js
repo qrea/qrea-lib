@@ -8,7 +8,6 @@ var core_1 = require('../../../core/core');
 var reglement_1 = require('../reglement/reglement');
 var vente_1 = require('../vente/vente');
 var logo_1 = require('../logo/logo');
-var jsPDF = require('jspdf');
 var helpers_1 = require('../../helpers/helpers');
 var Document = (function (_super) {
     __extends(Document, _super);
@@ -30,10 +29,6 @@ var Document = (function (_super) {
         if (this['calculate'])
             this.calculate();
     }
-    Document.prototype.output = function () {
-        var doc = new jsPDF();
-        return doc.output();
-    };
     Document.prototype.calculate = function () {
         var self = this;
         var d = {};
