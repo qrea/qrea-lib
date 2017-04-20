@@ -1,6 +1,6 @@
 {
   "name": "qrea-lib",
-  "version": "0.3.11",
+  "version": "0.4.2",
   "description": "Librairie Javascript permettant la modélisation d'un système de facturation et de comptabilité FR",
   "main": "src/index.ts",
   "types": "src/index.d.ts",
@@ -14,7 +14,9 @@
     "qrea"
   ],
   "dependencies": {
+    "@types/jspdf": "^1.1.31",
     "@types/moment": "2.13.0",
+    "jspdf": "^1.3.3",
     "moment": "2.13.0"
   },
   "devDependencies": {

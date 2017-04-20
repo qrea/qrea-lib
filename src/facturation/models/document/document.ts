@@ -4,6 +4,8 @@ import { Reglement } from '../reglement/reglement';
 import { Vente } from '../vente/vente';
 import { Logo } from '../logo/logo';
 
+import * as jsPDF from 'jspdf';
+
 import { DocumentDefinitionObjectHelper } from '../../helpers/helpers';
 
 export interface IDocument {
@@ -44,6 +46,10 @@ export abstract class Document extends Base.BaseModel {
 
         if (this['calculate']) this.calculate();
 
+    }
+
+    public toPDF(): jsPDF {
+        return new jsPDF();
     }
 
     protected calculate() {

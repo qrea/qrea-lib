@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var DocumentDefinitionObjectHelper = (function () {
     function DocumentDefinitionObjectHelper() {
     }
@@ -81,5 +83,5 @@ var DocumentDefinitionObjectHelper = (function () {
         ];
     };
     return DocumentDefinitionObjectHelper;
-})();
+}());
 exports.DocumentDefinitionObjectHelper = DocumentDefinitionObjectHelper;
