@@ -1,23 +1,15 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = require("../../../base/base");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_1 = require('../../../base/base');
 var Logo = (function (_super) {
     __extends(Logo, _super);
     function Logo(params) {
-        var _this = _super.call(this, params) || this;
-        _this.base64 = params.base64 || "";
-        return _this;
+        _super.call(this, params);
+        this.base64 = params.base64 || "";
     }
     return Logo;
-}(base_1.default.BaseModel));
+})(base_1.default.BaseModel);
 exports.Logo = Logo;
