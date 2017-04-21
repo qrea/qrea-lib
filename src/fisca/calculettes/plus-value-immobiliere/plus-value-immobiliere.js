@@ -1,17 +1,10 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = require("../base/base");
-var moment = require("moment");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_1 = require('../base/base');
+var moment = require('moment');
 exports.TAUX_IMPOT_PV_IMMO = 0.19;
 exports.ABATTEMENTS_PV_IMMO = [
     { "annee": 6, "abattPS": 0.0165, "abattIr": 0.06 },
@@ -43,9 +36,8 @@ exports.ABATTEMENTS_PV_IMMO = [
 var PlusValueImmobiliereCalculette = (function (_super) {
     __extends(PlusValueImmobiliereCalculette, _super);
     function PlusValueImmobiliereCalculette(params) {
-        var _this = _super.call(this, params) || this;
-        _this.hydrateParams(params);
-        return _this;
+        _super.call(this, params);
+        this.hydrateParams(params);
     }
     PlusValueImmobiliereCalculette.prototype.hydrateParams = function (params) {
         this._dateCession = params.dateCession ? params.dateCession : null;
@@ -351,5 +343,5 @@ var PlusValueImmobiliereCalculette = (function (_super) {
         return Math.round(surT);
     };
     return PlusValueImmobiliereCalculette;
-}(base_1.BaseCalculette));
+})(base_1.BaseCalculette);
 exports.PlusValueImmobiliereCalculette = PlusValueImmobiliereCalculette;

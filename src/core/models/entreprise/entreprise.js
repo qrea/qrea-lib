@@ -1,57 +1,49 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = require("../../../base/base");
-var personne_1 = require("../personne/personne");
-var identification_1 = require("../identification/identification");
-var logo_1 = require("../logo/logo");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_1 = require('../../../base/base');
+var personne_1 = require('../personne/personne');
+var identification_1 = require('../identification/identification');
+var logo_1 = require('../logo/logo');
 var Entreprise = (function (_super) {
     __extends(Entreprise, _super);
     function Entreprise(params) {
         if (params === void 0) { params = null; }
-        var _this = _super.call(this, params) || this;
+        _super.call(this, params);
         if (!params || !params.personne) {
             var personne = new personne_1.PersonnePhysique();
-            _this.personne = personne;
+            this.personne = personne;
         }
         else {
-            _this.personne = params.personne;
+            this.personne = params.personne;
         }
         if (!params || !params.identification) {
-            _this.identification = new identification_1.Identification();
+            this.identification = new identification_1.Identification();
         }
         else {
-            _this.identification = params.identification;
+            this.identification = params.identification;
         }
         if (!params || !params.logo) {
-            _this.logo = new logo_1.Logo();
+            this.logo = new logo_1.Logo();
         }
         else {
-            _this.logo = params.logo;
+            this.logo = params.logo;
         }
-        _this.isAdherentCGA = params ? params.isAdherentCGA : null;
-        _this.isExonere = params ? params.isExonere : null;
-        _this.isAssujettiTVA = params ? params.isAssujettiTVA : null;
-        _this.isFranchiseEnBase = params ? params.isFranchiseEnBase : null;
-        _this.isRegimeMargeBeneficiaire = params ? params.isRegimeMargeBeneficiaire : null;
-        _this.isAutoliquidation = params ? params.isAutoliquidation : null;
-        _this.numeroTVA = params ? params.numeroTVA : null;
-        _this.capital = params ? params.capital : null;
-        _this.isCapitalVariable = params ? params.isCapitalVariable : null;
-        _this.tauxPenalitesReglement = params ? params.tauxPenalitesReglement : null;
-        _this.conditionsEscompte = params ? params.conditionsEscompte : null;
-        _this.mentionsParticulieres = params ? params.mentionsParticulieres : null;
-        _this.modeReglementDefaut = params ? params.modeReglementDefaut : null;
-        return _this;
+        this.isAdherentCGA = params ? params.isAdherentCGA : null;
+        this.isExonere = params ? params.isExonere : null;
+        this.isAssujettiTVA = params ? params.isAssujettiTVA : null;
+        this.isFranchiseEnBase = params ? params.isFranchiseEnBase : null;
+        this.isRegimeMargeBeneficiaire = params ? params.isRegimeMargeBeneficiaire : null;
+        this.isAutoliquidation = params ? params.isAutoliquidation : null;
+        this.numeroTVA = params ? params.numeroTVA : null;
+        this.capital = params ? params.capital : null;
+        this.isCapitalVariable = params ? params.isCapitalVariable : null;
+        this.tauxPenalitesReglement = params ? params.tauxPenalitesReglement : null;
+        this.conditionsEscompte = params ? params.conditionsEscompte : null;
+        this.mentionsParticulieres = params ? params.mentionsParticulieres : null;
+        this.modeReglementDefaut = params ? params.modeReglementDefaut : null;
     }
     Object.defineProperty(Entreprise.prototype, "personne", {
         get: function () {
@@ -129,5 +121,5 @@ var Entreprise = (function (_super) {
         configurable: true
     });
     return Entreprise;
-}(base_1.default.BaseModel));
+})(base_1.default.BaseModel);
 exports.Entreprise = Entreprise;

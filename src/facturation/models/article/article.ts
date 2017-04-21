@@ -160,6 +160,6 @@ export class Article extends BaseArticle implements IArticle {
 
     unite: string;
     prix: number;
-    tauxTVA?: number;
+    tauxTVA: number;
 
 }
