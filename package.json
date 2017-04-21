@@ -3,15 +3,7 @@
   "version": "0.4.4",
   "description": "Librairie Javascript permettant la modélisation d'un système de facturation et de comptabilité FR",
   "main": "src/index.ts",
-  "types": [
-    "src/index.d.ts",
-    "node",
-    "mocha",
-    "chai"
-  ],
-  "typeRoots": [
-    "./node_modules/@types"
-  ],
+  "types": "src/index.d.ts",
   "keywords": [
     "comptabilité",
     "facturation",
@@ -22,30 +14,23 @@
     "qrea"
   ],
   "dependencies": {
-    "@types/jspdf": "^1.1.31",
     "@types/moment": "2.13.0",
-    "jspdf": "^1.3.3",
     "moment": "2.13.0"
   },
   "devDependencies": {
-    "@types/chai": "^3.5.1",
-    "@types/mocha": "^2.2.41",
+    "@types/moment": "^2.13.0",
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-uglify": "^1.0.1",
     "grunt-mocha-test": "^0.12.7",
     "grunt-typescript": "^0.8.0",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^4.3.0",
-    "gulp-typescript": "^3.1.6",
-    "mocha": "^3.2.0",
-    "ts-node": "^3.0.2"
+    "mocha": "^3.1.2"
   },
   "scripts": {
     "pretest": "tsc",
     "prepublish": "npm test",
-    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register src/**/*.test.ts"
+    "test": "mocha --recursive src/**/*.test.js"
   },
   "repository": {
     "type": "git",
