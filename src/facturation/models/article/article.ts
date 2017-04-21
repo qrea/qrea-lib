@@ -158,7 +158,7 @@ export class Article extends BaseArticle implements IArticle {
 
     }
 
-    unite?: string;
+    unite: string;
     prix: number;
     tauxTVA?: number;
 
