@@ -1,42 +1,42 @@
-namespace Base {
+namespace Base {    
 
     export interface IBase {
-        id?: any;
+        id?: string;    
     }
 
     export class BaseModel {
 
         constructor(o: any = null) {
-            if (o && o.id) this.id = o.id;
+            if(o && o.id) this.id = o.id;            
         }
 
-        id: any;
+        id: string;
 
         // on override la fonction qui vient de baseModel
-        public static instanciate(o: any) {
+        public static instanciate(o: any){
 
-            if (!o) return null;
-
+            if(!o) return null;
+            
             // on doit déterminé si c'est une vente ou non pour renvoyer un objet vente correctement instancié
-            if (o['getName'] && o.getName() === this.getName()) { // obtenir le nom du constructeur automatiquement pour remonter ce bloc dans BaseModel
+            if(o['getName'] && o.getName() === this.getName()){ // obtenir le nom du constructeur automatiquement pour remonter ce bloc dans BaseModel
                 // c'est ok on retourne la vente
                 return o; // TODO : voir si on peut décaller cette méthode directement dans le constructeur
             }
             else {
-                return new this(o);
+                return new this(o);          
             }
 
         };
 
-        public getName() {
-            return (<any>this).constructor.name;
+        public getName(){
+            return  (<any>this).constructor.name;
+        };
+        
+        public static getName(){
+            return  (<any>this).constructor.name;
         };
 
-        public static getName() {
-            return (<any>this).constructor.name;
-        };
-
-        protected getPourcent(value: number) {
+        protected getPourcent(value: number){
             return Math.round(value * 100 * 100) / 100;
         };
 
@@ -55,22 +55,22 @@ namespace Base {
         public watch(prop: string, handler: Function) {
             var oldval = this[prop];
             var newval = oldval;
-            var getter = function () {
+            var getter = function() {
                 return newval;
             };
-            var setter = function (val) {
+            var setter = function(val) {
                 oldval = newval;
                 return newval = handler.call(this, prop, oldval, val);
             };
             if (delete this[prop]) { // can't watch constants
                 if (Object.defineProperty) { // ECMAScript 5
-                    Object.defineProperty(this, prop, {
-                        'get': getter,
-                        'set': setter
-                    });
+                Object.defineProperty(this, prop, {
+                    'get': getter,
+                    'set': setter
+                });
                 } else if (Object.prototype['__defineGetter__'] && Object.prototype['__defineSetter__']) { // legacy
-                    Object.prototype['__defineGetter__'].call(this, prop, getter);
-                    Object.prototype['__defineSetter__'].call(this, prop, setter);
+                Object.prototype['__defineGetter__'].call(this, prop, getter);
+                Object.prototype['__defineSetter__'].call(this, prop, setter);
                 }
             }
         };
