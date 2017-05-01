@@ -26,6 +26,14 @@ export class Adresse extends Base.BaseModel implements IAdresse {
 
     }
 
+    estValide(): boolean {
+        if (this.ligne1 && this.ville && this.cp && this.nom) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     nom: string;
     ligne1: string;
     ligne2: string;
