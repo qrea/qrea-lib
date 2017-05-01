@@ -1,7 +1,17 @@
 language: node_js
 node_js:
   - "node"
+  
 deploy:
   provider: npm
   email: "pierre.bourdu@gmail.com"
   api_key: "5030c680-18bb-4ecb-ab78-4c56a63cb760"
+
+install:
+  - npm uninstall typescript
+  - npm uninstall tslint
+  - npm install
+
+cache:
+  directories:
+    - node_modules
