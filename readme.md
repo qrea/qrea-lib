@@ -1,6 +1,6 @@
 # QreaLib
 
-Bienvenue sur le projet QreaLib. Développé en Typescript, cette librairie permet de modéliser des systèmes en lien avec la comptabilité française.  
+Bienvenue sur le projet QreaLib. Développé en Typescript, cette librairie expose des modèles permettant de modéliser une comptabilité FR et un système de facturation FR.  
 
 Ces modèles sont utilisés par le logiciel SAAS **Qrea**, disponible [ici](http://www.qrea.io).
 
