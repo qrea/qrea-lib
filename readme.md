@@ -24,6 +24,12 @@ Nous avons configurer *mocha* pour qu'il parcourt le dossier `src` à la recherc
 Pour exécuter les tests :
 `npm test`
 
+## Workflow
+
+Le projet est hébergé sur GITHUB. Travis CI est configuré pour build.
+
+Les commits sont standardisés par la commande `npm run commit`.
+
 ## Contributeurs
 
 * **Pierre BOURDU**
