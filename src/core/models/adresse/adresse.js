@@ -15,6 +15,14 @@ var Adresse = (function (_super) {
         this.ville = params ? params.ville : null;
         this.pays = params ? params.pays : null;
     }
+    Adresse.prototype.estValide = function () {
+        if (this.ligne1 && this.ville && this.cp && this.nom) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
     return Adresse;
 })(base_1.default.BaseModel);
 exports.Adresse = Adresse;

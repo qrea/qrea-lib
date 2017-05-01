@@ -1,7 +1,7 @@
 # QreaLib
 
 [![travis build](https://img.shields.io/travis/qrea/qrea-lib.svg?style=flat-square)](https://travis-ci.org/qrea/qrea-lib)
-[![travis build](https://img.shields.io/npm/v/qrea-lib.svg?style=flat-square)](https://www.npmjs.com/package/qrea-lib)
+[![npm version](https://img.shields.io/npm/v/qrea-lib.svg?style=flat-square)](https://www.npmjs.com/package/qrea-lib)
 
 Bienvenue sur le projet QreaLib. Développé en Typescript, cette librairie expose des modèles permettant de modéliser une comptabilité FR et un système de facturation FR.  
 

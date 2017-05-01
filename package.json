@@ -35,7 +35,7 @@
   "scripts": {
     "commit": "git-cz",
     "pretest": "tsc",
-    "test": "mocha --recursive src/**/*.test.js"
+    "test": "mocha --recursive src/*.test.js src/core/**/*.test.js src/facturation/**/*.test.js src/compta/**/*.test.js src/fisca/**/*.test.js"
   },
   "repository": {
     "type": "git",
