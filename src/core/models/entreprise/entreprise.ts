@@ -3,6 +3,13 @@ import { Personne, PersonnePhysique, PersonneMorale } from '../personne/personne
 import { Identification } from '../identification/identification';
 import { Logo } from '../logo/logo';
 
+export enum TypeActivite {
+    liberale,
+    artisanale,
+    commerciale,
+    inconnu
+}
+
 export interface IEntreprise extends Base.IBase {
 
     personne?: PersonneMorale | PersonnePhysique | Personne;
@@ -21,7 +28,7 @@ export interface IEntreprise extends Base.IBase {
     mentionsParticulieres?: string;
     modeReglementDefaut?: string;
     logo?: Logo;
-
+    typeActivite?: TypeActivite
 }
 
 export class Entreprise extends Base.BaseModel implements IEntreprise {
@@ -64,7 +71,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
         this.conditionsEscompte = params ? params.conditionsEscompte : null;
         this.mentionsParticulieres = params ? params.mentionsParticulieres : null;
         this.modeReglementDefaut = params ? params.modeReglementDefaut : null;
-
+        this.typeActivite = params ? params.typeActivite : TypeActivite.inconnu;
     }
 
     isAdherentCGA: boolean;
@@ -80,6 +87,7 @@ export class Entreprise extends Base.BaseModel implements IEntreprise {
     conditionsEscompte: string;
     mentionsParticulieres: string;
     modeReglementDefaut: string;
+    typeActivite: TypeActivite;
 
     private _personne: PersonneMorale | PersonnePhysique | Personne;
     // on peut avoir une personne physique ou morale ou une personne
