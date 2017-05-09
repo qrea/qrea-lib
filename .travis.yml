@@ -6,6 +6,8 @@ deploy:
   provider: npm
   email: "pierre.bourdu@gmail.com"
   api_key: "5030c680-18bb-4ecb-ab78-4c56a63cb760"
+  on:
+   branch: master
 
 install:
   - npm uninstall typescript
