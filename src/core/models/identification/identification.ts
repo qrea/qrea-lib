@@ -23,8 +23,23 @@ export class Identification extends Base.BaseModel implements IIdentification {
 
     }
 
+    private _SIRET: string;
+
+    public set SIRET(value: string) {
+
+        this._SIRET = value;
+        this.SIREN = value.substr(0, 9);
+        this.NIC = value.substr(8, 5);
+
+    }
     public get SIRET(): string {
-        return this.SIREN + this.NIC;
+
+        if (this._SIRET) {
+            return this._SIRET;
+        } else {
+            return this.SIREN + this.NIC;
+        }
+
     }
 
     SIREN: string;
