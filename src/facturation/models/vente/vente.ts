@@ -1,7 +1,7 @@
 import Base from '../../../base/base';
 import { Article, IArticle, BaseArticle } from '../article/article';
 
-export interface IVente {
+export interface IVente extends Base.IBase {
     article?: Article,
     quantite?: number,
     prctRemise?: number,
