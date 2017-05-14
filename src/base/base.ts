@@ -1,16 +1,19 @@
 namespace Base {
 
     export interface IBase {
-        id?: any;
+        id?: any,
+        relations: object
     }
 
     export class BaseModel {
 
         constructor(o: IBase = null) {
-            if (o && o.id) this.id = o.id;
+            this.id = o.id ? o.id : o.id;
+            this.relations = o.relations ? o.relations : null;
         }
 
         id: any;
+        relations: object;
 
         // on override la fonction qui vient de baseModel
         public static instanciate(o: any) {
