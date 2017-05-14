@@ -8,8 +8,12 @@ namespace Base {
     export class BaseModel {
 
         constructor(o: IBase = null) {
-            this.id = o.id ? o.id : o.id;
-            this.relations = o.relations ? o.relations : null;
+
+            if (o) {
+                this.id = o.id ? o.id : o.id;
+                this.relations = o.relations ? o.relations : null;
+            }
+
         }
 
         id: any;

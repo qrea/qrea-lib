@@ -1,29 +1,21 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_1 = require("../../../base/base");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var base_1 = require('../../../base/base');
 var Ecriture = (function (_super) {
     __extends(Ecriture, _super);
     function Ecriture(params) {
-        var _this = _super.call(this, params) || this;
-        _this.dateLet = params.dateLet || null;
-        _this.ecritureDate = params.ecritureDate || null;
-        _this.libelle = params.libelle || null;
-        _this.ecritureLet = params.ecritureLet || null;
-        _this.pieceRef = params.pieceRef || null;
-        _this.pieceDate = params.pieceDate || null;
-        _this.validDate = params.validDate || null;
-        _this.lignes = params.lignes || [];
-        return _this;
+        _super.call(this, params);
+        this.dateLet = params.dateLet || null;
+        this.ecritureDate = params.ecritureDate || null;
+        this.libelle = params.libelle || null;
+        this.ecritureLet = params.ecritureLet || null;
+        this.pieceRef = params.pieceRef || null;
+        this.pieceDate = params.pieceDate || null;
+        this.validDate = params.validDate || null;
+        this.lignes = params.lignes || [];
     }
     Ecriture.prototype.addLigne = function (l) {
         this.lignes.push(l);
@@ -53,6 +45,6 @@ var Ecriture = (function (_super) {
         configurable: true
     });
     return Ecriture;
-}(base_1.default.BaseModel));
+})(base_1.default.BaseModel);
 exports.Ecriture = Ecriture;
 ;

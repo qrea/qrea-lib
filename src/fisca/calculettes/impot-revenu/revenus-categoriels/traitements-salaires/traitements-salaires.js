@@ -1,16 +1,9 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var RevenusCategoriels = require("../revenus-categoriels");
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var RevenusCategoriels = require('../revenus-categoriels');
 exports.CONSTANTES_TS_2015 = {
     MINI_ABATTEMENT: 426,
     MAXI_ABATTEMENT: 12170,
@@ -21,27 +14,26 @@ exports.CONSTANTES_PENSIONS_2015 = {
     MAXI_ABATTEMENT: 3711,
     ABATTEMENT: 0.1
 };
-var typeTraitementSalaire;
 (function (typeTraitementSalaire) {
     typeTraitementSalaire[typeTraitementSalaire["traitementSalaire"] = 0] = "traitementSalaire";
     typeTraitementSalaire[typeTraitementSalaire["pension"] = 1] = "pension";
-})(typeTraitementSalaire = exports.typeTraitementSalaire || (exports.typeTraitementSalaire = {}));
+})(exports.typeTraitementSalaire || (exports.typeTraitementSalaire = {}));
+var typeTraitementSalaire = exports.typeTraitementSalaire;
 var TraitementsSalaires = (function (_super) {
     __extends(TraitementsSalaires, _super);
     function TraitementsSalaires(params) {
         if (params === void 0) { params = null; }
-        var _this = _super.call(this) || this;
-        _this._typeRevenu = typeTraitementSalaire.traitementSalaire;
-        _this._revenuBrut = 0;
-        _this._fraisReel = 0;
-        _this.categorie = 'Traitements et salaires';
-        _this.categorieShort = 'TS';
+        _super.call(this);
+        this._typeRevenu = typeTraitementSalaire.traitementSalaire;
+        this._revenuBrut = 0;
+        this._fraisReel = 0;
+        this.categorie = 'Traitements et salaires';
+        this.categorieShort = 'TS';
         if (params) {
-            _this.typeRevenu = params.typeRevenu ? params.typeRevenu : typeTraitementSalaire.traitementSalaire;
-            _this.revenuBrut = params.revenuBrut ? params.revenuBrut : 0;
-            _this.fraisReel = params.fraisReel ? params.fraisReel : 0;
+            this.typeRevenu = params.typeRevenu ? params.typeRevenu : typeTraitementSalaire.traitementSalaire;
+            this.revenuBrut = params.revenuBrut ? params.revenuBrut : 0;
+            this.fraisReel = params.fraisReel ? params.fraisReel : 0;
         }
-        return _this;
     }
     Object.defineProperty(TraitementsSalaires.prototype, "typeRevenu", {
         get: function () {
@@ -103,6 +95,7 @@ var TraitementsSalaires = (function (_super) {
         configurable: true
     });
     TraitementsSalaires.prototype.calculerNetImposableTraitementsSalaires = function (brut, fraisReel) {
+        // console.log('calculerNetImposableTraitementsSalaires(%s, %s: number = 0', brut, fraisReel);
         if (fraisReel === void 0) { fraisReel = 0; }
         if (brut === 0)
             return 0;
@@ -131,5 +124,5 @@ var TraitementsSalaires = (function (_super) {
         return net;
     };
     return TraitementsSalaires;
-}(RevenusCategoriels.RevenuCategoriel));
+})(RevenusCategoriels.RevenuCategoriel);
 exports.TraitementsSalaires = TraitementsSalaires;

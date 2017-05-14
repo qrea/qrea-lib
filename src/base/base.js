@@ -1,12 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 var Base;
 (function (Base) {
     var BaseModel = (function () {
         function BaseModel(o) {
             if (o === void 0) { o = null; }
-            this.id = o.id ? o.id : o.id;
-            this.relations = o.relations ? o.relations : null;
+            if (o) {
+                this.id = o.id ? o.id : o.id;
+                this.relations = o.relations ? o.relations : null;
+            }
         }
         BaseModel.instanciate = function (o) {
             if (!o)
@@ -69,9 +69,10 @@ var Base;
         };
         ;
         return BaseModel;
-    }());
+    })();
     Base.BaseModel = BaseModel;
     ;
 })(Base || (Base = {}));
 ;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Base;
