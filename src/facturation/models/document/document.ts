@@ -6,7 +6,7 @@ import { Logo } from '../logo/logo';
 
 import { DocumentDefinitionObjectHelper } from '../../helpers/helpers';
 
-export interface IDocument {
+export interface IDocument extends Base.IBase {
     libelle?: string;
     date?: Date;
     numero?: string;
