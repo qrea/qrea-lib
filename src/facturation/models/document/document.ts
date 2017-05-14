@@ -39,8 +39,13 @@ export abstract class Document extends Base.BaseModel {
         this.reglements = params && params.reglements ? params.reglements : new Array<Reglement>();
         this.adresseLivraison = params && params.adresseLivraison ? params.adresseLivraison : new CoreModels.Adresse({});
         this.details = params.details && params ? params.details : null;
-        this.logo = params && params.logo ? params.logo : null;
         this.detailsTVA = params && params.detailsTva ? params.detailsTva : {};
+
+        this.logo = params && params.logo
+            ? params.logo
+            : this.entreprise && this.entreprise.logo
+                ? this.entreprise.logo
+                : null;
 
         if (this['calculate']) this.calculate();
 

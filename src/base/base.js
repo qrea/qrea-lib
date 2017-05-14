@@ -7,6 +7,7 @@ var Base;
                 this.id = o.id ? o.id : o.id;
                 this.relations = o.relations ? o.relations : null;
             }
+            this.relations = this.relations ? this.relations : {};
         }
         BaseModel.instanciate = function (o) {
             if (!o)

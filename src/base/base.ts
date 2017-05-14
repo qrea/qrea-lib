@@ -14,6 +14,8 @@ namespace Base {
                 this.relations = o.relations ? o.relations : null;
             }
 
+            this.relations = this.relations ? this.relations : {};
+
         }
 
         id: any;
