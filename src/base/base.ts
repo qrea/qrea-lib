@@ -2,7 +2,7 @@ namespace Base {
 
     export interface IBase {
         id?: any,
-        relations: object
+        relations?: {}
     }
 
     export class BaseModel {
@@ -13,7 +13,7 @@ namespace Base {
         }
 
         id: any;
-        relations: object;
+        relations: {};
 
         // on override la fonction qui vient de baseModel
         public static instanciate(o: any) {

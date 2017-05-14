@@ -5,8 +5,8 @@ var Base;
     var BaseModel = (function () {
         function BaseModel(o) {
             if (o === void 0) { o = null; }
-            if (o && o.id)
-                this.id = o.id;
+            this.id = o.id ? o.id : o.id;
+            this.relations = o.relations ? o.relations : null;
         }
         BaseModel.instanciate = function (o) {
             if (!o)

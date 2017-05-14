@@ -25,7 +25,17 @@ var Identification = (function (_super) {
     }
     Object.defineProperty(Identification.prototype, "SIRET", {
         get: function () {
-            return this.SIREN + this.NIC;
+            if (this._SIRET) {
+                return this._SIRET;
+            }
+            else {
+                return this.SIREN + this.NIC;
+            }
+        },
+        set: function (value) {
+            this._SIRET = value;
+            this.SIREN = value.substr(0, 9);
+            this.NIC = value.substr(8, 5);
         },
         enumerable: true,
         configurable: true

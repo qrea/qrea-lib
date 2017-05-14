@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var entreprise_1 = require("./entreprise/entreprise");
 exports.Entreprise = entreprise_1.Entreprise;
+exports.TypeActivite = entreprise_1.TypeActivite;
 var adresse_1 = require("./adresse/adresse");
 exports.Adresse = adresse_1.Adresse;
 var identification_1 = require("./identification/identification");
